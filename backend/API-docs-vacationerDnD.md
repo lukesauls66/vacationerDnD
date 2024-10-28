@@ -49,7 +49,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - Route path: /users/:userId
+  - Route path: /users/me
   - Body: none
 
 - Successful Response when there is a logged in user
