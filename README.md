@@ -4,7 +4,7 @@
 
 ![db-schema]
 
-[db-schema]: ./images/example.png
+[db-schema]: ./images/backend-schema.PNG
 
 ## API Documentation
 
