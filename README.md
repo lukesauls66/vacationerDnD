@@ -8,4 +8,6 @@
 
 ## API Documentation
 
-reference the /backend/API-docs-AirBnB.md for the API Documentation.
+refer to the [API-Docs] for the API Documentation.
+
+[API-Docs]: ./backend/API-docs-vacationerDnD.md
