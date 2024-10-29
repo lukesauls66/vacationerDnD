@@ -285,7 +285,7 @@ Returns all the spots owned (created) by the current user.
 - Request
 
   - Method: GET
-  - Route path: /spots/:userId || /spots/:ownerId
+  - Route path: /user/:userId/spots
   - Body: none
 
 - Successful Response
@@ -650,7 +650,7 @@ Returns all the reviews written by the current user.
 - Request
 
   - Method: GET
-  - Route path: /reviews
+  - Route path: /user/:userId/reviews
   - Body: none
 
 - Successful Response
@@ -1019,7 +1019,7 @@ Return all the bookings that the current user has made.
 - Request
 
   - Method: GET
-  - Route path: /bookings
+  - Route path: /users/:userId/bookings
   - Body: none
 
 - Successful Response
@@ -1066,7 +1066,7 @@ Return all the bookings for a spot specified by id.
 - Request
 
   - Method: GET
-  - Route path: /bookings/:spotId
+  - Route path: /spots/:spotId/bookings
   - Body: none
 
 - Successful Response: If you ARE NOT the owner of the spot.
@@ -1138,7 +1138,7 @@ Create and return a new booking from a spot specified by id.
 - Request
 
   - Method: POST
-  - Route path: /bookings/:spotId
+  - Route path: /spots/:spotId/bookings
   - Headers:
     - Content-Type: application/json
   - Body:
