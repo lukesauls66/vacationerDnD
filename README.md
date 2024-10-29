@@ -8,6 +8,6 @@
 
 ## API Documentation
 
-refer to the [API-Docs] for the API Documentation.
+Refer to the [API-Docs] for the API Documentation.
 
 [API-Docs]: ./backend/API-docs-vacationerDnD.md
