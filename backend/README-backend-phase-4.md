@@ -30,7 +30,7 @@ This file will hold the resources for the route paths beginning with
 
 ```js
 // backend/routes/api/session.js
-const express = require('express')
+const express = require("express");
 const router = express.Router();
 
 module.exports = router;
@@ -42,7 +42,7 @@ Create and export an Express router from this file.
 
 ```js
 // backend/routes/api/users.js
-const express = require('express')
+const express = require("express");
 const router = express.Router();
 
 module.exports = router;
@@ -56,21 +56,21 @@ Your `backend/routes/api/index.js` file should now look like this:
 
 ```js
 // backend/routes/api/index.js
-const router = require('express').Router();
-const sessionRouter = require('./session.js');
-const usersRouter = require('./users.js');
+const router = require("express").Router();
+const sessionRouter = require("./session.js");
+const usersRouter = require("./users.js");
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
-  // If current user session is valid, set req.user to the user in the database
-  // If current user session is not valid, set req.user to null
+// If current user session is valid, set req.user to the user in the database
+// If current user session is not valid, set req.user to null
 router.use(restoreUser);
 
-router.use('/session', sessionRouter);
+router.use("/session", sessionRouter);
 
-router.use('/users', usersRouter);
+router.use("/users", usersRouter);
 
-router.post('/test', (req, res) => {
+router.post("/test", (req, res) => {
   res.json({ requestBody: req.body });
 });
 
@@ -84,12 +84,12 @@ top of the file and create an Express router:
 
 ```js
 // backend/routes/api/session.js
-const express = require('express');
-const { Op } = require('sequelize');
-const bcrypt = require('bcryptjs');
+const express = require("express");
+const { Op } = require("sequelize");
+const bcrypt = require("bcryptjs");
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { setTokenCookie, restoreUser } = require("../../utils/auth");
+const { User } = require("../../db/models");
 
 const router = express.Router();
 ```
@@ -122,9 +122,7 @@ successfully logged in:
 ```js
 {
   user: {
-    id,
-    email,
-    username
+    id, email, username;
   }
 }
 ```
@@ -134,41 +132,38 @@ successfully logged in:
 // ...
 
 // Log in
-router.post(
-  '/',
-  async (req, res, next) => {
-    const { credential, password } = req.body;
+router.post("/", async (req, res, next) => {
+  const { credential, password } = req.body;
 
-    const user = await User.unscoped().findOne({
-      where: {
-        [Op.or]: {
-          username: credential,
-          email: credential
-        }
-      }
-    });
+  const user = await User.unscoped().findOne({
+    where: {
+      [Op.or]: {
+        username: credential,
+        email: credential,
+      },
+    },
+  });
 
-    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-      const err = new Error('Login failed');
-      err.status = 401;
-      err.title = 'Login failed';
-      err.errors = { credential: 'The provided credentials were invalid.' };
-      return next(err);
-    }
-
-    const safeUser = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    };
-
-    await setTokenCookie(res, safeUser);
-
-    return res.json({
-      user: safeUser
-    });
+  if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+    const err = new Error("Login failed");
+    err.status = 401;
+    err.title = "Login failed";
+    err.errors = { credential: "The provided credentials were invalid." };
+    return next(err);
   }
-);
+
+  const safeUser = {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+  };
+
+  await setTokenCookie(res, safeUser);
+
+  return res.json({
+    user: safeUser,
+  });
+});
 ```
 
 Make sure to export the `router` at the bottom of the file.
@@ -195,14 +190,16 @@ model file.
 Try to login the demo user with the username first.
 
 ```js
-fetch('/api/session', {
-  method: 'POST',
+fetch("/api/session", {
+  method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
+    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`,
   },
-  body: JSON.stringify({ credential: 'Demo-lition', password: 'password' })
-}).then(res => res.json()).then(data => console.log(data));
+  body: JSON.stringify({ credential: "Demo-lition", password: "password" }),
+})
+  .then((res) => res.json())
+  .then((data) => console.log(data));
 ```
 
 Remember to replace the `<value of XSRF-TOKEN cookie>` with the value of the
@@ -213,27 +210,31 @@ route to add the cookie back.
 Then try to login the demo user with the email next.
 
 ```js
-fetch('/api/session', {
-  method: 'POST',
+fetch("/api/session", {
+  method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
+    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`,
   },
-  body: JSON.stringify({ credential: 'demo@user.io', password: 'password' })
-}).then(res => res.json()).then(data => console.log(data));
+  body: JSON.stringify({ credential: "demo@user.io", password: "password" }),
+})
+  .then((res) => res.json())
+  .then((data) => console.log(data));
 ```
 
 Now test an invalid user `credential` and `password` combination.
 
 ```js
-fetch('/api/session', {
-  method: 'POST',
+fetch("/api/session", {
+  method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
+    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`,
   },
-  body: JSON.stringify({ credential: 'Demo-lition', password: 'Hello World!' })
-}).then(res => res.json()).then(data => console.log(data));
+  body: JSON.stringify({ credential: "Demo-lition", password: "Hello World!" }),
+})
+  .then((res) => res.json())
+  .then((data) => console.log(data));
 ```
 
 You should get a `Login failed` error back with an invalid `password` for the
@@ -300,13 +301,10 @@ response and return a JSON success message.
 // ...
 
 // Log out
-router.delete(
-  '/',
-  (_req, res) => {
-    res.clearCookie('token');
-    return res.json({ message: 'success' });
-  }
-);
+router.delete("/", (_req, res) => {
+  res.clearCookie("token");
+  return res.json({ message: "success" });
+});
 
 // ...
 ```
@@ -323,13 +321,15 @@ the logout route has a `DELETE` HTTP verb.
 Try to logout the session user.
 
 ```js
-fetch('/api/session', {
-  method: 'DELETE',
+fetch("/api/session", {
+  method: "DELETE",
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
-  }
-}).then(res => res.json()).then(data => console.log(data));
+    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`,
+  },
+})
+  .then((res) => res.json())
+  .then((data) => console.log(data));
 ```
 
 You should see the `token` cookie disappear from the list of cookies in your
@@ -397,11 +397,11 @@ In the `backend/routes/api/users.js` file, import the following code at the top
 of the file and create an Express router:
 
 ```js
-const express = require('express');
-const bcrypt = require('bcryptjs');
+const express = require("express");
+const bcrypt = require("bcryptjs");
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { setTokenCookie, requireAuth } = require("../../utils/auth");
+const { User } = require("../../db/models");
 
 const router = express.Router();
 ```
@@ -424,9 +424,7 @@ successfully created in the database:
 ```js
 {
   user: {
-    id,
-    email,
-    username
+    id, email, username;
   }
 }
 ```
@@ -436,26 +434,23 @@ successfully created in the database:
 // ...
 
 // Sign up
-router.post(
-  '/',
-  async (req, res) => {
-    const { email, password, username } = req.body;
-    const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ email, username, hashedPassword });
+router.post("/", async (req, res) => {
+  const { email, password, username } = req.body;
+  const hashedPassword = bcrypt.hashSync(password);
+  const user = await User.create({ email, username, hashedPassword });
 
-    const safeUser = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    };
+  const safeUser = {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+  };
 
-    await setTokenCookie(res, safeUser);
+  await setTokenCookie(res, safeUser);
 
-    return res.json({
-      user: safeUser
-    });
-  }
-);
+  return res.json({
+    user: safeUser,
+  });
+});
 ```
 
 Make sure to export the `router` at the bottom of the file.
@@ -482,18 +477,20 @@ syntax in the `users.js` route file as well as the `signup` method in the
 Try to signup a new valid user.
 
 ```js
-fetch('/api/users', {
-  method: 'POST',
+fetch("/api/users", {
+  method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
+    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`,
   },
   body: JSON.stringify({
-    email: 'spidey@spider.man',
-    username: 'Spidey',
-    password: 'password'
-  })
-}).then(res => res.json()).then(data => console.log(data));
+    email: "spidey@spider.man",
+    username: "Spidey",
+    password: "password",
+  }),
+})
+  .then((res) => res.json())
+  .then((data) => console.log(data));
 ```
 
 Remember to replace the `<value of XSRF-TOKEN cookie>` with the value of the
@@ -577,22 +574,19 @@ Add the route to the `router` in the `backend/routes/api/session.js` file.
 // ...
 
 // Restore session user
-router.get(
-  '/',
-  (req, res) => {
-    const { user } = req;
-    if (user) {
-      const safeUser = {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-      };
-      return res.json({
-        user: safeUser
-      });
-    } else return res.json({ user: null });
-  }
-);
+router.get("/", (req, res) => {
+  const { user } = req;
+  if (user) {
+    const safeUser = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+    };
+    return res.json({
+      user: safeUser,
+    });
+  } else return res.json({ user: null });
+});
 
 // ...
 ```
