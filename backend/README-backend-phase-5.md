@@ -41,18 +41,18 @@ middleware.
 
 ```js
 // backend/utils/validation.js
-const { validationResult } = require('express-validator');
+const { validationResult } = require("express-validator");
 
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
-  if (!validationErrors.isEmpty()) { 
+  if (!validationErrors.isEmpty()) {
     const errors = {};
     validationErrors
       .array()
-      .forEach(error => errors[error.path] = error.msg);
+      .forEach((error) => (errors[error.path] = error.msg));
 
     const err = Error("Bad request.");
     err.errors = errors;
@@ -64,7 +64,7 @@ const handleValidationErrors = (req, _res, next) => {
 };
 
 module.exports = {
-  handleValidationErrors
+  handleValidationErrors,
 };
 ```
 
@@ -81,8 +81,8 @@ In the `backend/routes/api/session.js` file, import the `check` function from
 ```js
 // backend/routes/api/session.js
 // ...
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { check } = require("express-validator");
+const { handleValidationErrors } = require("../../utils/validation");
 // ...
 ```
 
@@ -101,14 +101,14 @@ them:
 // ...
 
 const validateLogin = [
-  check('credential')
+  check("credential")
     .exists({ checkFalsy: true })
     .notEmpty()
-    .withMessage('Please provide a valid email or username.'),
-  check('password')
+    .withMessage("Please provide a valid email or username."),
+  check("password")
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a password.'),
-  handleValidationErrors
+    .withMessage("Please provide a password."),
+  handleValidationErrors,
 ];
 ```
 
@@ -125,42 +125,38 @@ Your login route should now look like this:
 // ...
 
 // Log in
-router.post(
-  '/',
-  validateLogin,
-  async (req, res, next) => {
-    const { credential, password } = req.body;
+router.post("/", validateLogin, async (req, res, next) => {
+  const { credential, password } = req.body;
 
-    const user = await User.unscoped().findOne({
-      where: {
-        [Op.or]: {
-          username: credential,
-          email: credential
-        }
-      }
-    });
+  const user = await User.unscoped().findOne({
+    where: {
+      [Op.or]: {
+        username: credential,
+        email: credential,
+      },
+    },
+  });
 
-    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-      const err = new Error('Login failed');
-      err.status = 401;
-      err.title = 'Login failed';
-      err.errors = { credential: 'The provided credentials were invalid.' };
-      return next(err);
-    }
-
-    const safeUser = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    };
-
-    await setTokenCookie(res, safeUser);
-
-    return res.json({
-      user: safeUser
-    });
+  if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+    const err = new Error("Login failed");
+    err.status = 401;
+    err.title = "Login failed";
+    err.errors = { credential: "The provided credentials were invalid." };
+    return next(err);
   }
-);
+
+  const safeUser = {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+  };
+
+  await setTokenCookie(res, safeUser);
+
+  return res.json({
+    user: safeUser,
+  });
+});
 ```
 
 ### Test the Login Validation
@@ -179,14 +175,16 @@ Try setting the `credential` user field to an empty string. You should get a
 `Bad Request` error back.
 
 ```js
-fetch('/api/session', {
-  method: 'POST',
+fetch("/api/session", {
+  method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
+    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`,
   },
-  body: JSON.stringify({ credential: '', password: 'password' })
-}).then(res => res.json()).then(data => console.log(data));
+  body: JSON.stringify({ credential: "", password: "password" }),
+})
+  .then((res) => res.json())
+  .then((data) => console.log(data));
 ```
 
 Remember to replace the `<value of XSRF-TOKEN cookie>` with the value of the
@@ -198,14 +196,16 @@ Test the `password` field by setting it to an empty string. You should get a
 `Bad Request` error back with `Please provide a password` as one of the errors.
 
 ```js
-fetch('/api/session', {
-  method: 'POST',
+fetch("/api/session", {
+  method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `HxJlWHvC-zxPQGc4hydprq59OkZAfW_BC1eY`
+    "XSRF-TOKEN": `HxJlWHvC-zxPQGc4hydprq59OkZAfW_BC1eY`,
   },
-  body: JSON.stringify({ credential: 'Demo-lition', password: '' })
-}).then(res => res.json()).then(data => console.log(data));
+  body: JSON.stringify({ credential: "Demo-lition", password: "" }),
+})
+  .then((res) => res.json())
+  .then((data) => console.log(data));
 ```
 
 ## Commit your code
@@ -268,8 +268,8 @@ In the `backend/routes/api/users.js` file, import the `check` function from
 ```js
 // backend/routes/api/users.js
 // ...
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { check } = require("express-validator");
+const { handleValidationErrors } = require("../../utils/validation");
 // ...
 ```
 
@@ -284,23 +284,20 @@ validate them:
 // backend/routes/api/users.js
 // ...
 const validateSignup = [
-  check('email')
+  check("email")
     .exists({ checkFalsy: true })
     .isEmail()
-    .withMessage('Please provide a valid email.'),
-  check('username')
+    .withMessage("Please provide a valid email."),
+  check("username")
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
-    .withMessage('Please provide a username with at least 4 characters.'),
-  check('username')
-    .not()
-    .isEmail()
-    .withMessage('Username cannot be an email.'),
-  check('password')
+    .withMessage("Please provide a username with at least 4 characters."),
+  check("username").not().isEmail().withMessage("Username cannot be an email."),
+  check("password")
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
-    .withMessage('Password must be 6 characters or more.'),
-  handleValidationErrors
+    .withMessage("Password must be 6 characters or more."),
+  handleValidationErrors,
 ];
 ```
 
@@ -319,27 +316,23 @@ Your signup route should now look like this:
 // ...
 
 // Sign up
-router.post(
-  '/',
-  validateSignup,
-  async (req, res) => {
-    const { email, password, username } = req.body;
-    const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ email, username, hashedPassword });
+router.post("/", validateSignup, async (req, res) => {
+  const { email, password, username } = req.body;
+  const hashedPassword = bcrypt.hashSync(password);
+  const user = await User.create({ email, username, hashedPassword });
 
-    const safeUser = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    };
+  const safeUser = {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+  };
 
-    await setTokenCookie(res, safeUser);
+  await setTokenCookie(res, safeUser);
 
-    return res.json({
-      user: safeUser
-    });
-  }
-);
+  return res.json({
+    user: safeUser,
+  });
+});
 ```
 
 ### Test the Signup Validation
@@ -359,18 +352,20 @@ First, test the signup route with an empty `password` field. You should get a
 the errors.
 
 ```js
-fetch('/api/users', {
-  method: 'POST',
+fetch("/api/users", {
+  method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
+    "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`,
   },
   body: JSON.stringify({
-    email: 'firestar@spider.man',
-    username: 'Firestar',
-    password: ''
-  })
-}).then(res => res.json()).then(data => console.log(data));
+    email: "firestar@spider.man",
+    username: "Firestar",
+    password: "",
+  }),
+})
+  .then((res) => res.json())
+  .then((data) => console.log(data));
 ```
 
 Remember to replace the `<value of XSRF-TOKEN cookie>` with the value of the
@@ -441,7 +436,7 @@ later when setting up your frontend.**
 // ...
 
 // Keep this route to test frontend setup in Mod 5
-router.post('/test', function (req, res) {
+router.post("/test", function (req, res) {
   res.json({ requestBody: req.body });
 });
 
@@ -462,11 +457,7 @@ user in the following format on successful login/signup:
 ```js
 {
   user: {
-    id,
-    firstName,
-    lastName,
-    email,
-    userName
+    id, firstName, lastName, email, userName;
   }
 }
 ```
@@ -477,11 +468,7 @@ format if there is a logged in user:
 ```js
 {
   user: {
-    id,
-    firstName,
-    lastName,
-    email,
-    userName
+    id, firstName, lastName, email, userName;
   }
 }
 ```
@@ -491,7 +478,7 @@ is **no** logged in user:
 
 ```js
 {
-  user: null
+  user: null;
 }
 ```
 
