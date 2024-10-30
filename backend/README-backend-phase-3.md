@@ -72,14 +72,14 @@ the dependency that you will be using to hash passwords.
 With Sequelize, you will create a `Users` table that will have the following
 schema:
 
-| column name      |   data type   | constraints                                   |
-| :--------------- | :-----------: | :-------------------------------------------- |
-| `id`             |    integer    | not null, primary key                         |
+| column name      |   data type   | constraints                          |
+| :--------------- | :-----------: | :----------------------------------- |
+| `id`             |    integer    | not null, primary key                |
 | `username`       |    string     | not null, unique, max 30 characters  |
 | `email`          |    string     | not null, unique, max 256 characters |
-| `hashedPassword` | binary string | not null                                      |
-| `createdAt`      |   datetime    | not null, default value of now()              |
-| `updatedAt`      |   datetime    | not null, default value of now()              |
+| `hashedPassword` | binary string | not null                             |
+| `createdAt`      |   datetime    | not null, default value of now()     |
+| `updatedAt`      |   datetime    | not null, default value of now()     |
 
 ## Users Table Migration
 
@@ -98,59 +98,63 @@ the default constraints for the `createdAt` and `updatedAt` columns.
 
 You should
 also define the schema name for the Postgres production database in the options object at the top of the file, and include
-the options object in both the up and down functions.  All `queryInterface` method calls except `createTable` will require 
+the options object in both the up and down functions. All `queryInterface` method calls except `createTable` will require
 the options object as the first argument, with the appropriate `tableName` property.
 
 If completed correctly, your migration file should look something like this:
 
 ```js
-'use strict';
+"use strict";
 
 let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+    await queryInterface.createTable(
+      "Users",
+      {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: Sequelize.INTEGER,
+        },
+        username: {
+          type: Sequelize.STRING(30),
+          allowNull: false,
+          unique: true,
+        },
+        email: {
+          type: Sequelize.STRING(256),
+          allowNull: false,
+          unique: true,
+        },
+        hashedPassword: {
+          type: Sequelize.STRING.BINARY,
+          allowNull: false,
+        },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        },
       },
-      username: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: true
-      },
-      email: {
-        type: Sequelize.STRING(256),
-        allowNull: false,
-        unique: true
-      },
-      hashedPassword: {
-        type: Sequelize.STRING.BINARY,
-        allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
-    }, options);
+      options
+    );
   },
 
   async down(queryInterface, Sequelize) {
     options.tableName = "Users";
     return queryInterface.dropTable(options);
-  }
+  },
 };
 ```
 
@@ -178,7 +182,7 @@ by running the following command in the terminal:
 sqlite3 db/dev.db ".schema Users"
 ```
 
-> _Note: In this migration, you specified a schema name for the production environment only. When you look at your data in sqlite in the development environment, the tables will not be prefixed by the schema name. They will only be prefixed in the production environment.
+> \_Note: In this migration, you specified a schema name for the production environment only. When you look at your data in sqlite in the development environment, the tables will not be prefixed by the schema name. They will only be prefixed in the production environment.
 
 ## User Model
 
@@ -202,9 +206,9 @@ is an email. If it is, throw an error with a message.
 Your `user.js` file should look like this with the applied constraints:
 
 ```js
-'use strict';
+"use strict";
 
-const { Model, Validator } = require('sequelize');
+const { Model, Validator } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -212,7 +216,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-
 
   User.init(
     {
@@ -224,7 +227,7 @@ module.exports = (sequelize, DataTypes) => {
           len: [4, 30],
           isNotEmail(value) {
             if (Validator.isEmail(value)) {
-              throw new Error('Cannot be an email.');
+              throw new Error("Cannot be an email.");
             }
           },
         },
@@ -248,7 +251,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: "User",
     }
   );
   return User;
@@ -277,46 +280,52 @@ package's `hashSync` method.
 Your seeder file should look something like this:
 
 ```js
-'use strict';
+"use strict";
 
-const { User } = require('../models');
+const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 
 let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await User.bulkCreate([
-      {
-        email: 'demo@user.io',
-        username: 'Demo-lition',
-        hashedPassword: bcrypt.hashSync('password')
-      },
-      {
-        email: 'user1@user.io',
-        username: 'FakeUser1',
-        hashedPassword: bcrypt.hashSync('password2')
-      },
-      {
-        email: 'user2@user.io',
-        username: 'FakeUser2',
-        hashedPassword: bcrypt.hashSync('password3')
-      }
-    ], { validate: true });
+  async up(queryInterface, Sequelize) {
+    await User.bulkCreate(
+      [
+        {
+          email: "demo@user.io",
+          username: "Demo-lition",
+          hashedPassword: bcrypt.hashSync("password"),
+        },
+        {
+          email: "user1@user.io",
+          username: "FakeUser1",
+          hashedPassword: bcrypt.hashSync("password2"),
+        },
+        {
+          email: "user2@user.io",
+          username: "FakeUser2",
+          hashedPassword: bcrypt.hashSync("password3"),
+        },
+      ],
+      { validate: true }
+    );
   },
 
-  async down (queryInterface, Sequelize) {
-    options.tableName = 'Users';
+  async down(queryInterface, Sequelize) {
+    options.tableName = "Users";
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
-    }, {});
-  }
+    return queryInterface.bulkDelete(
+      options,
+      {
+        username: { [Op.in]: ["Demo-lition", "FakeUser1", "FakeUser2"] },
+      },
+      {}
+    );
+  },
 };
-
 ```
 
 Notice how you do not need to add the `createdAt` and `updatedAt` fields for the
@@ -380,9 +389,9 @@ exclude the desired fields from the default query. For example, when you run
 Your `user.js` model file should now look like this:
 
 ```js
-'use strict';
+"use strict";
 
-const { Model, Validator } = require('sequelize');
+const { Model, Validator } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -401,7 +410,7 @@ module.exports = (sequelize, DataTypes) => {
           len: [4, 30],
           isNotEmail(value) {
             if (Validator.isEmail(value)) {
-              throw new Error('Cannot be an email.');
+              throw new Error("Cannot be an email.");
             }
           },
         },
@@ -425,10 +434,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: "User",
       defaultScope: {
         attributes: {
-          exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt'],
+          exclude: ["hashedPassword", "email", "createdAt", "updatedAt"],
         },
       },
     }
@@ -488,9 +497,9 @@ At the top of the file, add the following imports:
 
 ```js
 // backend/utils/auth.js
-const jwt = require('jsonwebtoken');
-const { jwtConfig } = require('../config');
-const { User } = require('../db/models');
+const jwt = require("jsonwebtoken");
+const { jwtConfig } = require("../config");
+const { User } = require("../db/models");
 
 const { secret, expiresIn } = jwtConfig;
 ```
@@ -526,11 +535,11 @@ const setTokenCookie = (res, user) => {
   const isProduction = process.env.NODE_ENV === "production";
 
   // Set the token cookie
-  res.cookie('token', token, {
+  res.cookie("token", token, {
     maxAge: expiresIn * 1000, // maxAge in milliseconds
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction && "Lax"
+    sameSite: isProduction && "Lax",
   });
 
   return token;
@@ -575,15 +584,15 @@ const restoreUser = (req, res, next) => {
       const { id } = jwtPayload.data;
       req.user = await User.findByPk(id, {
         attributes: {
-          include: ['email', 'createdAt', 'updatedAt']
-        }
+          include: ["email", "createdAt", "updatedAt"],
+        },
       });
     } catch (e) {
-      res.clearCookie('token');
+      res.clearCookie("token");
       return next();
     }
 
-    if (!req.user) res.clearCookie('token');
+    if (!req.user) res.clearCookie("token");
 
     return next();
   });
@@ -614,12 +623,12 @@ and passed along to the error-handling middlewares.
 const requireAuth = function (req, _res, next) {
   if (req.user) return next();
 
-  const err = new Error('Authentication required');
-  err.title = 'Authentication required';
-  err.errors = { message: 'Authentication required' };
+  const err = new Error("Authentication required");
+  err.title = "Authentication required";
+  err.errors = { message: "Authentication required" };
   err.status = 401;
   return next(err);
-}
+};
 ```
 
 `requireAuth` will be connected directly to route handlers where there needs to
@@ -648,13 +657,13 @@ Add a test route in your `backend/routes/api/index.js` file that will test the
 // ...
 
 // GET /api/set-token-cookie
-const { setTokenCookie } = require('../../utils/auth.js');
-const { User } = require('../../db/models');
-router.get('/set-token-cookie', async (_req, res) => {
+const { setTokenCookie } = require("../../utils/auth.js");
+const { User } = require("../../db/models");
+router.get("/set-token-cookie", async (_req, res) => {
   const user = await User.findOne({
     where: {
-      username: 'Demo-lition'
-    }
+      username: "Demo-lition",
+    },
   });
   setTokenCookie(res, user);
   return res.json({ user: user });
@@ -680,16 +689,13 @@ been populated by the middleware properly.
 // ...
 
 // GET /api/restore-user
-const { restoreUser } = require('../../utils/auth.js');
+const { restoreUser } = require("../../utils/auth.js");
 
 router.use(restoreUser);
 
-router.get(
-  '/restore-user',
-  (req, res) => {
-    return res.json(req.user);
-  }
-);
+router.get("/restore-user", (req, res) => {
+  return res.json(req.user);
+});
 
 // ...
 ```
@@ -718,14 +724,10 @@ router.use(restoreUser);
 // ...
 
 // GET /api/require-auth
-const { requireAuth } = require('../../utils/auth.js');
-router.get(
-  '/require-auth',
-  requireAuth,
-  (req, res) => {
-    return res.json(req.user);
-  }
-);
+const { requireAuth } = require("../../utils/auth.js");
+router.get("/require-auth", requireAuth, (req, res) => {
+  return res.json(req.user);
+});
 
 // ...
 ```
@@ -763,8 +765,8 @@ const router = require("express").Router();
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
-  // If current user session is valid, set req.user to the user in the database
-  // If current user session is not valid, set req.user to null
+// If current user session is valid, set req.user to the user in the database
+// If current user session is not valid, set req.user to null
 router.use(restoreUser);
 
 module.exports = router;
