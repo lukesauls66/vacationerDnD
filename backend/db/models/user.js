@@ -13,6 +13,32 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [1, 50],
+          isAlpha: true,
+          isFirstLetterCap(value) {
+            if (value[0] !== value[0].toUpperCase()) {
+              throw new Error("Names must be capitalized");
+            }
+          },
+        },
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [1, 50],
+          isAlpha: true,
+          isFirstLetterCap(value) {
+            if (value[0] !== value[0].toUpperCase()) {
+              throw new Error("Names must be capitalized");
+            }
+          },
+        },
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -43,12 +69,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
       defaultScope: {
         attributes: {
-          exclude: ["hashedPassword", 
-            "updatedAt", 
-            "email", 
-            "createdAt"],
+          exclude: ["hashedPassword", "updatedAt", "email", "createdAt"],
         },
-        
       },
     }
   );
