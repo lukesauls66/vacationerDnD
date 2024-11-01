@@ -1,6 +1,5 @@
 "use strict";
 const { Model, Validator } = require("sequelize");
-const UserSpot = require("./userspot");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -9,19 +8,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      User.hasMany(models.UserSpot, {
+        foreignKey: "userId",
+      });
+      User.belongsToMany(models.Spot, {
+        through: models.UserSpot,
+        foreignKey: "userId",
+        otherKey: "spotId",
+      });
       User.hasMany(models.Review, {
         foreignKey: "userId",
       });
       User.hasMany(models.Booking, {
         foreignKey: "userId",
-      });
-      User.hasMany(models.UserSpot, {
-        foreignKey: 'userId'
-      });
-      User.belongsToMany(models.Spot, {
-        through: UserSpot,
-        foreignKey: "userId",
-        otherKey: "spotId"
       });
     }
   }
