@@ -3,6 +3,7 @@ const {
   Model,
   DATE
 } = require('sequelize');
+const UserSpot = require("./userspot");
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     /**
@@ -12,16 +13,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Spot.belongsToMany(models.User, {
-      //   foreignKey: 'userId'
-      // })
+      Spot.belongsToMany(models.User, {
+        through: UserSpot
+      });
+      Spot.hasMany(models.Booking, {
+        foreignKey: 'spotId'
+      });
+      Spot.hasMany(models.Review, {
+        foreignKey: 'spotId'
+      });
+      Spot.hasMany(models.Image, {
+        through: SpotImage,
+      })
     }
   }
   Spot.init({
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     address: {
       type: DataTypes.STRING(255),
       allowNull: false,
