@@ -35,7 +35,8 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       description: {
         type: Sequelize.STRING,
@@ -52,7 +53,8 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       previewImage: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

@@ -13,8 +13,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Spot.hasMany(models.UserSpot, {
+        foreignKey: 'spotId'
+      }),
       Spot.belongsToMany(models.User, {
-        through: UserSpot
+        through: UserSpot,
+        foreignKey: 'spotId',
+        otherKey: 'userId'
       });
       Spot.hasMany(models.Booking, {
         foreignKey: 'spotId'
@@ -22,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
       Spot.hasMany(models.Review, {
         foreignKey: 'spotId'
       });
-      Spot.hasMany(models.Image, {
-        through: SpotImage,
+      Spot.hasMany(models.SpotImage, {
+        foreignKey: 'spotId'
       })
     }
   }
@@ -102,16 +107,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(150),
       allowNull: false,
+      unique: true,
       validate: {
-        len: [1, 100],
+        len: [1, 150],
         isAlpha: true,
         firstLetterCap(value) {
+          const preps = ['of', 'in', 'for', 'with', 'to', 'on']
           const array = value.split(' ');
           array.forEach((val) => {
-            if (val[0] !== val[0].toUpperCase()) {
-              throw new Error('Name must be capitalized.')
+            if (!preps.includes(val) && val[0] !== val[0].toUpperCase()) {
+              throw new Error('Location name must be capitalized.')
             } 
           })
         }
@@ -136,6 +143,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     previewImage: {
       type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     sequelize,
