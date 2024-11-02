@@ -4,13 +4,7 @@ const { User } = require("./user");
 const { Spot } = require("./spot");
 module.exports = (sequelize, DataTypes) => {
   class UserSpot extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
       UserSpot.belongsTo(models.User, {
         foreignKey: "userId",
       });
