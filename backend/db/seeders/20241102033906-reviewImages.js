@@ -7,7 +7,7 @@ module.exports = {
     await ReviewImage.bulkCreate(
       [
         {
-          reviewId: 1, // Assuming this corresponds to an existing review
+          reviewId: 1,
           url: "https://example.com/images/review1.jpg",
           preview: true,
         },
