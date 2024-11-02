@@ -1,10 +1,10 @@
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */
-const { Userspot } = require("../models");
+const { UserSpot } = require("../models");
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await Userspot.bulkInsert(
+    await UserSpot.bulkCreate(
       [
         { userId: 1, spotId: 1 },
         { userId: 1, spotId: 2 },
