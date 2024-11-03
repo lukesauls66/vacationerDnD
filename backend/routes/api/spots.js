@@ -1,6 +1,12 @@
 const router = require("express").Router();
 
-const { Spot, User, SpotImage } = require("../../db/models");
+const {
+  Spot,
+  User,
+  SpotImage,
+  Review,
+  ReviewImage,
+} = require("../../db/models");
 
 // ### Get all Spots
 
@@ -63,7 +69,26 @@ router.get("/:spotId/reviews", async (req, res) => {
   try {
     const spotId = req.params.spotId;
 
-    const reviews = await Review.findAll({ where: { spotId }, include: [] });
+    const reviews = await Review.findAll({
+      where: { spotId },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
+        },
+        {
+          model: ReviewImage,
+          as: "ReviewImages",
+          attributes: ["id", "url"],
+        },
+      ],
+    });
+
+    if (!reviews) {
+      res.status(404).json({ message: "Spot couldn't be found" });
+    }
+
+    res.json({ Reviews: reviews });
   } catch (err) {
     console.error("Error getting spot reviews: ", err);
     res.status(500).json({ message: "Error getting spot reviews" });
