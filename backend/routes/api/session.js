@@ -1,9 +1,13 @@
 const express = require("express");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 const bcrypt = require("bcryptjs");
 
-const { setTokenCookie, restoreUser } = require("../../utils/auth");
-const { User } = require("../../db/models");
+const {
+  setTokenCookie,
+  restoreUser,
+  requireAuth,
+} = require("../../utils/auth");
+const { User, Spot, Review, ReviewImage, Booking } = require("../../db/models");
 
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -21,40 +25,112 @@ const validateLogin = [
   handleValidationErrors,
 ];
 
-router.post("/login", validateLogin, async (req, res, next) => {
-    const { credential, password } = req.body;
-  
-    const user = await User.unscoped().findOne({
-      where: {
-        [Op.or]: {
-          username: credential,
-          email: credential,
-        },
-      },
-    });
+router.get("/spots", requireAuth, async (req, res) => {
+  const userId = req.user.id;
 
-  
-    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-      const err = new Error("Invalid credentials");
-      err.status = 401;
-      err.title = "Login failed";
-      err.errors = { credential: "Invalid credentials" };
-      return next(err);
-    }
-  
-    const safeUser = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      username: user.username,
-    };
-  
-    await setTokenCookie(res, safeUser);
-  
-    return res.json({
-      user: safeUser,
-    });
+  const spots = await Spot.findAll({ where: { ownerId: userId } });
+
+  res.json({ Spots: spots });
+});
+
+router.get("/reviews", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+
+  const reviews = await Review.findAll({
+    where: { userId },
+    include: [
+      {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: Spot,
+        attributes: [
+          "id",
+          "ownerId",
+          "address",
+          "city",
+          "state",
+          "country",
+          "lat",
+          "lng",
+          "name",
+          "price",
+          "previewImage",
+        ],
+      },
+      {
+        model: ReviewImage,
+        as: "ReviewImages",
+        attributes: ["id", "url"],
+      },
+    ],
+  });
+
+  res.json({ Reviews: reviews });
+});
+
+router.get("/bookings", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+
+  const bookings = await Booking.findAll({
+    where: { userId },
+    include: [
+      {
+        model: Spot,
+        attributes: [
+          "id",
+          "ownerId",
+          "address",
+          "city",
+          "state",
+          "country",
+          "lat",
+          "lng",
+          "name",
+          "price",
+          "previewImage",
+        ],
+      },
+    ],
+  });
+
+  res.json({ Bookings: bookings });
+});
+
+router.post("/login", validateLogin, async (req, res, next) => {
+  const { credential, password } = req.body;
+
+  const user = await User.unscoped().findOne({
+    where: {
+      [Op.or]: {
+        username: credential,
+        email: credential,
+      },
+    },
+  });
+
+  if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+    const err = new Error("Invalid credentials");
+    err.status = 401;
+    err.title = "Login failed";
+    err.errors = { credential: "Invalid credentials" };
+    return next(err);
+  }
+
+  const safeUser = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    username: user.username,
+  };
+
+  await setTokenCookie(res, safeUser);
+
+  return res.json({
+    user: safeUser,
+  });
 });
 
 router.delete("/", (_req, res) => {
@@ -74,7 +150,6 @@ router.post("/login", async (req, res, next) => {
     },
   });
 
-
   if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
     const err = new Error("Invalid credentials");
     err.status = 401;
@@ -82,8 +157,6 @@ router.post("/login", async (req, res, next) => {
     err.errors = { credential: "Invalid credentials" };
     return next(err);
   }
-
-
 
   const safeUser = {
     id: user.id,
