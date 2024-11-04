@@ -3,11 +3,8 @@ const { Model, DATE } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     static associate(models) {
-      Spot.hasMany(models.UserSpot, {
-        foreignKey: "spotId",
-      }); 
       Spot.belongsTo(models.User, {
-        as: 'Owner',
+        as: "Owner",
         foreignKey: "ownerId",
       });
       Spot.hasMany(models.Booking, {
@@ -23,14 +20,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   Spot.init(
     {
-      ownerId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
-      },
+      // ownerId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   references: {
+      //     model: 'Users',
+      //     key: 'id'
+      //   }
+      // },
       address: {
         type: DataTypes.STRING(255),
         allowNull: false,

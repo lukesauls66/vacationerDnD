@@ -7,6 +7,7 @@ module.exports = {
     await Spot.bulkCreate(
       [
         {
+          ownerId: 1,
           address: "123 Main St",
           city: "Springfield",
           state: "Illinois",
@@ -21,6 +22,7 @@ module.exports = {
           previewImage: "https://example.com/images/cozy-cottage.jpg",
         },
         {
+          ownerId: 2,
           address: "456 Elm St",
           city: "Denver",
           state: "Colorado",
@@ -35,6 +37,7 @@ module.exports = {
           previewImage: "https://example.com/images/mountain-retreat.jpg",
         },
         {
+          ownerId: 3,
           address: "789 Oak Ave",
           city: "Los Angeles",
           state: "California",
@@ -49,6 +52,7 @@ module.exports = {
           previewImage: "https://example.com/images/sunny-villa.jpg",
         },
         {
+          ownerId: 4,
           address: "321 Pine Blvd",
           city: "Miami",
           state: "Florida",
@@ -63,6 +67,7 @@ module.exports = {
           previewImage: "https://example.com/images/tropical-escape.jpg",
         },
         {
+          ownerId: 4,
           address: "654 Maple St",
           city: "Austin",
           state: "Texas",
