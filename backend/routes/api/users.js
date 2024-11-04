@@ -45,7 +45,7 @@ router.post("/signup", validateSignup, async (req, res) => {
       username,
       hashedPassword,
     });
-  
+
     const safeUser = {
       id: user.id,
       firstName: user.firstName,
@@ -53,21 +53,18 @@ router.post("/signup", validateSignup, async (req, res) => {
       email: user.email,
       username: user.username,
     };
-  
-    await setTokenCookie(res, safeUser);
 
+    await setTokenCookie(res, safeUser);
 
     return res.json({
       user: safeUser,
     });
-    
   } catch (err) {
-    console.error('User already exists', err);
+    console.error("User already exists", err);
     res.status(500).json({
-      message: 'User already exists'
-    })
+      message: "User already exists",
+    });
   }
-  
 });
 
 router.post("/", async (req, res) => {
