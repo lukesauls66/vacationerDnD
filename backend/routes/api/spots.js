@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const { handleValidationErrors } = require('../../utils/validation')
+const { requireAuth } = require("../../utils/auth")
+const { check } = require('express-validator');
 
 const {
   Spot,
@@ -98,38 +100,55 @@ router.get("/:spotId/reviews", async (req, res) => {
 
 // Creates and returns a new spot.
 
-// - Require Authentication: true
-// - Request
 
-//   - Method: POST
-//   - Route path: /spots
-//   - Headers:
-//     - Content-Type: application/json
-//   - Body:
-
-//     ```json
-//     {
-//       "address": "123 Disney Lane",
-//       "city": "San Francisco",
-//       "state": "California",
-//       "country": "United States of America",
-//       "lat": 37.7645358,
-//       "lng": -122.4730327,
-//       "name": "App Academy",
-//       "description": "Place where web developers are created",
-//       "price": 123
-//     }
-//     ```
-
-router.post('/spots', requireAuth,
+router.post('/', requireAuth,
   [
-    check()
+    check('address')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('Street address is required'),
+    check('city')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('City is required'),
+    check('state')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('State is required'),
+    check('country')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('Country is required'),
+    check('lat')
+      .exists({ checkFalsey: true })
+      .isFloat({ min: -90, max: 90 })
+      .withMessage('Latitude must be within -90 and 90'),
+    check('lng')
+      .exists({ checkFalsey: true })
+      .isFloat({ min: -180, max: 180 })
+      .withMessage('Longitude must be within -180 and 180'),
+    check('name')
+      .exists({ checkFalsey: true })
+      .isLength({ max: 50 })
+      .withMessage('Name must be less than 50 characters'),
+    check('description')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('Description is required'),
+    check('price')
+      .exists({ checkFalsey: true })
+      .isFloat({ gt: 0 })
+      .withMessage('Price per day must be a positive number'),
+    handleValidationErrors,
   ],
   async (req, res) => {
   try {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
   
+    const userId = req.user.id
+
     const newSpot = await Spot.create({
+      ownerId: userId,
       address,
       city,
       state,
@@ -144,13 +163,11 @@ router.post('/spots', requireAuth,
     res.status(201).json(newSpot)
 
   } catch (err) {
-    console.error('Bad Request', err);
-    res.status(400).json({
-      message: 'Bad Request',
+    console.error('Error creating spot:', err);
+    res.status(500).json({
+      message: 'Error creating spot',
     })
   }
-
-
-})
+});
 
 module.exports = router;
