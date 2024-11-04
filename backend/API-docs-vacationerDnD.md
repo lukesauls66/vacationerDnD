@@ -49,7 +49,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - Route path: /users/:userId
+  - Route path: api/session
   - Body: none
 
 - Successful Response when there is a logged in user
@@ -93,7 +93,7 @@ information.
 - Request
 
   - Method: POST
-  - Route path: /login
+  - Route path: /api/session/login
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -163,7 +163,7 @@ user's information.
 - Request
 
   - Method: POST
-  - Route path: /signup
+  - Route path: /api/users/signup
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -243,7 +243,7 @@ Returns all the spots.
 - Request
 
   - Method: GET
-  - Route path: /spots
+  - Route path: /api/spots
   - Body: none
 
 - Successful Response
@@ -285,7 +285,7 @@ Returns all the spots owned (created) by the current user.
 - Request
 
   - Method: GET
-  - Route path: /user/:userId/spots
+  - Route path: api/user/:userId/spots
   - Body: none
 
 - Successful Response
