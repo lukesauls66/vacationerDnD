@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { handleValidationErrors } = require('../../utils/validation')
 
 const {
   Spot,
@@ -94,5 +95,62 @@ router.get("/:spotId/reviews", async (req, res) => {
     res.status(500).json({ message: "Error getting spot reviews" });
   }
 });
+
+// Creates and returns a new spot.
+
+// - Require Authentication: true
+// - Request
+
+//   - Method: POST
+//   - Route path: /spots
+//   - Headers:
+//     - Content-Type: application/json
+//   - Body:
+
+//     ```json
+//     {
+//       "address": "123 Disney Lane",
+//       "city": "San Francisco",
+//       "state": "California",
+//       "country": "United States of America",
+//       "lat": 37.7645358,
+//       "lng": -122.4730327,
+//       "name": "App Academy",
+//       "description": "Place where web developers are created",
+//       "price": 123
+//     }
+//     ```
+
+router.post('/spots', requireAuth,
+  [
+    check()
+  ],
+  async (req, res) => {
+  try {
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  
+    const newSpot = await Spot.create({
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    });
+  
+    res.status(201).json(newSpot)
+
+  } catch (err) {
+    console.error('Bad Request', err);
+    res.status(400).json({
+      message: 'Bad Request',
+    })
+  }
+
+
+})
 
 module.exports = router;
