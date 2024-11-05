@@ -22,13 +22,16 @@ router.delete('/:spotId/images/:imageId', requireAuth,
   const spot = await Spot.findOne({
     where: {
       id: spotId,
-      ownerId
     }
   });
 
   if (!spot) {
-    res.status(404).json("Spot couldn't be found");
+    res.status(404).json({ message: "Spot couldn't be found" });
   };
+
+  if (spot.ownerId !== ownerId) {
+    res.status(403).json({ message: "Forbidden" });
+  }
 
   const spotImage = await SpotImage.findOne({
     where: {
