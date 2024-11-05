@@ -1019,7 +1019,7 @@ Return all the bookings that the current user has made.
 - Request
 
   - Method: GET
-  - Route path: /users/:userId/bookings
+  - Route path: /session/bookings
   - Body: none
 
 - Successful Response
@@ -1066,7 +1066,7 @@ Return all the bookings for a spot specified by id.
 - Request
 
   - Method: GET
-  - Route path: /spots/:spotId/bookings
+  - Route path: /bookings/:spotId
   - Body: none
 
 - Successful Response: If you ARE NOT the owner of the spot.
@@ -1138,7 +1138,7 @@ Create and return a new booking from a spot specified by id.
 - Request
 
   - Method: POST
-  - Route path: /spots/:spotId/bookings
+  - Route path: /bookings/:spotId
   - Headers:
     - Content-Type: application/json
   - Body:
