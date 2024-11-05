@@ -1,14 +1,38 @@
 const router = require("express").Router();
 
 const { requireAuth } = require("../../utils/auth");
-const { Review, Spot } = require("../../db/models");
+const { Review, Spot, ReviewImage } = require("../../db/models");
 
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
-// router.post("/:reviewId/images", requireAuth, async (req, res) => {
+router.post("/:reviewId/images", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const { reviewId } = req.params;
+  const { url } = req.body;
 
-// })
+  const review = await Review.findOne({ where: { id: reviewId, userId } });
+
+  if (!review) {
+    return res.status(404).json({ message: "Review couldn't be found" });
+  }
+
+  const allReviewImages = await ReviewImage.findAll({ where: { reviewId } });
+
+  if (allReviewImages.length > 10) {
+    return res.status(403).json({
+      message: "Maximum number of images for this resource was reached",
+    });
+  }
+
+  const newReviewImage = await ReviewImage.create({
+    reviewId,
+    url,
+    preview: false,
+  });
+
+  res.status(201).json(newReviewImage);
+});
 
 router.post(
   "/:spotId",
@@ -32,10 +56,10 @@ router.post(
     const spot = await Spot.findOne({ where: { id: spotId } });
 
     if (!spot) {
-      res.json({ message: "Spot couldn't be found" });
+      return res.json({ message: "Spot couldn't be found" });
     }
 
-    const allReviews = await Review.findAll({ where: { userId } });
+    const allReviews = await Review.findAll({ where: { userId, spotId } });
 
     if (allReviews.length !== 0) {
       res
@@ -50,7 +74,7 @@ router.post(
       stars,
     });
 
-    res.json(newReview);
+    res.status(201).json(newReview);
   }
 );
 
