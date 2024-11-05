@@ -279,7 +279,43 @@ router.put('/:spotId', requireAuth,
     spotToUpdate.price = price;
 
     res.status(200).json(spotToUpdate)
-})
+});
+
+
+// ### Delete a Spot
+
+router.delete('/:spotId', requireAuth,
+  async (req, res) => {
+
+  try {
+    const userId = req.user.id;
+    const { spotId } = req.params;
+
+    const spotToDelete = await Spot.findOne({
+      where: {
+        id: spotId,
+        ownerId: userId,
+      }
+    });
+
+    if (!spotToDelete) {
+      res.status(404).json({
+        message: "Spot couldn't be found"
+      });
+    };
+
+    res.status(200).json({
+      message: 'Successfully deleted'
+    });
+
+  } catch {
+    console.error('Error deleting spot:', err);
+    res.status(500).json({
+      message: 'Error deleting spot'
+    });
+  };
+
+});
 
 
 
