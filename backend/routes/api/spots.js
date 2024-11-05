@@ -169,39 +169,48 @@ router.post('/', requireAuth,
 
 router.post('/:spotId/images', requireAuth,
   async (req, res) => {
-    const { spotId } = req.params;
-    const { url } = req.body;
 
-    const spot = await Spot.findOne({
-      where: {
-        id: spotId,
-      }
+  const userId = req.user.id
+  const { spotId } = req.params;
+  const { url } = req.body;
+
+  const spot = await Spot.findOne({ 
+    where: { 
+      id: spotId, 
+      ownerId: userId 
+    } 
+  });
+
+  if (!spot) {
+    return res.status(404).json({ message: "Spot couldn't be found"});
+  };
+
+  const allSpotImages = await SpotImage.findAll({
+    where: {
+      spotId
+    }
+  });
+
+  if (allSpotImages.length >= 10) {
+    return res.status(403).json({
+      message: 'Maximum number of images for this resource was reached'
     });
+  };
 
-    if (!spot) {
-      return res.status(404).json({ message: "Spot couldn't be found"});
-    };
+  const newSpotImage = await SpotImage.create({
+    spotId,
+    url,
+    preview: true,
+  });
 
-    const allSpotImages = await SpotImage.findAll({
-      where: {
-        spotId
-      }
-    });
+  res.status(201).json(newSpotImage);
+});    
 
-    if (allSpotImages.length >= 10) {
-      return res.status(403).json({
-        message: 'Maximum number of images for this resource was reached'
-      });
-    };
 
-    const newSpotImage = await SpotImage.create({
-      spotId,
-      url,
-      preview: true,
-    });
 
-    res.status(201).json(newSpotImage);
-  });    
+// ### Edit a Spot
+
+// router.put('/:spotId')
 
 
 
