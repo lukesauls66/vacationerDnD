@@ -327,7 +327,7 @@ Returns the details of a spot specified by its id.
 - Request
 
   - Method: GET
-  - Route path: /spots/:spotId
+  - Route path: /api/spots/:spotId
   - Body: none
 
 - Successful Response
@@ -395,7 +395,7 @@ Creates and returns a new spot.
 - Request
 
   - Method: POST
-  - Route path: /spots
+  - Route path: /api/spots
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -472,7 +472,7 @@ Create and return a new image for a spot specified by id.
 - Request
 
   - Method: POST
-  - Route path: /spots/:spotId/images
+  - Route path: api/spots/:spotId/images
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -521,7 +521,7 @@ Updates and returns an existing spot.
 - Request
 
   - Method: Put
-  - Route path: /spots/:spotId
+  - Route path: /api/spots/:spotId
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -611,7 +611,7 @@ Deletes an existing spot.
 - Request
 
   - Method: DELETE
-  - Route path: /spots/:spotId
+  - Route path: /api/spots/:spotId
   - Body: none
 
 - Successful Response
