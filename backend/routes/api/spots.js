@@ -314,7 +314,44 @@ router.delete('/:spotId', requireAuth,
       message: 'Error deleting spot'
     });
   };
+});
 
+
+// ### Delete a Spot Image
+
+router.delete('/:spotId/images/:imageId', requireAuth, 
+  async (req, res) => {
+  
+  const ownerId = req.user.id;
+  const { spotId, imageId } = req.params;
+
+  const spot = await Spot.findOne({
+    where: {
+      id: spotId,
+      ownerId
+    }
+  });
+
+  if (!spot) {
+    res.status(404).json("Spot couldn't be found");
+  };
+
+  const spotImage = await SpotImage.findOne({
+    where: {
+      id: imageId,
+      spotId
+    }
+  });
+
+  if (!spotImage) {
+    res.status(404).json("Spot Image couldn't be found")
+  };
+
+  await spotImage.destroy();
+
+  res.status(200).json({
+    message: 'Successfully deleted'
+  });
 });
 
 
