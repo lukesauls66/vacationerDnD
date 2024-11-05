@@ -5,6 +5,7 @@ const { Review, Spot, ReviewImage } = require("../../db/models");
 
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+const { where } = require("sequelize");
 
 router.post("/:reviewId/images", requireAuth, async (req, res) => {
   const userId = req.user.id;
@@ -19,7 +20,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
 
   const allReviewImages = await ReviewImage.findAll({ where: { reviewId } });
 
-  if (allReviewImages.length > 10) {
+  if (allReviewImages.length >= 10) {
     return res.status(403).json({
       message: "Maximum number of images for this resource was reached",
     });
@@ -32,6 +33,53 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
   });
 
   res.status(201).json(newReviewImage);
+});
+
+router.put(
+  "/:reviewId",
+  requireAuth,
+  [
+    check("review")
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage("Review text is required"),
+    check("stars")
+      .exists({ checkFalsy: true })
+      .isInt({ min: 1, max: 5 })
+      .withMessage("Stars must be an integer from 1 to 5"),
+    handleValidationErrors,
+  ],
+  async (req, res) => {
+    const userId = req.user.id;
+    const { reviewId } = req.params;
+    const { review, stars } = req.body;
+
+    const reviewToUpdate = await Review.findOne({
+      where: { userId, id: reviewId },
+    });
+
+    if (!reviewToUpdate) {
+      res.status(403).json({ message: "Review couldn't be found" });
+    }
+
+    reviewToUpdate.review = review;
+    reviewToUpdate.stars = stars;
+
+    res.status(200).json(reviewToUpdate);
+  }
+);
+
+router.delete("/:reviewId", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const { reviewId } = req.params;
+
+  const review = await Review.findOne({ where: { userId, id: reviewId } });
+
+  if (!review) {
+    res.status(404).json({ message: "Review couldn't be found" });
+  }
+
+  res.status(200).json({ message: "Successfully deleted" });
 });
 
 router.post(
