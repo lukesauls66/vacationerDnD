@@ -5,7 +5,7 @@ const { handleValidationErrors } = require("../../utils/validation");
 const { requireAuth } = require("../../utils/auth");
 const { Booking, Spot, User } = require("../../db/models");
 
-router.use("/:bookingId", requireAuth, async (req, res) => {
+router.delete("/:bookingId", requireAuth, async (req, res) => {
   const userId = req.user.id;
   const { bookingId } = req.params;
 

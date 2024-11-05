@@ -17,10 +17,10 @@ router.delete("/:reviewId/images/:imageId", requireAuth, async (req, res) => {
   });
 
   if (!reviewImageToDelete) {
-    res.status(404).json({ message: "Review Image couldn't be found" });
+    return res.status(404).json({ message: "Review Image couldn't be found" });
   }
 
-  res.status(200).json({ message: "Successfully deleted" });
+  return res.status(200).json({ message: "Successfully deleted" });
 });
 
 router.post("/:reviewId/images", requireAuth, async (req, res) => {
@@ -28,10 +28,14 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
   const { reviewId } = req.params;
   const { url } = req.body;
 
-  const review = await Review.findOne({ where: { id: reviewId, userId } });
+  const review = await Review.findOne({ where: { id: reviewId } });
 
   if (!review) {
     return res.status(404).json({ message: "Review couldn't be found" });
+  }
+
+  if (review.userId !== userId) {
+    return res.status(403).json({ message: "Forbidden" });
   }
 
   const allReviewImages = await ReviewImage.findAll({ where: { reviewId } });
@@ -71,17 +75,21 @@ router.put(
     const { review, stars } = req.body;
 
     const reviewToUpdate = await Review.findOne({
-      where: { userId, id: reviewId },
+      where: { id: reviewId },
     });
 
     if (!reviewToUpdate) {
-      res.status(403).json({ message: "Review couldn't be found" });
+      return res.status(403).json({ message: "Review couldn't be found" });
+    }
+
+    if (reviewToUpdate.userId !== userId) {
+      return res.status(403).json({ message: "Forbidden" });
     }
 
     reviewToUpdate.review = review;
     reviewToUpdate.stars = stars;
 
-    res.status(200).json(reviewToUpdate);
+    return res.status(200).json(reviewToUpdate);
   }
 );
 
@@ -92,10 +100,10 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
   const review = await Review.findOne({ where: { userId, id: reviewId } });
 
   if (!review) {
-    res.status(404).json({ message: "Review couldn't be found" });
+    return res.status(404).json({ message: "Review couldn't be found" });
   }
 
-  res.status(200).json({ message: "Successfully deleted" });
+  return res.status(200).json({ message: "Successfully deleted" });
 });
 
 router.post(
@@ -120,13 +128,13 @@ router.post(
     const spot = await Spot.findOne({ where: { id: spotId } });
 
     if (!spot) {
-      return res.json({ message: "Spot couldn't be found" });
+      return res.status(404).json({ message: "Spot couldn't be found" });
     }
 
     const allReviews = await Review.findAll({ where: { userId, spotId } });
 
     if (allReviews.length !== 0) {
-      res
+      return res
         .status(500)
         .json({ message: "User already has a review for this spot" });
     }
@@ -138,7 +146,7 @@ router.post(
       stars,
     });
 
-    res.status(201).json(newReview);
+    return res.status(201).json(newReview);
   }
 );
 
