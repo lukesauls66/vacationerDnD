@@ -139,7 +139,7 @@ router.post('/:spotId/images', requireAuth,
 
   if (spot.ownerId !== userId) {
     return res.status(403).json({ message: "Forbidden" })
-  }
+  };
 
   const allSpotImages = await SpotImage.findAll({
     where: {
@@ -213,16 +213,21 @@ router.put('/:spotId', requireAuth,
     
     const spotToUpdate = await Spot.findOne({
       where: {
-        ownerId,
         id: spotId
       }
     });
 
     if (!spotToUpdate) {
       return res.status(404).json({
-        message: "Spot couldn't be found",
+        message: "Spot couldn't be found"
       });
     };
+
+    if (spotToUpdate.ownerId !== ownerId) {
+      return res.status(403).json({
+        message: "Forbidden"
+      })
+    }
 
     spotToUpdate.address = address;
     spotToUpdate.city = city;
