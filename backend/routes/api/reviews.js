@@ -7,6 +7,22 @@ const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const { where } = require("sequelize");
 
+router.delete("/:reviewId/images/:imageId", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const { reviewId, imageId } = req.params;
+
+  const reviewImageToDelete = await ReviewImage.findOne({
+    where: { id: imageId, reviewId },
+    include: { model: Review, where: { userId } },
+  });
+
+  if (!reviewImageToDelete) {
+    res.status(404).json({ message: "Review Image couldn't be found" });
+  }
+
+  res.status(200).json({ message: "Successfully deleted" });
+});
+
 router.post("/:reviewId/images", requireAuth, async (req, res) => {
   const userId = req.user.id;
   const { reviewId } = req.params;
