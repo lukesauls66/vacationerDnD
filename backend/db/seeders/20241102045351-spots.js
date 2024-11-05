@@ -2,6 +2,10 @@
 
 /** @type {import('sequelize-cli').Migration} */
 const { Spot } = require("../models");
+let options = {};
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA;
+}
 module.exports = {
   async up(queryInterface, Sequelize) {
     await Spot.bulkCreate(
@@ -87,8 +91,9 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
+    options.tableName = "Spots";
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete("Spots", {
+    return queryInterface.bulkDelete(options, {
       name: {
         [Op.in]: [
           "Cozy Cottage",

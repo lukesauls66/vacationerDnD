@@ -2,6 +2,10 @@
 
 /** @type {import('sequelize-cli').Migration} */
 const { SpotImage } = require("../models");
+let options = {};
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA;
+}
 module.exports = {
   async up(queryInterface, Sequelize) {
     await SpotImage.bulkCreate(
@@ -37,6 +41,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("SpotImages", {});
+    options.tableName = "SpotImages";
+    await queryInterface.bulkDelete(options, {});
   },
 };

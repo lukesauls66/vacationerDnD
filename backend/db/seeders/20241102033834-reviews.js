@@ -2,6 +2,10 @@
 
 /** @type {import('sequelize-cli').Migration} */
 const { Review } = require("../models");
+let options = {};
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA;
+}
 module.exports = {
   async up(queryInterface, Sequelize) {
     await Review.bulkCreate(
@@ -42,6 +46,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("Reviews", {});
+    options.tableName = "Reviews";
+    await queryInterface.bulkDelete(options, {});
   },
 };
