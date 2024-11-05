@@ -11,14 +11,25 @@ router.delete("/:reviewId/images/:imageId", requireAuth, async (req, res) => {
   const userId = req.user.id;
   const { reviewId, imageId } = req.params;
 
+  const review = await Review.findOne({ where: { id: reviewId } });
+
+  if (!review) {
+    res.status(404).json({ message: "Review couldn't be found" });
+  }
+
+  if (review.userId !== userId) {
+    res.status(403).json({ message: "Forbidden" });
+  }
+
   const reviewImageToDelete = await ReviewImage.findOne({
     where: { id: imageId, reviewId },
-    include: { model: Review, where: { userId } },
   });
 
   if (!reviewImageToDelete) {
     return res.status(404).json({ message: "Review Image couldn't be found" });
   }
+
+  await reviewImageToDelete.destroy();
 
   return res.status(200).json({ message: "Successfully deleted" });
 });
