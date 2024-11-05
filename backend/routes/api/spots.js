@@ -210,7 +210,76 @@ router.post('/:spotId/images', requireAuth,
 
 // ### Edit a Spot
 
-// router.put('/:spotId')
+router.put('/:spotId', requireAuth,
+  [
+    check('address')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('Street address is required'),
+    check('city')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('City is required'),
+    check('state')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('State is required'),
+    check('country')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('Country is required'),
+    check('lat')
+      .exists({ checkFalsey: true })
+      .isFloat({ min: -90, max: 90 })
+      .withMessage('Latitude must be within -90 and 90'),
+    check('lng')
+      .exists({ checkFalsey: true })
+      .isFloat({ min: -180, max: 180 })
+      .withMessage('Longitude must be within -180 and 180'),
+    check('name')
+      .exists({ checkFalsey: true })
+      .isLength({ max: 50 })
+      .withMessage('Name must be less than 50 characters'),
+    check('description')
+      .exists({ checkFalsey: true })
+      .isLength({ min: 1 })
+      .withMessage('Description is required'),
+    check('price')
+      .exists({ checkFalsey: true })
+      .isFloat({ gt: 0 })
+      .withMessage('Price per day must be a positive number'),
+    handleValidationErrors,    
+  ],
+  async (req, res) => {
+    const ownerId = req.user.id;
+    const { spotId } = req.params;
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    
+    const spotToUpdate = await Spot.findOne({
+      where: {
+        ownerId,
+        id: spotId
+      }
+    });
+
+    if (!spotToUpdate) {
+      return res.status(404).json({
+        message: "Spot couldn't be found",
+      });
+    };
+
+    spotToUpdate.address = address;
+    spotToUpdate.city = city;
+    spotToUpdate.state = state;
+    spotToUpdate.country = country;
+    spotToUpdate.lat = lat;
+    spotToUpdate.lng = lng;
+    spotToUpdate.name = name;
+    spotToUpdate.description = description;
+    spotToUpdate.price = price;
+
+    res.status(200).json(spotToUpdate)
+})
 
 
 
