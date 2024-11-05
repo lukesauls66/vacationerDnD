@@ -255,7 +255,6 @@ router.delete('/:spotId', requireAuth,
     const spotToDelete = await Spot.findOne({
       where: {
         id: spotId,
-        ownerId: userId,
       }
     });
 
@@ -265,9 +264,18 @@ router.delete('/:spotId', requireAuth,
       });
     };
 
+    if (spotToDelete.ownerId !== userId) {
+      res.status(403).json({
+        message: "Forbidden"
+      })
+    }
+
+    await spotToDelete.destroy();
+
     res.status(200).json({
       message: 'Successfully deleted'
     });
+
 
   } catch {
     console.error('Error deleting spot:', err);
