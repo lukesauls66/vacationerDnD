@@ -270,6 +270,8 @@ router.delete('/:spotId', requireAuth,
 });
 
 
+
+
 //! Get all Spots
 router.get("/", 
   [
@@ -297,14 +299,17 @@ router.get("/",
       .optional()
       .isFloat({ min: -180, max: 180 })
       .withMessage("Maximum longitude is invalid"),
+    check('minPrice')
+      .optional()
+      .isFloat({ min: 0 })
+      .withMessage("Minimum price must be greater than or equal to 0"),
+    check('maxPrice')
+      .optional()
+      .isFloat({ min: 0 })
+      .withMessage("Maximum price must be greater than or equal to 0"),
     handleValidationErrors
   ],
   async (req, res) => {
-    const { minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-
-
-
-
   try {
     let page = parseInt(req.query.page) || 1;
     let size = parseInt(req.query.size) || 20;
@@ -324,17 +329,15 @@ router.get("/",
     };
 
     if (req.query.maxLng) {
-      // where.lng = where.lng || {};
-      where.lng = { [Sequelize.Op.lte]: parseFloat(req.query.maxLng) };
+      where.lng = parseFloat(req.query.maxLng);
     };
 
     if (req.query.minPrice) {
-      where.price = { [Sequelize.Op.gte]: parseFloat(req.query.minPrice) };
+      where.price = parseFloat(req.query.minPrice);
     };
 
     if (req.query.maxPrice) {
-      // where.price = where.price || {};
-      where.price = { [Sequelize.Op.gte]: parseFloat(req.query.maxPrice) };
+      where.price = parseFloat(req.query.maxPrice);
     };
 
     let limit = size;
