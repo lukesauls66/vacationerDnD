@@ -24,15 +24,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ### Get all Spots owned by the Current User
-
-// - Require Authentication: true
-// - Request
-
-//   - Method: GET
-//   - Route path: /user/:userId/spots
-//   - Body: none
-//! -> goes in user route?
 
 // ### Get details of a Spot from an id
 
@@ -97,6 +88,8 @@ router.get("/:spotId/reviews", async (req, res) => {
     res.status(500).json({ message: "Error getting spot reviews" });
   }
 });
+
+
 
 // Creates and returns a new spot.
 
@@ -169,5 +162,43 @@ router.post('/', requireAuth,
     })
   }
 });
+
+
+// ### Add an Image to a Spot based on the Spot's id
+
+
+router.post('/:spotId/images', requireAuth,
+  async (req, res) => {
+    const userId = req.user.id;
+    const { spotId } = req.params;
+    const { url } = req.body;
+
+    const spot = await Spot.findByPk(spotId);
+
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found"});
+    };
+
+    const allSpotImages = await SpotImage.findAll({
+      where: {
+        spotId
+      }
+    });
+
+    if (allSpotImages.length >= 10) {
+      return res.status(403).json({
+        message: 'Maximum number of images for this resource was reached'
+      });
+    };
+
+    const newSpotImage = await SpotImage.create({
+      spotId,
+      url,
+      
+    })
+
+  })    
+
+
 
 module.exports = router;
