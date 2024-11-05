@@ -130,13 +130,16 @@ router.post('/:spotId/images', requireAuth,
   const spot = await Spot.findOne({ 
     where: { 
       id: spotId, 
-      ownerId: userId 
     } 
   });
 
   if (!spot) {
     return res.status(404).json({ message: "Spot couldn't be found"});
   };
+
+  if (spot.ownerId !== userId) {
+    return res.status(403).json({ message: "Forbidden" })
+  }
 
   const allSpotImages = await SpotImage.findAll({
     where: {
@@ -346,12 +349,7 @@ router.get("/",
     const spots = await Spot.findAll({
       where,
       offset,
-      limit,
-      include: {
-        model: SpotImage,
-        as: 'SpotImages',
-        attributes: ['id', 'url', 'preview'],
-      }
+      limit
     });
     res.status(200).json({ 
       Spots: spots,
