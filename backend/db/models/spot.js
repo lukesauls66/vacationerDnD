@@ -83,16 +83,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           len: [1, 150],
-          firstLetterCap(value) {
-            // const preps = ["of", "in", "for", "with", "to", "on"];
-            // (!preps.includes(val) && )
-            const array = value.split(" ");
-            array.forEach((val) => {
-              if (val[0] !== val[0].toUpperCase()) {
-                throw new Error("Country must be capitalized.");
-              }
-            });
-          },
         },
       },
       lat: {
