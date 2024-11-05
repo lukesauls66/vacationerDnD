@@ -7,17 +7,23 @@ if (process.env.NODE_ENV === "production") {
 }
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.addColumn("Spots", "ownerId", {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      references: {
-        model: "Users",
-        key: "id",
+    await queryInterface.addColumn(
+      "Spots",
+      "ownerId",
+      {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
       },
-    });
+      options
+    );
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn("Spots", "ownerId");
+    options.tableName = "Spots";
+    await queryInterface.removeColumn(options, "ownerId");
   },
 };
