@@ -1,4 +1,4 @@
-# vacationerDnD
+# VacayDnD
 
 ## API Documentation
 
