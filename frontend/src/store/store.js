@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { default as logger } from "redux-logger";
+import sessionReducer from "./session/sessionSlice";
 
 const store = configureStore({
   reducer: {
     // Your reducers here
+    session: sessionReducer,
   },
   middleware: (getDefaultMiddleware) => {
     const middlewares = getDefaultMiddleware();
