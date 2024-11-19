@@ -23,18 +23,18 @@ export const login = createAsyncThunk(
   }
 );
 
-export const restoreUser = createAsyncThunk(
-  "session/restoreUser",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await csrfFetch("/api/session");
-      const data = await response.json();
-      return data.user;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
+// export const restoreUser = createAsyncThunk(
+//   "session/restoreUser",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const response = await csrfFetch("/api/session");
+//       const data = await response.json();
+//       return data.user;
+//     } catch (error) {
+//       return rejectWithValue(error);
+//     }
+//   }
+// );
 
 const sessionSlice = createSlice({
   name: "session",
@@ -57,19 +57,19 @@ const sessionSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.errors = action.payload.errors;
-      })
-      .addCase(restoreUser.pending, (state) => {
-        state.loading = true;
-        state.errors = null;
-      })
-      .addCase(restoreUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload;
-      })
-      .addCase(restoreUser.rejected, (state, action) => {
-        state.loading = false;
-        state.errors = action.payload.errors || "Failed to restore session";
       });
+    // .addCase(restoreUser.pending, (state) => {
+    //   state.loading = true;
+    //   state.errors = null;
+    // })
+    // .addCase(restoreUser.fulfilled, (state, action) => {
+    //   state.loading = false;
+    //   state.user = action.payload;
+    // })
+    // .addCase(restoreUser.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.errors = action.payload.errors || "Failed to restore session";
+    // });
   },
 });
 
