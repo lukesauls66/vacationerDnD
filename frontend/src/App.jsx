@@ -1,29 +1,29 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LoginFormPage from "./components/LoginFormPage/LoginFormPage";
-import SignupFormPage from "./components/SignupFormPage/SignupFormPage";
+import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { restoreUser } from "./store/session/sessionSlice";
-import { Outlet } from "react-router-dom";
+import Navigation from "./components/Navigation/Navigation";
+import * as sessionActions from "./store/session/sessionSlice";
 
 const Layout = () => {
   const [isUserLoaded, setIsUserLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const loadUser = () => {
-      dispatch(restoreUser());
+    dispatch(sessionActions.restoreUser()).then(() => {
       setIsUserLoaded(true);
-    };
-
-    loadUser();
+    });
   }, [dispatch]);
 
   if (!isUserLoaded) {
     return <h1>Loading</h1>;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <Navigation isUserLoaded={isUserLoaded} />
+      {isUserLoaded && <Outlet />}
+    </>
+  );
 };
 
 const router = createBrowserRouter([
@@ -34,14 +34,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <h1>Welcome!</h1>,
       },
-      {
-        path: "/login",
-        element: <LoginFormPage />,
-      },
-      {
-        path: "/signup",
-        element: <SignupFormPage />,
-      },
+      // {
+      //   path: "*",
+      //   element: <h1>Page Not Found</h1>,
+      // },
     ],
   },
 ]);
