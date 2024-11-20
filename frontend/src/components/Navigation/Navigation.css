@@ -41,8 +41,8 @@ li {
 
 .profile-container {
   display: flex;
-  flex-direction: row;
-  align-items: end;
+  flex-direction: column;
+  align-items: start;
   gap: 0.8rem;
   margin-top: 0.3rem;
 }
@@ -78,19 +78,91 @@ li {
   height: 2px;
 }
 
-.profile-dropdown {
+.profile-modal-content {
+  position: fixed;
+  top: 5rem;
+  right: 4rem;
+  z-index: 9999;
+  background-color: white;
+  width: 12rem;
+  height: 15rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+}
+
+.profile-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: end;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 2rem;
+  padding-top: 0.6rem;
+  color: rgb(218, 89, 106);
+}
+
+#logout-button {
+  cursor: pointer;
+}
+
+.login-signup-modal-content {
+  position: fixed;
+  top: 5rem;
+  right: 4rem;
+  z-index: 9999;
+  background-color: white;
+  width: 8rem;
+  height: 9rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+}
+
+.close-modal-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding-left: 0.8rem;
+  padding-top: 0.5rem;
+}
+
+.open-modal-button {
+  width: 5rem;
+  cursor: pointer;
+}
+
+.login-signup-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding-top: 0.6rem;
 }
 
 .login-signup-container {
   display: flex;
   flex-direction: column;
   align-items: end;
-  gap: 0.5rem;
-  padding-right: 3rem;
-  padding-top: 1rem;
+}
+
+.login-form-container {
+  margin: 3rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0;
+}
+
+.signup-form-container {
+  margin: 3rem;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0;
 }

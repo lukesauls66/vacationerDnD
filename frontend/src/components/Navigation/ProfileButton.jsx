@@ -16,7 +16,7 @@ const HamburgerIcon = () => {
 };
 
 function ProfileButton({ user }) {
-  const [isDropdown, setIsDropdown] = useState(false);
+  const [isProfileModal, setIsProfileModal] = useState(false);
   const dispatch = useDispatch();
 
   const logout = (e) => {
@@ -24,27 +24,34 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
-  const toggleDropdown = () => {
-    setIsDropdown(!isDropdown);
+  const openAndCloseModal = () => {
+    setIsProfileModal(!isProfileModal);
   };
 
   return (
     <div className="profile-container">
-      <button className="profile-button" onClick={toggleDropdown}>
+      <button className="profile-button" onClick={openAndCloseModal}>
         <HamburgerIcon />
         <GiDjinn />
       </button>
-      {isDropdown && (
-        <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>
-            {user.firstName} {user.lastName}
-          </li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
+      {isProfileModal && (
+        <div className="profile-modal">
+          <div className="profile-modal-content">
+            <button onClick={openAndCloseModal} className="close-modal-button">
+              &times;
+            </button>
+            <div className="profile-info">
+              <p className="profile-user-info">{user.username}</p>
+              <p className="profile-user-info">
+                {user.firstName} {user.lastName}
+              </p>
+              <p className="profile-user-info">{user.email}</p>
+              <button onClick={logout} id="logout-button">
+                Log Out
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

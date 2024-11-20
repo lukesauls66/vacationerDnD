@@ -75,11 +75,6 @@ export const restoreUser = createAsyncThunk(
   }
 );
 
-// csrfFetch('/api/users/signup', {
-//   method: 'POST',
-//   body: JSON.stringify({ username: "padams", firstName: "Patrick", lastName: "Adams", email: "p.adams@gmail.com", password: "password88" })
-// }).then(res => res.json()).then(data => console.log(data));
-
 const sessionSlice = createSlice({
   name: "session",
   initialState,

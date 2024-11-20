@@ -1,9 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
-import OpenModalButton from "../OpenModalButton/OpenModalButton";
-import LoginFormModal from "../LoginFormModal/LoginFormModal";
-import SignupFormModal from "../SignupFormModal/SignupFormModal";
+import LoginSignupButton from "./LoginSignupButton";
 import { FcHome } from "react-icons/fc";
 import "./Navigation.css";
 
@@ -17,16 +15,7 @@ function Navigation({ isUserLoaded }) {
   ) : (
     <div className="login-signup-container">
       <li>
-        <OpenModalButton
-          buttonText="Log In"
-          modalComponent={<LoginFormModal />}
-        />
-      </li>
-      <li>
-        <OpenModalButton
-          buttonText="Sign Up"
-          modalComponent={<SignupFormModal />}
-        />
+        <LoginSignupButton />
       </li>
     </div>
   );
