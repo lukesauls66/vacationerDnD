@@ -37,19 +37,6 @@ export const logout = createAsyncThunk(
   }
 );
 
-export const restoreUser = createAsyncThunk(
-  "session/restoreUser",
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await csrfFetch("/api/session");
-      const data = await res.json();
-      return data.user;
-    } catch (error) {
-      return rejectWithValue(error.message || "Restore user failed.");
-    }
-  }
-);
-
 export const signup = createAsyncThunk(
   "session/signup",
   async (
@@ -67,10 +54,23 @@ export const signup = createAsyncThunk(
           password,
         }),
       });
-      const data = res.json();
+      const data = await res.json();
       return data.user;
     } catch (error) {
       return rejectWithValue(error.message || "Signup failed.");
+    }
+  }
+);
+
+export const restoreUser = createAsyncThunk(
+  "session/restoreUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await csrfFetch("/api/session");
+      const data = await res.json();
+      return data.user;
+    } catch (error) {
+      return rejectWithValue(error.message || "Restore user failed.");
     }
   }
 );
@@ -110,18 +110,6 @@ const sessionSlice = createSlice({
         state.loading = false;
         state.errors = action.payload.errors;
       })
-      .addCase(restoreUser.pending, (state) => {
-        state.loading = true;
-        state.errors = null;
-      })
-      .addCase(restoreUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload;
-      })
-      .addCase(restoreUser.rejected, (state, action) => {
-        state.loading = false;
-        state.errors = action.payload.errors;
-      })
       .addCase(signup.pending, (state) => {
         state.loading = true;
         state.errors = null;
@@ -131,6 +119,18 @@ const sessionSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(signup.rejected, (state, action) => {
+        state.loading = false;
+        state.errors = action.payload.errors;
+      })
+      .addCase(restoreUser.pending, (state) => {
+        state.loading = true;
+        state.errors = null;
+      })
+      .addCase(restoreUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(restoreUser.rejected, (state, action) => {
         state.loading = false;
         state.errors = action.payload.errors;
       });
