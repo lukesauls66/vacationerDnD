@@ -1,0 +1,63 @@
+.signup-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 11rem;
+}
+
+.inner-signup-form-container {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: aqua; */
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+.username-label {
+  display: flex;
+  gap: 4.4rem;
+  border-color: black;
+}
+
+.firstname-label {
+  display: flex;
+  gap: 4rem;
+  border-color: black;
+}
+
+.lastname-label {
+  display: flex;
+  gap: 4.1rem;
+  border-color: black;
+}
+
+.email-label {
+  display: flex;
+  gap: 6.1rem;
+  border-color: black;
+}
+
+.signup-password-label {
+  display: flex;
+  gap: 4.65rem;
+  border-color: black;
+}
+
+.confirm-password-label {
+  display: flex;
+  gap: 1rem;
+  border-color: black;
+}

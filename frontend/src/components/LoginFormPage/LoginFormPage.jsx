@@ -11,22 +11,27 @@ function LoginFormPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
+  if (sessionUser) {
+    return <Navigate to="/" replace={true} />;
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();
     setErrors({});
+
     return dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
-        if (data?.errors) setErrors(data.errors);
+        if (data?.errors) {
+          setErrors(data.errors);
+        }
       }
     );
   };
 
   return (
-    <div className="form-container">
-      <div className="inner-form-container">
+    <div className="login-form-container">
+      <div className="inner-login-form-container">
         <h1>Log In</h1>
         <form className="login-form" onSubmit={onSubmit}>
           <label className="credential-label">
@@ -39,7 +44,7 @@ function LoginFormPage() {
               required
             />
           </label>
-          <label className="password-label">
+          <label className="login-password-label">
             Password:
             <input
               className="login-input"

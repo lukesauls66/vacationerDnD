@@ -1,11 +1,11 @@
-.form-container {
+.login-form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 15rem;
 }
 
-.inner-form-container {
+.inner-login-form-container {
   width: 40%;
   display: flex;
   flex-direction: column;
@@ -32,7 +32,7 @@ h1 {
   border-color: black;
 }
 
-.password-label {
+.login-password-label {
   display: flex;
   gap: 4.96rem;
   border-color: black;
