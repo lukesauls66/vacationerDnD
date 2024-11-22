@@ -26,7 +26,7 @@ function Navigation({ isUserLoaded }) {
         <div id="home-icon-container">
           <FcHome />
         </div>
-        <NavLink to="/" id="home-link" className={"link"}>
+        <NavLink to="/" id="home-link" className="link">
           VacayDnD
         </NavLink>
       </li>

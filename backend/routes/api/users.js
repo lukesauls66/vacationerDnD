@@ -37,6 +37,17 @@ const validateSignup = [
 router.post("/signup", validateSignup, async (req, res) => {
   try {
     const { firstName, lastName, email, password, username } = req.body;
+
+    if (username.length < 4) {
+      return res
+        .status(400)
+        .json({ error: "Username must be at least 4 characters long" });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ error: "Passwords must match" });
+    }
+
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({
       firstName,

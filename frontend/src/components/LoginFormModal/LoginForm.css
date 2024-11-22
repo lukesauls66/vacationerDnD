@@ -10,7 +10,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-color: aqua; */
 }
 
 h1 {
@@ -38,6 +37,11 @@ h1 {
   border-color: black;
 }
 
+.credential-error {
+  color: red;
+}
+
 .login-button {
   width: 19.8rem;
+  cursor: pointer;
 }

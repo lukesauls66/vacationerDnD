@@ -54,10 +54,18 @@ export const signup = createAsyncThunk(
           password,
         }),
       });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        return rejectWithValue(errorData.error || "Signup failed");
+      }
+
       const data = await res.json();
+      // console.log("data:", data);
+      // console.log("user:", data.user);
       return data.user;
     } catch (error) {
-      return rejectWithValue(error.message || "Signup failed.");
+      return rejectWithValue("Signup failed.");
     }
   }
 );
@@ -78,7 +86,11 @@ export const restoreUser = createAsyncThunk(
 const sessionSlice = createSlice({
   name: "session",
   initialState,
-  reducers: {},
+  reducers: {
+    resetErrors: (state) => {
+      state.errors = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -91,7 +103,7 @@ const sessionSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.errors = action.payload.errors;
+        state.errors = action.payload;
       })
       .addCase(logout.pending, (state) => {
         state.loading = true;
@@ -99,11 +111,11 @@ const sessionSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.loading = false;
-        state.user = null; // Clear the user from Redux state
+        state.user = null;
       })
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
-        state.errors = action.payload.errors;
+        state.errors = action.payload;
       })
       .addCase(signup.pending, (state) => {
         state.loading = true;
@@ -115,7 +127,7 @@ const sessionSlice = createSlice({
       })
       .addCase(signup.rejected, (state, action) => {
         state.loading = false;
-        state.errors = action.payload.errors;
+        state.errors = action.payload;
       })
       .addCase(restoreUser.pending, (state) => {
         state.loading = true;
@@ -127,9 +139,10 @@ const sessionSlice = createSlice({
       })
       .addCase(restoreUser.rejected, (state, action) => {
         state.loading = false;
-        state.errors = action.payload.errors;
+        state.errors = action.payload;
       });
   },
 });
 
+export const { resetErrors } = sessionSlice.actions;
 export default sessionSlice.reducer;

@@ -46,10 +46,9 @@ function ProfileButton({ user }) {
                 {user.firstName} {user.lastName}
               </p>
               <p className="profile-user-info">{user.email}</p>
-              <button className="logout-button-background-container">
-                <button onClick={logout} id="logout-button">
-                  Log Out
-                </button>
+
+              <button onClick={logout} id="logout-button">
+                Log Out
               </button>
             </div>
           </div>

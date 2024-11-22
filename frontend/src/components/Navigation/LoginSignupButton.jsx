@@ -36,24 +36,19 @@ function LoginSignupButton() {
               &times;
             </button>
             <div className="login-signup-modal-buttons">
-              <button
-                onClick={openAndCloseModal}
-                className="login-modal-button"
-              >
+              <div onClick={openAndCloseModal}>
                 <OpenModalButton
                   buttonText="Log In"
                   modalComponent={<LoginFormModal />}
                 />
-              </button>
-              <button
-                onClick={openAndCloseModal}
-                className="signup-modal-button"
-              >
+              </div>
+
+              <div onClick={openAndCloseModal}>
                 <OpenModalButton
                   buttonText="Sign Up"
                   modalComponent={<SignupFormModal />}
                 />
-              </button>
+              </div>
             </div>
           </div>
         </div>

@@ -1,34 +1,49 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session/sessionSlice";
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const errors = useSelector((state) => state.session.errors);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
+  const [submitAttempted, setSubmitAttempted] = useState(false);
   const { closeModal } = useModal();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setErrors({});
+  useEffect(() => {
+    if (!errors) {
+      dispatch(sessionActions.resetErrors());
+    }
+  }, [dispatch, errors]);
 
-    return dispatch(sessionActions.login({ credential, password }))
-      .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data?.errors) {
-          setErrors(data.errors);
-        }
-      });
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitAttempted(true);
+    dispatch(sessionActions.resetErrors());
+
+    try {
+      const res = await dispatch(
+        sessionActions.login({ credential, password })
+      );
+
+      if (res.type.endsWith("/rejected")) {
+        return;
+      }
+
+      closeModal();
+    } catch (err) {
+      console.log("Error:", err);
+    }
   };
 
   return (
     <div className="login-form-container">
       <div className="inner-login-form-container">
-        <h1>Log In</h1>
+        <div className="form-h1-container">
+          <h1 id="form-h1">Log In</h1>
+        </div>
         <form className="login-form" onSubmit={onSubmit}>
           <label className="credential-label">
             Username or Email:
@@ -50,7 +65,11 @@ function LoginFormModal() {
               required
             />
           </label>
-          {errors.credential && <p>{errors.credential}</p>}
+          {submitAttempted && errors && (
+            <p className="credential-error">
+              {errors.credential || errors.password || "Invalid credentials"}
+            </p>
+          )}
           <button className="login-button" type="submit">
             Log In
           </button>
