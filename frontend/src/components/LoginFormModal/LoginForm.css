@@ -27,14 +27,17 @@ h1 {
 
 .credential-label {
   display: flex;
-  gap: 1rem;
+  height: 1.5rem;
+  gap: 1.1rem;
   border-color: black;
+  font-size: 1.1rem;
 }
 
 .login-password-label {
   display: flex;
-  gap: 4.96rem;
-  border-color: black;
+  height: 1.5rem;
+  gap: 5.49rem;
+  font-size: 1.1rem;
 }
 
 .credential-error {
@@ -42,6 +45,19 @@ h1 {
 }
 
 .login-button {
-  width: 19.8rem;
+  width: 19.5rem;
+  height: 1.8rem;
   cursor: pointer;
+  font-size: medium;
+  border: 0.1mm solid black;
+  background-color: yellow;
+}
+
+.demo-login-button {
+  background-color: rgb(235, 31, 173);
+}
+
+.login-input {
+  width: 9.3rem;
+  border: 0.1mm solid black;
 }
