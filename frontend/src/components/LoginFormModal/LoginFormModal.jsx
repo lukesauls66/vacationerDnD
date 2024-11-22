@@ -38,6 +38,11 @@ function LoginFormModal() {
     }
   };
 
+  const signInDemoUser = () => {
+    setCredential("demouser");
+    setPassword("password10");
+  };
+
   return (
     <div className="login-form-container">
       <div className="inner-login-form-container">
@@ -72,6 +77,12 @@ function LoginFormModal() {
           )}
           <button className="login-button" type="submit">
             Log In
+          </button>
+          <button
+            className="demo-login-button login-button"
+            onClick={signInDemoUser}
+          >
+            Demo User (Not a Rickroll)
           </button>
         </form>
       </div>
