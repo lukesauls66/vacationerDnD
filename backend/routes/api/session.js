@@ -14,6 +14,8 @@ const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
+router.use(restoreUser);
+
 const validateLogin = [
   check("credential")
     .exists({ checkFalsy: true })
@@ -24,6 +26,42 @@ const validateLogin = [
     .withMessage("Password is required"),
   handleValidationErrors,
 ];
+
+router.post("/login", validateLogin, async (req, res, next) => {
+  const { credential, password } = req.body;
+
+  const user = await User.unscoped().findOne({
+    where: {
+      [Op.or]: {
+        username: credential,
+        email: credential,
+      },
+    },
+  });
+
+  if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+    const err = new Error("Invalid credentials");
+    err.status = 401;
+    err.title = "Login failed";
+    err.errors = { credential: "Invalid credentials" };
+    return next(err);
+  }
+
+  const safeUser = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    username: user.username,
+  };
+
+  await setTokenCookie(res, safeUser);
+
+  return res.json({
+    user: safeUser,
+  });
+});
+
 
 router.get("/spots", requireAuth, async (req, res) => {
   const userId = req.user.id;
@@ -98,40 +136,6 @@ router.get("/bookings", requireAuth, async (req, res) => {
   res.json({ Bookings: bookings });
 });
 
-router.post("/login", validateLogin, async (req, res, next) => {
-  const { credential, password } = req.body;
-
-  const user = await User.unscoped().findOne({
-    where: {
-      [Op.or]: {
-        username: credential,
-        email: credential,
-      },
-    },
-  });
-
-  if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-    const err = new Error("Invalid credentials");
-    err.status = 401;
-    err.title = "Login failed";
-    err.errors = { credential: "Invalid credentials" };
-    return next(err);
-  }
-
-  const safeUser = {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    username: user.username,
-  };
-
-  await setTokenCookie(res, safeUser);
-
-  return res.json({
-    user: safeUser,
-  });
-});
 
 router.delete("/", (_req, res) => {
   res.clearCookie("token");
@@ -166,12 +170,13 @@ router.post("/login", async (req, res, next) => {
     username: user.username,
   };
 
-  setTokenCookie(res, safeUser);
+  await setTokenCookie(res, safeUser);
 
   return res.json({
     user: safeUser,
   });
 });
+
 
 router.get("/", (req, res) => {
   const { user } = req;

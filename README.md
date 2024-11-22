@@ -1,4 +1,4 @@
-# VacayDnD
+# WaterBnB
 
 ## Summary
 
@@ -16,6 +16,6 @@ Refer to [db-schema] to see how all of the tables and connections are set up for
 
 Refer to the [API-Docs] for the API Documentation.
 
-[Live-Link]: https://vacaydnd-1jt8.onrender.com/api
+[Live-Link]: 
 [db-schema]: ./images/backend-schema.PNG
-[API-Docs]: ./backend/API-docs-vacationerDnD.md
+[API-Docs]: ./backend/API-docs-waterBnB.md
