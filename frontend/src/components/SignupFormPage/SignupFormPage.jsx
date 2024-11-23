@@ -46,7 +46,7 @@ function SignupFormPage() {
     };
 
     return (
-        <div id='signup-form'>
+        <div className='signup-form'>
             <h1>Sign Up</h1>
             <form onSubmit={handleSubmit}>
                 <label>
