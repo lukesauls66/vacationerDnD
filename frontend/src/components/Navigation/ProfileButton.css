@@ -1,16 +1,39 @@
-.profile-button-container {
-    display: inline-block;
-    position: relative;
+.profile-dropdown.hidden {
+    display: none;
 }
 
-button {
-    border: none;
+.profile-dropdown {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    list-style: none;
+    z-index: 10;
+    min-width: 200px;
+    width: auto;
+    height: auto;
+    margin-top: 5px;
+    box-sizing: border-box; 
+    max-height: none;
+    overflow: visible; 
+}
+
+.profile-dropdown li {
+    margin: 5px 0;
+    color: black;
+    text-align: left;
+    width: 100%;
+}
+
+.profile-dropdown li:hover {
+    background-color: #f0f0f0;
+}
+
+.profile-dropdown button {
     background: none;
+    border: none;
     cursor: pointer;
-    font-size: 24px;
-    color: white;
-}
-
-button:hover {
-    color: #ccc;
+    color: black;
 }
