@@ -26,7 +26,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </ModalProvider>
   </React.StrictMode>
 );
-
-// if (process.env.NODE_ENV !== "production") {
-//   window.store = store;
-// }
