@@ -6,7 +6,7 @@ ul {
     align-items: center;
     justify-content: space-between;
     height: 70px;
-    background-color: #333;
+    background-image: linear-gradient(to bottom right, rgb(95, 219, 250), rgb(0, 117, 115));
 }
 
 li {
@@ -32,6 +32,7 @@ a:hover {
     position: absolute;
     top: 70px;
     right: 15px;
+    background-image: none;
     background-color: #333;
     list-style: none;
     padding: 10px;

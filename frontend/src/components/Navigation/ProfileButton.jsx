@@ -12,7 +12,7 @@ import SignupFormModal from '../SignupFormModal/SignupFormModal';
 
 const WaterDrop = () => {
     return (
-        <div style={{ color: '#74e1ff', fontSize:'50px', marginTop: '10px'}}>
+        <div style={{ color: 'rgb(95, 219, 250)', fontSize:'50px', marginTop: '10px'}}>
             <MdWaterDrop />
         </div>
     );
