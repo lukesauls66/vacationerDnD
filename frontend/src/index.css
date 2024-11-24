@@ -1,7 +1,10 @@
 /* TODO: Add sitewide styles */
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
+
 * {
     margin: 0px;
     padding: 0px;
+    font-family: "Parkinsans", sans-serif;
 }
 
 form {
@@ -38,8 +41,8 @@ form p {
 
 form button {
     padding: 10px;
-    background-color: #007bff;
-    color: white;
+    background-color: #0cefeb;
+    color: #007573;
     border: none;
     border-radius: 4px;
     font-size: 1rem;
@@ -47,5 +50,6 @@ form button {
 }
 
 form button:hover {
-    background-color: #0056b3;
+    background-color: #16e8e4;
+    color: white;
 }
