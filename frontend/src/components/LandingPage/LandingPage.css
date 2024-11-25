@@ -124,6 +124,11 @@
   justify-content: space-between;
 }
 
+.star-rating {
+  display: flex;
+  gap: 0.3rem;
+}
+
 .spot-tooltip {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.7);
@@ -137,4 +142,5 @@
 
 .spot-tooltip span {
   font-weight: bold;
+  font-size: 0.9rem;
 }
