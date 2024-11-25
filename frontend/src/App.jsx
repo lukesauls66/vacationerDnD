@@ -8,6 +8,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  // const [error, setError] = useState(null);
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser())

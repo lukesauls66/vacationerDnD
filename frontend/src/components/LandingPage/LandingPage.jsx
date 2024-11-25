@@ -1,3 +1,4 @@
+import ImageGallery from './ImageGallery';
 import './LandingPage.css';
 
 function LandingPage() {
