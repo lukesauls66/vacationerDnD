@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { IoStarSharp } from "react-icons/io5";
 import * as spotsActions from "../../store/slices/spotsSlice";
 import "./LandingPage.css";
 
@@ -16,8 +17,8 @@ function LandingPage() {
 
   const handleMouseMove = (e) => {
     setTooltipPosition({
-      top: e.clientY + 30,
-      left: e.clientX + -50,
+      top: e.pageY + 30,
+      left: e.pageX + -50,
     });
   };
 
@@ -66,7 +67,8 @@ function LandingPage() {
                   <p>
                     {spot.city}, {spot.state}
                   </p>
-                  <div>
+                  <div className="star-rating">
+                    <IoStarSharp />
                     <p>{spot.avgRating}</p>
                   </div>
                 </div>

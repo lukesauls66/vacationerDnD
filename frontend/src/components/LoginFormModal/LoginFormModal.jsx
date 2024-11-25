@@ -40,7 +40,7 @@ function LoginFormModal() {
 
   const signInDemoUser = () => {
     setCredential("demouser");
-    setPassword("password10");
+    setPassword("password6");
   };
 
   return (
