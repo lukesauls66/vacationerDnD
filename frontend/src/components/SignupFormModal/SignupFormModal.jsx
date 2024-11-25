@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import * as sessionActions from "../../store/session/sessionSlice";
+import * as sessionActions from "../../store/slices/sessionSlice";
 import "./SignupForm.css";
 
 function SignupFormModal() {
@@ -18,14 +18,7 @@ function SignupFormModal() {
 
   console.log("Backend:", backendErrors);
 
-  const validationErrors = ({
-    username,
-    firstName,
-    lastName,
-    email,
-    password,
-    confirmPassword,
-  }) => {
+  const validationErrors = ({ firstName, lastName }) => {
     const newValidationErrors = {};
 
     if (!firstName || firstName[0] !== firstName[0].toUpperCase()) {

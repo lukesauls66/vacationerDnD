@@ -4,9 +4,13 @@ import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
-import * as sessionActions from "./store/session/sessionSlice";
+import * as sessionActions from "./store/slices/sessionSlice";
 import { Modal, ModalProvider } from "./context/Modal";
 import "./index.css";
+
+if (process.env.NODE_ENV !== "production") {
+  window.store = store;
+}
 
 if (import.meta.env.MODE !== "production") {
   restoreCSRF();

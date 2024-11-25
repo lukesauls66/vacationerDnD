@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GiDjinn } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
-import * as sessionActions from "../../store/session/sessionSlice";
+import * as sessionActions from "../../store/slices/sessionSlice";
 
 const HamburgerIcon = () => {
   return (
@@ -49,10 +49,10 @@ function ProfileButton({ user }) {
                 &times;
               </button>
               <div className="profile-info">
-                <p className="profile-user-info">Hello, {user.username}</p>
                 <p className="profile-user-info">
-                  {user.firstName} {user.lastName}
+                  Hello, {user.firstName} {user.lastName}
                 </p>
+                <p className="profile-user-info">{user.username}</p>
                 <p className="profile-user-info">{user.email}</p>
 
                 <button onClick={logout} id="logout-button">
