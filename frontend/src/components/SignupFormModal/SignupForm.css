@@ -29,42 +29,42 @@ h1 {
 
 .username-label {
   display: flex;
-  gap: 4.4rem;
+  gap: 7rem;
   border-color: black;
   font-size: large;
 }
 
 .firstname-label {
   display: flex;
-  gap: 3.9rem;
+  gap: 6.8rem;
   border-color: black;
   font-size: large;
 }
 
 .lastname-label {
   display: flex;
-  gap: 4rem;
+  gap: 7.03rem;
   border-color: black;
   font-size: large;
 }
 
 .email-label {
   display: flex;
-  gap: 6.2rem;
+  gap: 9.48rem;
   border-color: black;
   font-size: large;
 }
 
 .signup-password-label {
   display: flex;
-  gap: 4.6rem;
+  gap: 7.09rem;
   border-color: black;
   font-size: large;
 }
 
 .confirm-password-label {
   display: flex;
-  gap: 0.5rem;
+  gap: 2.4rem;
   border-color: black;
   font-size: large;
 }
@@ -74,7 +74,7 @@ h1 {
 }
 
 .signup-button {
-  width: 18.6rem;
+  width: 22rem;
   height: 1.8rem;
   cursor: pointer;
   font-size: medium;

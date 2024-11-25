@@ -76,6 +76,26 @@ module.exports = (sequelize, DataTypes) => {
           exclude: ["hashedPassword", "updatedAt", "email", "createdAt"],
         },
       },
+      hooks: {
+        // Check if username or email already exists before creating the user
+        async beforeCreate(user, options) {
+          // Check if username already exists
+          const existingUser = await User.findOne({
+            where: { username },
+          });
+          if (existingUser) {
+            throw new Error("Username already exists");
+          }
+
+          // Check if email already exists
+          const existingEmail = await User.findOne({
+            where: { email },
+          });
+          if (existingEmail) {
+            throw new Error("Email already in use");
+          }
+        },
+      },
     }
   );
   return User;

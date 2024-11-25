@@ -42,7 +42,6 @@ function LoginSignupButton() {
                   modalComponent={<LoginFormModal />}
                 />
               </div>
-
               <div onClick={openAndCloseModal}>
                 <OpenModalButton
                   buttonText="Sign Up"

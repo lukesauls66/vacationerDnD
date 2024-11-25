@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === "production") {
 }
 module.exports = {
   async up(queryInterface, Sequelize) {
+    options.tableName = "SpotImages";
     await SpotImage.bulkCreate(
       [
         {
@@ -33,21 +34,6 @@ module.exports = {
         {
           spotId: 5,
           url: "https://drive.google.com/uc?export=view&id=1sx82ydaBlyAyjf8WTEpU-ULhmci3gp-J",
-          preview: true,
-        },
-        {
-          spotId: 6,
-          url: "https://drive.google.com/uc?export=view&id=1gtCjo3DFKAPGHbHQO-3u9TsrWDMQlTSl",
-          preview: true,
-        },
-        {
-          spotId: 7,
-          url: "https://drive.google.com/uc?export=view&id=1SKtjKcs2HrsprgwKCcwpCfwtzYpM_6po",
-          preview: true,
-        },
-        {
-          spotId: 8,
-          url: "https://drive.google.com/uc?export=view&id=1bCXvQFvfw5NbeaTqbtp7yfzAGV9awoJO",
           preview: true,
         },
       ],

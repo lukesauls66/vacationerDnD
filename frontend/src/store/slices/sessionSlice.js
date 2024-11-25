@@ -55,17 +55,13 @@ export const signup = createAsyncThunk(
         }),
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        return rejectWithValue(errorData.error || "Signup failed");
-      }
-
       const data = await res.json();
-      // console.log("data:", data);
-      // console.log("user:", data.user);
       return data.user;
     } catch (error) {
-      return rejectWithValue("Signup failed.");
+      // signupError = "Signup failed, username or email are already being used";
+      const errorData = await error.json();
+      const backendErrors = errorData.errors;
+      return rejectWithValue(backendErrors);
     }
   }
 );

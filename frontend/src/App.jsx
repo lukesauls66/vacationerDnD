@@ -2,7 +2,8 @@ import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Navigation from "./components/Navigation/Navigation";
-import * as sessionActions from "./store/session/sessionSlice";
+import LandingPage from "./components/LandingPage/LandingPage";
+import * as sessionActions from "./store/slices/sessionSlice";
 
 const Layout = () => {
   const [isUserLoaded, setIsUserLoaded] = useState(false);
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Welcome!</h1>,
+        element: <LandingPage />,
       },
       // {
       //   path: "*",

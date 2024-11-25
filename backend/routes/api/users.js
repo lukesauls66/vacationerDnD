@@ -38,15 +38,25 @@ router.post("/signup", validateSignup, async (req, res) => {
   try {
     const { firstName, lastName, email, password, username } = req.body;
 
-    if (username.length < 4) {
-      return res
-        .status(400)
-        .json({ error: "Username must be at least 4 characters long" });
-    }
+    // const uniqueUserErrors = {};
 
-    if (password !== confirmPassword) {
-      return res.status(400).json({ error: "Passwords must match" });
-    }
+    // const existingUser = await User.findOne({ where: { username } });
+    // if (existingUser) {
+    //   uniqueUserErrors.username = "Username already exists";
+    // }
+
+    // const existingEmail = await User.findOne({ where: { email } });
+    // if (existingEmail) {
+    //   uniqueUserErrors.email = "Email already in use";
+    // }
+
+    // if (Object.keys(uniqueUserErrors).length > 0) {
+    //   return res.status(400).json({
+    //     title: "Bad request.",
+    //     message: "Bad request.",
+    //     errors: uniqueUserErrors,
+    //   });
+    // }
 
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({
@@ -71,9 +81,19 @@ router.post("/signup", validateSignup, async (req, res) => {
       user: safeUser,
     });
   } catch (err) {
-    console.error("User already exists", err);
-    res.status(500).json({
+    if (err.message) {
+      return res.status(400).json({
+        title: "Bad request.",
+        message: "Bad request.",
+        errors: err.message,
+      });
+    }
+    // console.log("ERROR RAN");
+    // console.error("User already exists", err);
+    return res.status(500).json({
       message: "User already exists",
+      // errors: err.message,
+      errors: err,
     });
   }
 });
