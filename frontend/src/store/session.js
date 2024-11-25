@@ -18,13 +18,6 @@ const removeUser = () => {
     };
 };
 
-// const signupUser = (user) => {
-//     return {
-//         type: SIGNUP_USER,
-//         payload: user
-//     };
-// };
-
 export const restoreUser = () => async (dispatch) => {
     const response = await csrfFetch('/api/session');
     const data = await response.json();
