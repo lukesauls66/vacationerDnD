@@ -31,11 +31,11 @@ module.exports = {
           url: "https://example.com/images/review4.jpg",
           preview: false,
         },
-        {
-          reviewId: 5,
-          url: "https://example.com/images/review5.jpg",
-          preview: true,
-        },
+        // {
+        //   reviewId: 5,
+        //   url: "https://example.com/images/review5.jpg",
+        //   preview: true,
+        // },
       ],
       { validate: true }
     );

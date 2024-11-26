@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import * as spotsActions from "../../store/slices/spotsSlice";
 import "./LandingPage.css";
 
 function LandingPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { spots, loading, errors } = useSelector((state) => state.spots);
   const [tooltip, setTooltip] = useState("");
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -28,6 +30,10 @@ function LandingPage() {
 
   const handleMouseLeave = () => {
     setTooltip("");
+  };
+
+  const handleSpotNavigation = (spotId) => {
+    navigate(`/spots/${spotId}`);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -56,13 +62,15 @@ function LandingPage() {
                 className="individual-spot-container"
                 onMouseEnter={() => handleMouseEnter(spot.name)}
                 onMouseLeave={handleMouseLeave}
+                onClick={() => handleSpotNavigation(spot.id)}
               >
-                {console.log("image url:", spot.previewImage)}
-                <img
-                  className="spot-img"
-                  src={spot.previewImage}
-                  alt={`Image of ${spot.name}`}
-                />
+                <div className="landing-page-spot-img-container">
+                  <img
+                    className="spot-img"
+                    src={spot.previewImage}
+                    alt={`Image of ${spot.name}`}
+                  />
+                </div>
                 <div className="city-state-avg">
                   <p>
                     {spot.city}, {spot.state}

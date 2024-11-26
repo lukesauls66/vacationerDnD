@@ -97,23 +97,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(150),
         allowNull: false,
         unique: true,
-        validate: {
-          len: [1, 150],
-          firstLetterCap(value) {
-            const array = value.split(" ");
-            array.forEach((val) => {
-              if (val[0] !== val[0].toUpperCase()) {
-                throw new Error("Location name must be capitalized.");
-              }
-            });
-          },
-        },
       },
       description: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(400),
         allowNull: false,
         validate: {
-          len: [1, 255],
+          len: [1, 400],
         },
       },
       price: {
@@ -129,7 +118,7 @@ module.exports = (sequelize, DataTypes) => {
       previewImage: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate: { isUrl: true },
+        // validate: { isUrl: true },
       },
     },
     {

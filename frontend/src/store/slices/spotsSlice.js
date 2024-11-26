@@ -3,6 +3,7 @@ import { csrfFetch } from "../csrf";
 
 const initialState = {
   spots: null,
+  currSpots: null,
   loading: false,
   errors: null,
 };
@@ -13,7 +14,6 @@ export const getAll = createAsyncThunk(
     try {
       const res = await csrfFetch("/api/spots");
       const data = await res.json();
-      // console.log("data from thunk", data.Spots);
       return data.Spots;
     } catch (err) {
       return rejectWithValue(err.message || "No spots found");
@@ -25,9 +25,8 @@ export const getSpotById = createAsyncThunk(
   "spots/getSpotById",
   async (spotId, { rejectWithValue }) => {
     try {
-      const res = await csrfFetch(`/api/spots/${spotId}`);
+      const res = await fetch(`/api/spots/${spotId}`);
       const data = await res.json();
-      console.log(data);
       return data;
     } catch (err) {
       return rejectWithValue(err.message || "This spot could not be found");
@@ -59,8 +58,7 @@ const spotsSlice = createSlice({
       })
       .addCase(getSpotById.fulfilled, (state, action) => {
         state.loading = false;
-        state.spots = action.payload;
-        console.log("state.spots", state.spots);
+        state.currSpots = action.payload;
       })
       .addCase(getSpotById.rejected, (state, action) => {
         state.loading = false;

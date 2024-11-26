@@ -31,6 +31,7 @@ li {
   padding-top: 1.5rem;
   padding-bottom: 2rem;
   background-color: rgba(163, 220, 247);
+  width: 100vw;
 }
 
 #home-link-container {
