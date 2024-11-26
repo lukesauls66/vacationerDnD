@@ -4,17 +4,26 @@
     box-sizing: border-box;
 }
 
-.signup-form {
+#signup-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-    padding: 20px;
 }
 
-.signup-form h1 {
+#signup-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 80%;
+}
+
+#signup-form h1 {
+    text-align: center;
     margin-bottom: 20px;
     font-size: 2rem;
     color: #333
