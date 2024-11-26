@@ -12,130 +12,131 @@ module.exports = {
       [
         {
           spotId: 1,
-          url: "https://example.com/images/stardrop-lane.jpg",
+          url: "https://i.ibb.co/xLjRh5F/standard-house.png",
           preview: true,
         },
         {
           spotId: 1,
-          url: "https://example.com/images/stardrop-lane-2.jpg",
-          preview: false,
+          url: "https://i.ibb.co/wQzJRYD/standard-layout.jpg",
+          preview: true,
+        },
+        {
+          spotId: 1,
+          url: "https://i.ibb.co/qYpVcDY/standard-zoom.png",
+          preview: true,
+        },
+        {
+          spotId: 1,
+          url: "https://i.ibb.co/GsgtdNf/standard-zoom2.png",
+          preview: true,
+        },
+        {
+          spotId: 1,
+          url: "https://i.ibb.co/7vM4q45/standard-zoom3.png",
+          preview: true,
         },
         {
           spotId: 2,
-          url: "https://example.com/images/junimo-grove.jpg",
+          url: "https://i.ibb.co/c2wmtG3/forest-house.png",
+          preview: true,
+        },
+        {
+          spotId: 2,
+          url: "https://i.ibb.co/bssG40B/forest-layout.jpg",
+          preview: true,
+        },
+        {
+          spotId: 2,
+          url: "https://i.ibb.co/JQrCS4N/forest-zoom.png",
+          preview: true,
+        },
+        {
+          spotId: 2,
+          url: "https://i.ibb.co/rmTg24x/forest-zoom2.png",
+          preview: true,
+        },
+        {
+          spotId: 2,
+          url: "https://i.ibb.co/DLS43t5/forest-zoom3.png",
           preview: true,
         },
         {
           spotId: 3,
-          url: "https://example.com/images/saloon-studio.jpg",
+          url: "https://i.ibb.co/ZJkzC4y/river-house.png",
           preview: true,
         },
         {
           spotId: 3,
-          url: "https://example.com/images/saloon-studio-2.jpg",
-          preview: false,
+          url: "https://i.ibb.co/YdtZmWF/river-layout.jpg",
+          preview: true,
+        },
+        {
+          spotId: 3,
+          url: "https://i.ibb.co/Rhyxx0m/river-zoom.png",
+          preview: true,
+        },
+        {
+          spotId: 3,
+          url: "https://i.ibb.co/WHKg1Dc/river-zoom2.png",
+          preview: true,
+        },
+        {
+          spotId: 3,
+          url: "https://i.ibb.co/GVvCfy1/river-zoom3.png",
+          preview: true,
         },
         {
           spotId: 4,
-          url: "https://example.com/images/mountain-cabin.jpg",
+          url: "https://i.ibb.co/DLq05yK/hilltop-house.png",
+          preview: true,
+        },
+        {
+          spotId: 4,
+          url: "https://i.ibb.co/ySWDMY2/hilltop-layout.jpg",
+          preview: true,
+        },
+        {
+          spotId: 4,
+          url: "https://i.ibb.co/Bt5K1Gv/hilltop-zoom.jpg",
+          preview: true,
+        },
+        {
+          spotId: 4,
+          url: "https://i.ibb.co/h1JXnfJ/hilltop-zoom2.png",
+          preview: true,
+        },
+        {
+          spotId: 4,
+          url: "https://i.ibb.co/BcfnVTV/hilltop-zoom3.png",
           preview: true,
         },
         {
           spotId: 5,
-          url: "https://example.com/images/dockside-haven.jpg",
+          url: "https://i.ibb.co/7VVzdVS/beach-house.png",
           preview: true,
         },
         {
-          spotId: 6,
-          url: "https://example.com/images/miners-cavern.jpg",
+          spotId: 5,
+          url: "https://i.ibb.co/CQ1GD65/beach-layout.jpg",
           preview: true,
         },
         {
-          spotId: 6,
-          url: "https://example.com/images/miners-cavern-2.jpg",
-          preview: false,
-        },
-        {
-          spotId: 7,
-          url: "https://example.com/images/apple-blossom-inn.jpg",
+          spotId: 5,
+          url: "https://i.ibb.co/RbNVP33/beach-zoom.jpg",
           preview: true,
         },
         {
-          spotId: 8,
-          url: "https://example.com/images/spa-retreat.jpg",
+          spotId: 5,
+          url: "https://i.ibb.co/fnwpXqd/beach-zoom2.png",
           preview: true,
         },
         {
-          spotId: 9,
-          url: "https://example.com/images/desert-oasis.jpg",
-          preview: true,
-        },
-        {
-          spotId: 10,
-          url: "https://example.com/images/tropical-escape.jpg",
-          preview: true,
-        },
-        {
-          spotId: 10,
-          url: "https://example.com/images/tropical-escape-2.jpg",
-          preview: false,
-        },
-        {
-          spotId: 11,
-          url: "https://example.com/images/quarry-cottage.jpg",
-          preview: true,
-        },
-        {
-          spotId: 12,
-          url: "https://example.com/images/cliffside-retreat.jpg",
-          preview: true,
-        },
-        {
-          spotId: 12,
-          url: "https://example.com/images/cliffside-retreat-2.jpg",
-          preview: false,
-        },
-        {
-          spotId: 13,
-          url: "https://example.com/images/riverbank-cottage.jpg",
-          preview: true,
-        },
-        {
-          spotId: 14,
-          url: "https://example.com/images/lavender-inn.jpg",
-          preview: true,
-        },
-        {
-          spotId: 15,
-          url: "https://example.com/images/seaside-getaway.jpg",
-          preview: true,
-        },
-        {
-          spotId: 16,
-          url: "https://example.com/images/valley-heights.jpg",
-          preview: true,
-        },
-        {
-          spotId: 17,
-          url: "https://example.com/images/deepwood-cabin.jpg",
-          preview: true,
-        },
-        {
-          spotId: 18,
-          url: "https://example.com/images/island-peak-resort.jpg",
-          preview: true,
-        },
-        {
-          spotId: 19,
-          url: "https://example.com/images/hidden-meadow.jpg",
-          preview: true,
-        },
-        {
-          spotId: 20,
-          url: "https://example.com/images/stardrop-hill.jpg",
+          spotId: 5,
+          url: "https://i.ibb.co/Yf3ZFFS/beach-zoom3.png",
           preview: true,
         },
       ],
+      
       { validate: true }
     );
   },
