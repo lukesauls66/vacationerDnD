@@ -9,6 +9,30 @@ const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
+// router.post("/check-username", async (req, res) => {
+//   const { username } = req.body;
+
+//   const existingUser = await User.findOne({ username: username });
+
+//   if (existingUser) {
+//     return res.status(400).json({ message: "Username already taken" });
+//   } else {
+//     return res.status(200).json({ message: "Username avaliable" });
+//   }
+// });
+
+// router.post("/check-email", async (req, res) => {
+//   const { email } = req.body;
+
+//   const existingUser = await User.findOne({ email: email });
+
+//   if (existingUser) {
+//     return res.status(400).json({ message: "Email already taken" });
+//   } else {
+//     return res.status(200).json({ message: "Email avaliable" });
+//   }
+// });
+
 const validateSignup = [
   check("firstName")
     .exists({ checkFalsy: true })
@@ -38,25 +62,14 @@ router.post("/signup", validateSignup, async (req, res) => {
   try {
     const { firstName, lastName, email, password, username } = req.body;
 
-    // const uniqueUserErrors = {};
-
-    // const existingUser = await User.findOne({ where: { username } });
-    // if (existingUser) {
-    //   uniqueUserErrors.username = "Username already exists";
-    // }
-
-    // const existingEmail = await User.findOne({ where: { email } });
-    // if (existingEmail) {
-    //   uniqueUserErrors.email = "Email already in use";
-    // }
-
-    // if (Object.keys(uniqueUserErrors).length > 0) {
-    //   return res.status(400).json({
-    //     title: "Bad request.",
-    //     message: "Bad request.",
-    //     errors: uniqueUserErrors,
-    //   });
-    // }
+    const existingUser = await User.findOne({ username: username });
+    if (existingUser) {
+      return res.status(409).json({
+        title: "Bad request.",
+        message: "Bad request.",
+        errors: { username: "Username must be unique" },
+      });
+    }
 
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({

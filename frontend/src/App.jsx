@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import Navigation from "./components/Navigation/Navigation";
 import LandingPage from "./components/LandingPage/LandingPage";
 import SpotDetailsPage from "./components/SpotDetailsPage/SpotDetailsPage";
+import SpotCreationFormPage from "./components/SpotCreationFormPage/SpotCreationFormPage";
 import * as sessionActions from "./store/slices/sessionSlice";
 
 const Layout = () => {
@@ -40,10 +41,14 @@ const router = createBrowserRouter([
         path: "/spots/:spotId",
         element: <SpotDetailsPage />,
       },
-      // {
-      //   path: "*",
-      //   element: <h1>Page Not Found</h1>,
-      // },
+      {
+        path: "/spots/new",
+        element: <SpotCreationFormPage />,
+      },
+      {
+        path: "*",
+        element: <h1>Page Not Found</h1>,
+      },
     ],
   },
 ]);
