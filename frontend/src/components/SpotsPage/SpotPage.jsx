@@ -1,7 +1,9 @@
+import './SpotPage.css'
+
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function SpotDetails() {
+function SpotPage() {
   const { spotId } = useParams();
   const [spot, setSpot] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,13 +41,25 @@ function SpotDetails() {
   }
 
   return (
-    <div className="spot-details">
-      <h1>{spot.name}</h1>
-      <img src={spot.previewImage} alt={spot.name} />
-      <p>{spot.description}</p>
-      {/* ... other spot details ... */}
+    <div className='spot-container'>
+        <h1 className='spot-header'>{spot.name}</h1>
+        <div className='image-container'>
+          <div className='preview-image-container'>
+              <img src={spot.previewImage} alt={spot.name} />
+          </div>
+
+          <div className='image-grid'>
+              {spot.SpotImages.slice(1).map(image => (
+              <img key={image.id} src={image.url} alt={`Image of ${spot.name}`} />
+              ))}
+          </div>
+        </div>
+
+        <div className="spot-details">
+            <p>{spot.description}</p>
+        </div>
     </div>
   );
 }
 
-export default SpotDetails;
+export default SpotPage;
