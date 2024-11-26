@@ -1,35 +1,46 @@
-import { useState, useEffect } from 'react';
+import './SpotDetails.css';
 
-function SpotDetails({ spotId }) {
-    const [spotDetails, setSpotDetails] = useState(null);
+import { useState, useEffect } from 'react';
+import LandingPage from '../LandingPage/LandingPage';
+
+function SpotDetails() {
+    const [spots, setSpots] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(`/api/spots/${spotId}`)
-            .then((res) => {
-                if (!res.ok) throw new Error('Failed to fetch spot details');
-                return res.json();
-            })
-            .then((data) => {
-                setSpotDetails(data);
-            })
-            .catch((err) => console.err(err));
-    }, [spotId]);
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/spots');
 
-    if (!spotDetails) {
+                if (response.ok) {
+                    throw new Error('Failed to fetch spot details');
+                }
+                const data = await response.json();
+                setSpots(data.slice(0, 5));
+            } catch (err) {
+                setError(err.message);
+                console.error(err);
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    if (error) {
+        return <p>Error fetching spots: {error}</p>
+    }
+
+    if (!spots) {
         return <p>Loading spot details...</p>
     }
 
-    return (
-        <div>
-            <h2>{spotDetails.name}</h2>
-            <p>{spotDetails.description}</p>
-            <img
-                src={spotDetails.previewImage}
-                alt={`${spotDetails.name} preview`}
-                style={{ width: '100%', borderRadius: '10px' }}
-            />
-        </div>
-    )
+    const getSpotPreviewImage = (spot) => {
+        if (!spot?.SpotImages?.length) return null;
+        const previewImage = spot.SpotImages.find((image) => image.preview)
+        return previewImage?.url || null;
+    };
+
+    return <LandingPage spots={spots} getSpotPreviewImage={getSpotPreviewImage} />;
 }
   
 export default SpotDetails;

@@ -1,17 +1,34 @@
-import ImageGallery from './ImageGallery';
+import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 
-function LandingPage() {
+function LandingPage({ spots, getSpotPreviewImage }) {
+    const navigate = useNavigate();
     return (
-        <div className='landing-page'>
-            <h1>Welcome to WaterBnB</h1>
-            <p>Escape to the magical shores of Stardew Valley. Whether you are looking for a rustic cabin by the river or a cozy beach-side retreat, we have the perfect spot for your next adventure!</p>
-            <div className='landing-buttons'>
-                <button onClick={() => alert('Explore more features!')}>Explore</button>
-                <button onClick={() => alert('Sign up now!')}>Sign Up Now!</button>
-            </div>
+        <div className='spot-grid'>
+          {spots && spots.length > 0 ? (
+            spots.map((spot) => (
+              <div key={spot.id} className='spot-card'>
+                <img
+                  src={getSpotPreviewImage(spot.id) || 'default-spot-image.jpg'}
+                  alt={`${spot.city}, ${spot.state}`}
+                  className='spot-image'
+                  onClick={() => navigate(`/spots/${spot.id}`)}
+                />
+                <div className='spot-info'>
+                  <p>{spot.city}, {spot.state}</p>
+                  <p>{spot.price} / night</p>
+                  <p>⭐ {spot.rating}</p>
+                  {/* Add more info based on your data structure */}
+                  <p>{spot.guests} Guests</p>
+                  <p>{spot.amenities.join(', ')}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No spots found.</p>
+          )}
         </div>
-    );
+      );
 }
 
 export default LandingPage;
