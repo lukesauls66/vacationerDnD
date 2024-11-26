@@ -27,8 +27,8 @@ a {
     font-family: "Parkinsans", sans-serif;
 }
 
-a:hover {
-    background-color: #555;
+.home-btn:hover {
+    color: #007573;
 }
 
 .profile-dropdown {

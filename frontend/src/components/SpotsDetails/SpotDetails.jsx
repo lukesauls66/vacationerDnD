@@ -1,6 +1,7 @@
 import './SpotDetails.css';
 
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
 function SpotDetails() {
@@ -33,16 +34,18 @@ function SpotDetails() {
     spots.map((spot) => {
       return (
         <div key={spot.id} className='spot-card'>
-          <img src={spot.previewImage} alt={spot.name} className='spot-image' />
-          <div className='spot-details'>
-            <div className='spot-top'>
-              <div className='spot-location'>
-                {spot.city}, {spot.state}
+          <Link to={`/spots/${spot.id}`}>
+            <img src={spot.previewImage} alt={spot.name} className='spot-image' />
+            <div className='spot-details'>
+              <div className='spot-top'>
+                <div className='spot-location'>
+                  {spot.city}, {spot.state}
+                </div>
+                <div className='spot-rating'>⭐ {spot.rating}</div>
               </div>
-              <div className='spot-rating'>⭐ {spot.rating}</div>
+              <div className='spot-price'>${spot.price} / night</div>
             </div>
-            <div className='spot-price'>${spot.price} / night</div>
-          </div>
+          </Link>
         </div>
       );
     })
