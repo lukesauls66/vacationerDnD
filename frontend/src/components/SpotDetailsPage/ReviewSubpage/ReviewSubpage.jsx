@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { csrfFetch } from "../../../store/csrf";
 import "./ReviewSubpage.css";
 
 function ReviewSubpage() {
@@ -9,7 +10,7 @@ function ReviewSubpage() {
   useEffect(() => {
     async function getReviews() {
       try {
-        const res = await fetch(`/api/spots/${spotId}/reviews`);
+        const res = await csrfFetch(`/api/spots/${spotId}/reviews`);
         const data = await res.json();
 
         const sortedReviews = data.Reviews.sort(
@@ -45,9 +46,7 @@ function ReviewSubpage() {
             );
           })}
         </>
-      ) : (
-        <p>New</p>
-      )}
+      ) : null}
     </div>
   );
 }

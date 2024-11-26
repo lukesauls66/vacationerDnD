@@ -9,9 +9,14 @@ function Navigation({ isUserLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   const sessionLinks = sessionUser ? (
-    <li>
-      <ProfileButton user={sessionUser} />
-    </li>
+    <>
+      <div>
+        <a href=""></a>
+      </div>
+      <li>
+        <ProfileButton user={sessionUser} />
+      </li>
+    </>
   ) : (
     <div className="login-signup-container">
       <li>

@@ -11,7 +11,6 @@ function LandingPage() {
   const { spots, loading, errors } = useSelector((state) => state.spots);
   const [tooltip, setTooltip] = useState("");
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
-  // console.log("spots in landing page", spots);
 
   useEffect(() => {
     dispatch(spotsActions.getAll());

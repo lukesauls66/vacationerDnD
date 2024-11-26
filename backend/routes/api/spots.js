@@ -417,6 +417,7 @@ router.post(
         name,
         description,
         price,
+        previewImage,
       } = req.body;
 
       const userId = req.user.id;
@@ -432,6 +433,7 @@ router.post(
         name,
         description,
         price,
+        previewImage,
       });
 
       res.status(201).json(newSpot);

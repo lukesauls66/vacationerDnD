@@ -5,7 +5,6 @@ import { IoStarSharp } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
 import ReviewSubpage from "./ReviewSubpage/ReviewSubpage";
 import * as spotsActions from "../../store/slices/spotsSlice";
-// import * as sessionAction from "../../store/slices/sessionSlice";
 import "./SpotDetails.css";
 
 function SpotDetailsPage() {
@@ -30,7 +29,7 @@ function SpotDetailsPage() {
   };
 
   const noReviewsAndNotTheOwner =
-    currSpots.numReviews === 0 && user && user.id !== currSpots.Owner.id;
+    currSpots?.numReviews === 0 && user && user.id !== currSpots.Owner.id;
 
   return (
     <div className="spot-details-page">

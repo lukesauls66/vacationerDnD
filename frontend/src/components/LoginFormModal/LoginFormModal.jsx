@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
+// import { useNavigate } from "react-router-dom";
 import * as sessionActions from "../../store/slices/sessionSlice";
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const errors = useSelector((state) => state.session.errors);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -41,13 +43,14 @@ function LoginFormModal() {
   const signInDemoUser = () => {
     setCredential("demouser");
     setPassword("password6");
+    // navigate("/");
   };
 
   return (
     <div className="login-form-container">
       <div className="inner-login-form-container">
         <div className="form-h1-container">
-          <h1 id="form-h1">Log In</h1>
+          <h1 id="login-form-h1">Log In</h1>
         </div>
         <form className="login-form" onSubmit={onSubmit}>
           <label className="credential-label">
@@ -64,7 +67,7 @@ function LoginFormModal() {
             Password:
             <input
               className="login-input"
-              type="password"
+              type="text"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -81,6 +84,7 @@ function LoginFormModal() {
           <button
             className="demo-login-button login-button"
             onClick={signInDemoUser}
+            type="submit"
           >
             Demo User (Not a Rickroll)
           </button>

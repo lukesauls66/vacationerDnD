@@ -11,11 +11,13 @@ export const login = createAsyncThunk(
   "session/login",
   async ({ credential, password }, { rejectWithValue }) => {
     try {
-      const res = await csrfFetch("api/session/login", {
+      const res = await csrfFetch("/api/session/login", {
         method: "POST",
         body: JSON.stringify({ credential, password }),
       });
+      console.log("res:", res);
       const data = await res.json();
+      console.log("data:", data);
       return data.user;
     } catch (error) {
       return rejectWithValue(error.message || "Login failed.");
@@ -56,6 +58,7 @@ export const signup = createAsyncThunk(
       });
 
       const data = await res.json();
+      console.log("data: ", data);
       return data.user;
     } catch (error) {
       const errorData = await error.json();

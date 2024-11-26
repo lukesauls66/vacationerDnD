@@ -19,19 +19,30 @@ li {
   border-radius: 2rem;
 }
 
-#form-h1 {
-  margin: 0;
+@media (min-width: 426px) {
+  .nav-container {
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    border-bottom: 0.2mm solid rgba(128, 128, 128, 0.5);
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+    background-color: rgba(163, 220, 247);
+    width: 100vw;
+  }
 }
 
-.nav-container {
-  display: flex;
-  justify-content: center;
-  justify-content: space-between;
-  border-bottom: 0.2mm solid rgba(128, 128, 128, 0.5);
-  padding-top: 1.5rem;
-  padding-bottom: 2rem;
-  background-color: rgba(163, 220, 247);
-  width: 100vw;
+@media (max-width: 425px) {
+  .nav-container {
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    border-bottom: 0.2mm solid rgba(128, 128, 128, 0.5);
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+    background-color: rgba(163, 220, 247);
+    min-width: 100vw;
+  }
 }
 
 #home-link-container {
@@ -164,24 +175,24 @@ li {
 }
 
 .login-form-container {
-  margin: 3rem;
+  margin: 2rem;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  /* gap: 2rem; */
   padding: 0;
 }
 
 .signup-form-container {
-  margin: 3rem;
+  margin: 2rem;
 }
 
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  /* gap: 2rem; */
   padding: 0;
 }
 

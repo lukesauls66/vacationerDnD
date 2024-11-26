@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { csrfFetch } from "../../store/csrf";
 import * as sessionActions from "../../store/slices/sessionSlice";
 import "./SignupForm.css";
 
@@ -42,17 +43,34 @@ function SignupFormModal() {
     return newErrors;
   };
 
+  // const checkUsername = async (username) => {
+  //   try {
+  //     const res = await csrfFetch(`/api/users/check-username`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ username: username }),
+  //     });
+  //     console.log("testing fetch");
+
+  //     if (res.status === 400) {
+  //       return setErrors((prevErrors) => ({
+  //         ...prevErrors,
+  //         username: "Username must be unique",
+  //       }));
+  //       // return "Username must be unique";
+  //     }
+  //   } catch (err) {
+  //     console.error("Error checking username", err);
+  //   }
+  // };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
 
     const clientSideErrors = validationErrors({
-      username,
       firstName,
       lastName,
-      email,
-      password,
-      confirmPassword,
     });
 
     const passwordConfirmation = validateForm({ password, confirmPassword });
@@ -70,10 +88,10 @@ function SignupFormModal() {
     try {
       const res = await dispatch(
         sessionActions.signup({
-          email,
           username,
           firstName,
           lastName,
+          email,
           password,
         })
       );
@@ -83,6 +101,7 @@ function SignupFormModal() {
           ...prevErrors,
           backendErrors: res.payload,
         }));
+        // checkUsername(username);
         return;
       }
 
@@ -102,7 +121,7 @@ function SignupFormModal() {
     <div className="signup-form-container">
       <div className="inner-signup-form-container">
         <div className="form-h1-container">
-          <h1 id="form-h1">Sign Up</h1>
+          <h1 id="signup-form-h1">Sign Up</h1>
         </div>
         <form className="signup-form" onSubmit={onSubmit}>
           <label className="username-label">
@@ -136,10 +155,7 @@ function SignupFormModal() {
             />
           </label>
           {errors.clientSideErrors?.firstName && (
-            <p
-              className="user-signup-errors
-          "
-            >
+            <p className="user-signup-errors">
               {errors.clientSideErrors.firstName}
             </p>
           )}
@@ -154,10 +170,7 @@ function SignupFormModal() {
             />
           </label>
           {errors.clientSideErrors?.lastName && (
-            <p
-              className="user-signup-errors
-          "
-            >
+            <p className="user-signup-errors">
               {errors.clientSideErrors.lastName}
             </p>
           )}
@@ -172,12 +185,7 @@ function SignupFormModal() {
             />
           </label>
           {errors.backendErrors?.email && (
-            <p
-              className="user-signup-errors
-          "
-            >
-              {errors.backendErrors.email}
-            </p>
+            <p className="user-signup-errors">{errors.backendErrors.email}</p>
           )}
           <label className="signup-password-label">
             Password:
@@ -190,10 +198,7 @@ function SignupFormModal() {
             />
           </label>
           {errors.backendErrors?.password && (
-            <p
-              className="user-signup-errors
-          "
-            >
+            <p className="user-signup-errors">
               {errors.backendErrors.password}
             </p>
           )}
@@ -215,9 +220,7 @@ function SignupFormModal() {
               {errors.passwordConfirmation.confirmPassword}
             </p>
           )}
-          {/* {errors.backendErrors?.signupError && (
-            <p>{errors.backendErrors.signupError}</p>
-          )} */}
+          {/* {errors.backendErrors && <p>{errors.backendErrors}</p>} */}
           <button className="signup-button" type="submit">
             Sign Up
           </button>
