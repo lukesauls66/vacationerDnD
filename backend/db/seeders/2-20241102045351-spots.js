@@ -21,7 +21,7 @@ module.exports = {
           lng: -89.6501,
           name: "Hotel on the Water",
           description:
-            "A beautiful hotel and restaurant on the water for any travels.",
+            "A stunning hotel and restaurant by the serene waters of East Blue. Offering picturesque views, luxurious accommodations, and a peaceful escape for travelers seeking both relaxation and adventure.",
           price: 360.0,
           numReviews: 25,
           avgRating: 4.8,
@@ -35,9 +35,9 @@ module.exports = {
           country: "Scandovia",
           lat: 39.7392,
           lng: -104.9903,
-          name: "Water-side Manor",
+          name: "Waterside Manor",
           description:
-            "A mansion, located in the heart of Richmond Falls, is a grand estate filled with opulent décor.",
+            "An opulent mansion nestled by the tranquil Richmond Falls, featuring grand décor and world-class amenities. Ideal for those seeking luxury and elegance, with easy access to scenic views and rich history.",
           price: 370.0,
           numReviews: 30,
           avgRating: 4.9,
@@ -51,12 +51,12 @@ module.exports = {
           country: "Luminara",
           lat: 34.0522,
           lng: -118.2437,
-          name: "Country-side Cottage",
+          name: "Countryside Cottage",
           description:
-            "A hidden sanctuary nestled in the heart of Traverse Town, where magic and mystery converge.",
+            "A charming cottage hidden within the enchanting Gleaming Isle. A perfect retreat for nature lovers, combining rustic beauty with comfort. Escape into a peaceful haven surrounded by rolling hills and fresh air.",
           price: 80.0,
-          numReviews: 15,
-          avgRating: 4.5,
+          numReviews: 0,
+          avgRating: 0,
           previewImage: "https://i.ibb.co/PhdL18p/dadan-house-1.jpg",
         },
         {
@@ -68,7 +68,8 @@ module.exports = {
           lat: 25.7617,
           lng: -80.1918,
           name: "Industrial Hotel",
-          description: "A peaceful hotel on the edge of town.",
+          description:
+            "A modern yet peaceful hotel in the heart of Traverse Town, blending industrial design with comfort. Enjoy tranquil rooms and a quiet atmosphere, just a short walk from town's vibrant culture and landmarks.",
           price: 180.0,
           numReviews: 20,
           avgRating: 4.7,
@@ -84,14 +85,14 @@ module.exports = {
           lng: -97.7431,
           name: "Deserted Castle",
           description:
-            "A gothic-style castle perched atop a secluded cliff overlooking the vast, stormy sea.",
+            "A gothic-style castle perched on a cliff overlooking a dramatic sea. A perfect blend of history and mystery, offering breathtaking views, secluded serenity, and a chance to step into another world.",
           price: 220.0,
           numReviews: 10,
           avgRating: 4.6,
           previewImage: "https://i.ibb.co/bKbjY9W/mihawk-house-1.jpg",
         },
       ],
-      { validate: false }
+      { validate: true }
     );
   },
 
@@ -102,8 +103,8 @@ module.exports = {
       name: {
         [Op.in]: [
           "Hotel on the Water",
-          "Water-side Manor",
-          "Country-side Cottage",
+          "Waterside Manor",
+          "Countryside Cottage",
           "Industrial Hotel",
           "Deserted Castle",
         ],

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Navigation from "./components/Navigation/Navigation";
 import LandingPage from "./components/LandingPage/LandingPage";
-import SpotDetailsPage from "./components/SpotDetailPage/SpotDetailsPage";
+import SpotDetailsPage from "./components/SpotDetailsPage/SpotDetailsPage";
 import * as sessionActions from "./store/slices/sessionSlice";
 
 const Layout = () => {

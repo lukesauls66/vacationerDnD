@@ -58,7 +58,6 @@ export const signup = createAsyncThunk(
       const data = await res.json();
       return data.user;
     } catch (error) {
-      // signupError = "Signup failed, username or email are already being used";
       const errorData = await error.json();
       const backendErrors = errorData.errors;
       return rejectWithValue(backendErrors);

@@ -11,12 +11,12 @@ module.exports = {
     options.tableName = "Reviews";
     await Review.bulkCreate(
       [
-        {
-          userId: 1,
-          spotId: 3,
-          review: "Amazing place! Had a wonderful stay.",
-          stars: 5,
-        },
+        // {
+        //   userId: 1,
+        //   spotId: 3,
+        //   review: "Amazing place! Had a wonderful stay.",
+        //   stars: 5,
+        // },
         {
           userId: 2,
           spotId: 4,
