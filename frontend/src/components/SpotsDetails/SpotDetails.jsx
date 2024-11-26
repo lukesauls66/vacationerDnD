@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 
 function SpotDetails() {
+
     const [spots, setSpots] = useState([]);
     const [error, setError] = useState(null);
 
@@ -25,9 +26,6 @@ function SpotDetails() {
     if (error) {
         return <div className='error'>{error}</div>
     }
-
-
-
         
     return (
         <div className="spots-container">
