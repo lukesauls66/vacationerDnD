@@ -34,6 +34,51 @@ export const getSpotById = createAsyncThunk(
   }
 );
 
+// export const createASpot = createAsyncThunk(
+//   "spots/createASpot",
+//   async (
+//     {
+//       country,
+//       address,
+//       city,
+//       state,
+//       latitude,
+//       longitude,
+//       description,
+//       name,
+//       price,
+//       previewImage,
+//     },
+//     { rejectWithValue }
+//   ) => {
+//     try {
+//       const res = await csrfFetch("/api/spots", {
+//         method: "POST",
+//         body: JSON.stringify({
+//           country,
+//           address,
+//           city,
+//           state,
+//           latitude,
+//           longitude,
+//           description,
+//           name,
+//           price,
+//           previewImage,
+//         }),
+//       });
+
+//       const data = await res.json();
+//       console.log("data:", data);
+//       return data;
+//     } catch (err) {
+//       const errorData = await err.json();
+//       const backendErrors = errorData.errors;
+//       return rejectWithValue(backendErrors);
+//     }
+//   }
+// );
+
 const spotsSlice = createSlice({
   name: "spots",
   initialState,
@@ -64,6 +109,18 @@ const spotsSlice = createSlice({
         state.loading = false;
         state.errors = action.payload;
       });
+    // .addCase(createASpot.pending, (state) => {
+    //   state.loading = true;
+    //   state.errors = null;
+    // })
+    // .addCase(createASpot.fulfilled, (state, action) => {
+    //   state.loading = false;
+    //   state.spots = action.payload;
+    // })
+    // .addCase(createASpot.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.errors = action.payload;
+    // });
   },
 });
 

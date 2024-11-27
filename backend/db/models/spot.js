@@ -87,11 +87,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       lat: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       lng: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       name: {
         type: DataTypes.STRING(150),
@@ -102,7 +102,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(400),
         allowNull: false,
         validate: {
-          len: [1, 400],
+          len: [30, 400],
         },
       },
       price: {

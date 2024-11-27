@@ -1,7 +1,15 @@
+.new-spot-credential-error {
+  color: red;
+}
+
+.spot-creation-form-image-url-input:hover {
+  cursor: pointer;
+}
+
 @media (min-width: 500px) {
   .spot-creation-page-container {
     background-color: rgb(233, 231, 231);
-    height: 80rem;
+    height: 90rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -224,6 +232,7 @@
     width: 24.78rem;
     background-color: rgb(197, 243, 243);
     font-size: 0.9rem;
+    border: 0.5mm solid black;
   }
 
   .spot-creation-form-section-6 {
@@ -237,6 +246,7 @@
   .spot-creation-form-submit {
     width: 8rem;
     background-color: rgb(246, 112, 112);
+    cursor: pointer;
   }
 }
 
@@ -479,5 +489,6 @@
   .spot-creation-form-submit {
     width: 8rem;
     background-color: rgb(246, 112, 112);
+    cursor: pointer;
   }
 }
