@@ -101,11 +101,8 @@ router.post("/signup", validateSignup, async (req, res) => {
         errors: err.message,
       });
     }
-    // console.log("ERROR RAN");
-    // console.error("User already exists", err);
     return res.status(500).json({
       message: "User already exists",
-      // errors: err.message,
       errors: err,
     });
   }

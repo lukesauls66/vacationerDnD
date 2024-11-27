@@ -9,14 +9,16 @@ function Navigation({ isUserLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   const sessionLinks = sessionUser ? (
-    <>
-      <div>
-        <a href=""></a>
+    <div className="new-spot-and-user-button">
+      <div className="new-spot-link-container">
+        <a className="new-spot-link" href="/spots/new">
+          Create a New Spot
+        </a>
       </div>
       <li>
         <ProfileButton user={sessionUser} />
       </li>
-    </>
+    </div>
   ) : (
     <div className="login-signup-container">
       <li>

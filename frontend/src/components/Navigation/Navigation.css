@@ -90,6 +90,21 @@ li {
   background-color: black;
 }
 
+.new-spot-and-user-button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.new-spot-link-container {
+  padding-top: 0.5rem;
+}
+
+.new-spot-link {
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
 .profile-button:hover {
   cursor: pointer;
 }
@@ -98,7 +113,6 @@ li {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  /* padding-bottom: 1rem; */
 }
 
 .line {
