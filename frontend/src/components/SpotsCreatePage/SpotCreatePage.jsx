@@ -1,10 +1,10 @@
-import * as sessionActions from '../../store/session';
+import * as spotActions from '../../store/spot';
 
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 
-function SpotsCreatePage() {
+function SpotCreatePage() {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -13,12 +13,12 @@ function SpotsCreatePage() {
     const [country, setCountry] = useState('');
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
-    const [lat, setLat] = useState();
-    const [lng, setLng] = useState();
+    const [lat, setLat] = useState('');
+    const [lng, setLng] = useState('');
     const [description, setDescription] = useState('');
     const [name, setName] = useState('');
-    const [price, setPrice] = useState();
-    const [images, setImages] = useState([]);
+    const [price, setPrice] = useState('');
+    const [images, setImages] = useState(['', '', '', '', '']);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -46,9 +46,14 @@ function SpotsCreatePage() {
             images
         };
 
-        dispatch(sessionActions.createSpot(spotData));
+        const response = dispatch(spotActions.createNewSpot(spotData));
 
-        history.push('/spots');
+        if (response.ok) {
+            history.push('/spots');
+        } else {
+            alert('There was an error creating the spot');
+        }
+
     }
 
     return (
@@ -104,40 +109,23 @@ function SpotsCreatePage() {
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                 />
-                <input
-                    type='url'
-                    placeholder='Preview Image URL'
-                    value={images[0]}
-                    onChange={(e) => setImages([e.target.value, images[1], images[2], images[3], images[4]])}
-                />
-                <input
-                    type='url'
-                    placeholder='Image URL'
-                    value={images[1]}
-                    onChange={(e) => setImages([images[0], e.target.value, images[2], images[3], images[4]])}
-                />
-                                <input
-                    type='url'
-                    placeholder='Image URL'
-                    value={images[2]}
-                    onChange={(e) => setImages([images[0], images[1] ,e.target.value, images[3], images[4]])}
-                />
-                                <input
-                    type='url'
-                    placeholder='Image URL'
-                    value={images[3]}
-                    onChange={(e) => setImages([images[0], images[1], images[2], e.target.value, images[4]])}
-                />
-                                <input
-                    type='url'
-                    placeholder='Image URL'
-                    value={images[4]}
-                    onChange={(e) => setImages([images[0], images[1], images[2], images[3], e.target.value])}
-                />
+                {images.map((image, index) => (
+                    <input
+                        key={index}
+                        type='url'
+                        placeholder={`Image URL ${index + 1}`}
+                        value={image}
+                        onChange={(e) => {
+                            const updatedImages = [...images];
+                            updatedImages[index] = e.target.value;
+                            setImages(updatedImages);
+                        }}
+                    />
+                ))}
                 <button type='submit'>Create Spot</button>
             </form>
         </div>
     )
 }
 
-export default SpotsCreatePage;
+export default SpotCreatePage;
