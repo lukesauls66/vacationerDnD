@@ -138,6 +138,6 @@ function SpotsCreatePage() {
             </form>
         </div>
     )
-
-
 }
+
+export default SpotsCreatePage;
