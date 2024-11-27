@@ -25,9 +25,16 @@ function Navigation({ isLoaded }) {
                     <span className='home-container'><WaterDrop /> WaterBnB</span>
                 </NavLink>
             </li>
+            {sessionUser && (
+                <li>
+                    <NavLink to='/spots/new' className='create-spot-btn'>
+                        Create a New Spot
+                    </NavLink>
+                </li>
+            )}
             {isLoaded && (
                 <li>
-                    <ProfileButton user={sessionUser} />
+                    <ProfileButton className='profile-btn' user={sessionUser} />
                 </li>
             )}
         </ul>

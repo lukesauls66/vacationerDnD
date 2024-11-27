@@ -38,6 +38,7 @@ a {
     color: #007573;
 }
 
+
 .profile-dropdown {
     display: none;
     position: absolute;
@@ -69,3 +70,23 @@ button:hover {
     color: #aaa;
 }
 
+.create-spot-btn {
+    position: relative;
+    top: 1.5%;
+    left: 30%;
+    text-decoration: none;
+    color: #0CEFEB;
+    font-size: 18px;
+    margin-left: 400px;
+}
+
+@media (max-width: 768px) {
+    ul {
+        flex-wrap: wrap;
+        justify-content: center; /* Adjusts alignment for smaller screens */
+    }
+
+    li {
+        margin: 5px;
+    }
+}
