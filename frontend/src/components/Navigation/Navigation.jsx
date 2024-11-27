@@ -9,7 +9,7 @@ function Navigation({ isUserLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   const sessionLinks = sessionUser ? (
-    <div className="new-spot-and-user-button">
+    <div className="new-spot-and-user-button-container">
       <div className="new-spot-link-container">
         <a className="new-spot-link" href="/spots/new">
           Create a New Spot

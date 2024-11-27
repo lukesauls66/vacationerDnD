@@ -383,21 +383,21 @@ router.post(
       .exists({ checkFalsey: true })
       .isLength({ min: 1 })
       .withMessage("Country is required"),
-    check("lat")
-      .exists({ checkFalsey: true })
-      .isFloat({ min: -90, max: 90 })
-      .withMessage("Latitude must be within -90 and 90"),
-    check("lng")
-      .exists({ checkFalsey: true })
-      .isFloat({ min: -180, max: 180 })
-      .withMessage("Longitude must be within -180 and 180"),
+    // check("lat")
+    //   .exists({ checkFalsey: true })
+    //   .isFloat({ min: -90, max: 90 })
+    //   .withMessage("Latitude must be within -90 and 90"),
+    // check("lng")
+    //   .exists({ checkFalsey: true })
+    //   .isFloat({ min: -180, max: 180 })
+    //   .withMessage("Longitude must be within -180 and 180"),
     check("name")
       .exists({ checkFalsey: true })
       .isLength({ max: 50 })
       .withMessage("Name must be less than 50 characters"),
     check("description")
       .exists({ checkFalsey: true })
-      .isLength({ min: 1 })
+      .isLength({ min: 30 })
       .withMessage("Description is required"),
     check("price")
       .exists({ checkFalsey: true })
@@ -412,12 +412,12 @@ router.post(
         city,
         state,
         country,
-        lat,
-        lng,
+        // lat,
+        // lng,
         name,
         description,
         price,
-        previewImage,
+        // previewImage,
       } = req.body;
 
       const userId = req.user.id;
@@ -428,13 +428,14 @@ router.post(
         city,
         state,
         country,
-        lat,
-        lng,
+        // lat,
+        // lng,
         name,
         description,
         price,
-        previewImage,
+        // previewImage,
       });
+      console.log("new spot: ", newSpot);
 
       res.status(201).json(newSpot);
     } catch (err) {

@@ -41,7 +41,9 @@ li {
     padding-top: 1.5rem;
     padding-bottom: 2rem;
     background-color: rgba(163, 220, 247);
-    min-width: 100vw;
+    /* max-width: 50rem; */
+    width: 125%;
+    /* min-width: 20rem; */
   }
 }
 
@@ -67,14 +69,6 @@ li {
   text-decoration: none;
 }
 
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 0.8rem;
-  margin-top: 0.3rem;
-}
-
 .profile-button {
   display: flex;
   justify-content: center;
@@ -90,14 +84,77 @@ li {
   background-color: black;
 }
 
-.new-spot-and-user-button {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+@media (min-width: 556px) {
+  .new-spot-and-user-button-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .new-spot-link-container {
+    padding-top: 0.5rem;
+  }
+
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0.8rem;
+    margin-top: 0.3rem;
+  }
+
+  .profile-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.5rem;
+    height: 2.5rem;
+    width: 5rem;
+    color: red;
+    margin-right: 4rem;
+    border-radius: 2rem;
+    border-color: rgba(0, 0, 0, 0.5);
+    background-color: black;
+  }
 }
 
-.new-spot-link-container {
-  padding-top: 0.5rem;
+@media (min-width: 319px) and (max-width: 555px) {
+  .new-spot-and-user-button-container {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    padding-right: 2.3rem;
+    gap: 1rem;
+  }
+
+  .new-spot-link-container {
+    display: flex;
+    align-content: center;
+    justify-items: center;
+  }
+
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 0.3rem;
+  }
+
+  .profile-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.5rem;
+    height: 2.5rem;
+    width: 5rem;
+    color: red;
+    margin-right: 0rem;
+    border-radius: 2rem;
+    border-color: rgba(0, 0, 0, 0.5);
+    background-color: black;
+  }
 }
 
 .new-spot-link {

@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
-// import { useNavigate } from "react-router-dom";
 import * as sessionActions from "../../store/slices/sessionSlice";
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const errors = useSelector((state) => state.session.errors);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +41,6 @@ function LoginFormModal() {
   const signInDemoUser = () => {
     setCredential("demouser");
     setPassword("password6");
-    // navigate("/");
   };
 
   return (

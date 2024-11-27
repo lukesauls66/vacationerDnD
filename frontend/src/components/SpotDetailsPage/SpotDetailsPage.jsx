@@ -43,24 +43,24 @@ function SpotDetailsPage() {
             <div className="spot-images-container">
               <img
                 className="preview-spot-image"
-                src={currSpots?.SpotImages[0].url}
+                src={currSpots?.SpotImages[0]?.url}
               />
               <div className="inner-spot-images-container">
                 <img
                   className="spot-image"
-                  src={currSpots?.SpotImages[1].url}
+                  src={currSpots?.SpotImages[1]?.url}
                 />
                 <img
                   className="spot-image"
-                  src={currSpots?.SpotImages[2].url}
+                  src={currSpots?.SpotImages[2]?.url}
                 />
                 <img
                   className="spot-image"
-                  src={currSpots?.SpotImages[3].url}
+                  src={currSpots?.SpotImages[3]?.url}
                 />
                 <img
                   className="spot-image"
-                  src={currSpots?.SpotImages[4].url}
+                  src={currSpots?.SpotImages[4]?.url}
                 />
               </div>
             </div>
