@@ -5,15 +5,6 @@
     margin: 20px;
 }
 
-/* .spot-card {
-    width: 300px;
-    margin: 15px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    transition: transform 0.3s ease-in-out;
-} */
 
 .spot-card {
     width: calc(25% - 20px); /* adjusts the width for responsive columns */
@@ -66,6 +57,7 @@
     color: #4CAF50;
     margin-top: 10px;
 }
+
 
 .spot-rating {
     font-size: 14px;

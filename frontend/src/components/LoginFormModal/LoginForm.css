@@ -28,3 +28,20 @@
     font-size: 2rem;
     color: #333
 }
+
+button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.demo-user {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 10px;
+    color: #007bff; /* Blue link color */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.demo-user:hover {
+    text-decoration: underline;
+}

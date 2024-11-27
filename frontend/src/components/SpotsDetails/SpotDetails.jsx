@@ -43,7 +43,7 @@ function SpotDetails() {
                 </div>
                 <div className='spot-rating'>⭐ {spot.rating}</div>
               </div>
-              <div className='spot-price'>${spot.price} / night</div>
+              <div className='spot-price'>${spot.price} night</div>
             </div>
           </Link>
         </div>
