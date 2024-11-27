@@ -1,18 +1,22 @@
-import * as sessionActions from '../../store/session'
-
+import * as sessionActions from '../../store/session';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function UserSpotsPage() {
     const dispatch = useDispatch();
-    const userSpots = useSelector((state) => state.session.userSpots);
+    // const userSpots = useSelector((state) => state.session.userSpots); 
+
+    const userSpots = useSelector((state) => {
+        console.log('Redux State:', state);
+        return state.session.userSpots;
+    })
 
     useEffect(() => {
-        dispatch(sessionActions.getUserSpots());
+        dispatch(sessionActions.getUserSpots()); 
     }, [dispatch]);
 
     if (!userSpots.length) {
-        return <p>You have no spots yet.</p>
+        return <p>You have no spots yet.</p>;
     }
 
     return (
@@ -29,7 +33,7 @@ function UserSpotsPage() {
                 ))}
             </ul>
         </div>
-    )
+    );
 }
 
 export default UserSpotsPage;

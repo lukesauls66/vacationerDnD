@@ -77,8 +77,9 @@ export const logout = () => async (dispatch) => {
 export const getUserSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/session/spots');
     const data = await response.json();
-    if (data.spots) {
-        dispatch(setUserSpots(data.spots));
+    console.log('Fetched spots:', data.Spots);
+    if (data.Spots) {
+        dispatch(setUserSpots(data.Spots));
     }
     return response;
 }
@@ -97,6 +98,7 @@ const sessionReducer = (state = initialState, action) => {
         case SIGNUP_USER:
             return { ...state, user: action.payload };
         case GET_USER_SPOTS:
+            console.log('Reducer received spots:', action.payload)
             return { ...state, userSpots: action.payload };
         default:
             return state;
