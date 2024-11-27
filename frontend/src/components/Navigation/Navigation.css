@@ -71,9 +71,6 @@ button:hover {
 }
 
 .create-spot-btn {
-    position: relative;
-    top: 1.5%;
-    left: 30%;
     text-decoration: none;
     color: #0CEFEB;
     font-size: 18px;

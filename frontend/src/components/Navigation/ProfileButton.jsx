@@ -3,8 +3,8 @@ import * as sessionActions from '../../store/session';
 
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-// import { MdWaterDrop } from "react-icons/md";
 import { PiUserListBold } from "react-icons/pi";
+import { Link } from 'react-router-dom'
 
 import OpenModalButton from './OpenModalButton'
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
@@ -63,6 +63,15 @@ function ProfileButton({ user }) {
                     <>
                         <li>Hello, {user.firstName}</li>
                         <li>{user.email}</li>
+
+                        <hr />
+
+                        <li>
+                            <Link to={'/user/spots'} onClick={closeMenu}>
+                                Manage Spots
+                            </Link>
+                        </li>
+
                         <li>
                             <button onClick={logout}>Log Out</button>
                         </li>
