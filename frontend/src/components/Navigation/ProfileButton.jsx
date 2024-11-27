@@ -3,17 +3,18 @@ import * as sessionActions from '../../store/session';
 
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { MdWaterDrop } from "react-icons/md";
+// import { MdWaterDrop } from "react-icons/md";
+import { PiUserListBold } from "react-icons/pi";
 
 import OpenModalButton from './OpenModalButton'
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
 
 
-const WaterDrop = () => {
+const UserList = () => {
     return (
         <div style={{ color: '#0cefeb', fontSize:'50px', marginTop: '10px'}}>
-            <MdWaterDrop />
+            <PiUserListBold />
         </div>
     );
 };
@@ -55,7 +56,7 @@ function ProfileButton({ user }) {
     return (
         <div>
             <button onClick={toggleMenu}>
-                <WaterDrop />
+                <UserList />
             </button>
             <ul className={ulClassName} ref={ulRef}>
                 {user ? (

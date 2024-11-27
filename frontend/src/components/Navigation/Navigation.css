@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
 
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -27,7 +28,13 @@ a {
     font-family: "Parkinsans", sans-serif;
 }
 
-.home-btn:hover {
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-container:hover {
     color: #007573;
 }
 
