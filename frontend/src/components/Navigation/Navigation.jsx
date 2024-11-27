@@ -19,7 +19,7 @@ function Navigation({ isLoaded }) {
 
 
     return (
-        <ul>
+        <ul className='nav-bar'>
             <li>
                 <NavLink to='/' className='home-btn'>
                     <span className='home-container'><WaterDrop /> WaterBnB</span>

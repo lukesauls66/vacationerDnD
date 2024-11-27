@@ -6,12 +6,10 @@ import * as sessionActions from './store/session';
 import LandingPage from "./components/LandingPage/LandingPage";
 import SpotPage from "./components/SpotsPage/SpotPage";
 import UserSpotsPage from "./components/UserSpotsPage/UserSpotsPage";
-// import SpotCreatePage from "./components/SpotsCreatePage/SpotsCreatePage";
 
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  // const [error, setError] = useState(null);
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser())

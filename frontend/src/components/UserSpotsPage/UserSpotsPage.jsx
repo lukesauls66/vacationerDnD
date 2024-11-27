@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 function UserSpotsPage() {
     const dispatch = useDispatch();
-    // const userSpots = useSelector((state) => state.session.userSpots); 
 
     const userSpots = useSelector((state) => {
         console.log('Redux State:', state);
@@ -22,7 +21,7 @@ function UserSpotsPage() {
     return (
         <div>
             <h1>Your Spots</h1>
-            <ul>
+            <ul className='user-spots'>
                 {userSpots.map((spot) => (
                     <li key={spot.id}>
                         <h3>{spot.name}</h3>
