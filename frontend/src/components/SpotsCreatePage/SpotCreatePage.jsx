@@ -1,14 +1,12 @@
-import * as spotActions from '../../store/spot';
+import * as sessionActions from '../../store/session';
 
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+
 
 function SpotCreatePage() {
     const dispatch = useDispatch();
-    const history = useHistory();
 
-    const sessionUser = useSelector(state => state.session.user);
 
     const [country, setCountry] = useState('');
     const [street, setStreet] = useState('');
@@ -20,41 +18,20 @@ function SpotCreatePage() {
     const [price, setPrice] = useState('');
     const [images, setImages] = useState(['', '', '', '', '']);
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!sessionUser) {
-            alert('You must be logged in to create a spot');
-            history.push('/login');
-            return;
-        }
-
-        if (!country || !street || !city || !lat || !lng || !name || !price) {
-            alert('Please fill out all the required fields');
-            return;
-        }
-
         const spotData = {
-            country,
-            street,
-            city,
-            lat,
-            lng,
-            description,
             name,
-            price,
-            images
+            description,
+            city,
+            country,
+            price
         };
 
-        const response = dispatch(spotActions.createNewSpot(spotData));
-
-        if (response.ok) {
-            history.push('/spots');
-        } else {
-            alert('There was an error creating the spot');
-        }
-
-    }
+        await dispatch(sessionActions.createUserSpot(spotData));
+    };
 
     return (
         <div>
@@ -128,4 +105,114 @@ function SpotCreatePage() {
     )
 }
 
+
 export default SpotCreatePage;
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+
+//         if (!sessionUser) {
+//             alert('You must be logged in to create a spot');
+//             history.push('/login');
+//             return;
+//         }
+
+//         if (!country || !street || !city || !lat || !lng || !name || !price) {
+//             alert('Please fill out all the required fields');
+//             return;
+//         }
+
+//         const spotData = {
+//             country,
+//             street,
+//             city,
+//             lat,
+//             lng,
+//             description,
+//             name,
+//             price,
+//             images
+//         };
+
+//         const response = dispatch(spotActions.createNewSpot(spotData));
+
+//         if (response.ok) {
+//             history.push('/spots');
+//         } else {
+//             alert('There was an error creating the spot');
+//         }
+
+//     }
+
+//     return (
+//         <div>
+//             <h1>Create a New Spot</h1>
+//             <form onSubmit={handleSubmit}>
+//                 <input
+//                     type='text'
+//                     placeholder='Country'
+//                     value={country}
+//                     onChange={(e) => setCountry(e.target.value)}
+//                 />
+//                 <input
+//                     type='text'
+//                     placeholder='Street Address'
+//                     value={street}
+//                     onChange={(e) => setStreet(e.target.value)}
+//                 />
+//                 <input
+//                     type='text'
+//                     placeholder='City'
+//                     value={city}
+//                     onChange={(e) => setCity(e.target.value)}
+//                 />
+//                 <input
+//                     type='number'
+//                     placeholder='Latitude'
+//                     value={lat}
+//                     onChange={(e) => setLat(e.target.value)}
+//                     step='0.0001'
+//                 />
+//                 <input
+//                     type='number'
+//                     placeholder='Longitude'
+//                     value={lng}
+//                     onChange={(e) => setLng(e.target.value)}
+//                     step='0.0001'
+//                 />
+//                 <textarea
+//                     value={description}
+//                     onChange={(e) => setDescription(e.target.value)}
+//                     placeholder='Enter a description'
+//                 />
+//                 <input
+//                     type='text'
+//                     placeholder='Title'
+//                     value={name}
+//                     onChange={(e) => setName(e.target.value)}
+//                 />
+//                 <input
+//                     type='number'
+//                     placeholder='price'
+//                     value={price}
+//                     onChange={(e) => setPrice(e.target.value)}
+//                 />
+//                 {images.map((image, index) => (
+//                     <input
+//                         key={index}
+//                         type='url'
+//                         placeholder={`Image URL ${index + 1}`}
+//                         value={image}
+//                         onChange={(e) => {
+//                             const updatedImages = [...images];
+//                             updatedImages[index] = e.target.value;
+//                             setImages(updatedImages);
+//                         }}
+//                     />
+//                 ))}
+//                 <button type='submit'>Create Spot</button>
+//             </form>
+//         </div>
+//     )
+// }
+
+// export default SpotCreatePage;

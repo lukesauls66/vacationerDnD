@@ -67,7 +67,7 @@ function ProfileButton({ user }) {
                         <hr />
 
                         <li>
-                            <Link to={'/user/spots'} onClick={closeMenu}>
+                            <Link className='manage-spots' to={'/user/spots'} onClick={closeMenu}>
                                 Manage Spots
                             </Link>
                         </li>

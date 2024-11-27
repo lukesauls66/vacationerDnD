@@ -4,6 +4,7 @@ const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 const SIGNUP_USER = 'users/signupUser';
 const GET_USER_SPOTS = 'session/getUserSpots';
+const CREATE_USER_SPOT = 'session/createUserSpot'
 
 
 const setUser = (user) => {
@@ -25,6 +26,13 @@ const setUserSpots = (spots) => {
         payload: spots
     }
 }
+
+const addUserSpot = (spot) => {
+    return {
+        type: CREATE_USER_SPOT,
+        payload: spot
+    };
+};
 
 export const restoreUser = () => async (dispatch) => {
     const response = await csrfFetch('/api/session');
@@ -84,6 +92,18 @@ export const getUserSpots = () => async (dispatch) => {
     return response;
 }
 
+export const createUserSpot = (spotData) => async (dispatch) => {
+    const response = await csrfFetch('/api/spots', {
+        method: 'POST',
+        body: JSON.stringify(spotData)
+    });
+    const data = await response.json();
+    if (data.Spot) {
+        dispatch(addUserSpot(data.Spot))
+    }
+    return response
+}
+
 const initialState = { 
     user: null, 
     userSpots: []
@@ -100,6 +120,11 @@ const sessionReducer = (state = initialState, action) => {
         case GET_USER_SPOTS:
             console.log('Reducer received spots:', action.payload)
             return { ...state, userSpots: action.payload };
+        case CREATE_USER_SPOT:
+            return {
+                ...state,
+                userSpots: [...state.userSpots, action.payload]
+            };    
         default:
             return state;
     }
