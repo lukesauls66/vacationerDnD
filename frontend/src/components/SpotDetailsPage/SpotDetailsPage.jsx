@@ -11,7 +11,6 @@ function SpotDetailsPage() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const { currSpots, loading, errors } = useSelector((state) => state.spots);
-  console.log("CurrSpots:", currSpots);
   const { user } = useSelector((state) => state.session);
 
   useEffect(() => {
