@@ -66,7 +66,7 @@ function SpotCreatePage() {
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                     />
-                    
+                    <span>, </span>
                     <input
                         type='text'
                         placeholder='State'
@@ -74,20 +74,23 @@ function SpotCreatePage() {
                         onChange={(e) => setState(e.target.value)}
                     />
                 </div>
-                <input
-                    type='number'
-                    placeholder='Latitude'
-                    value={lat}
-                    onChange={(e) => setLat(e.target.value)}
-                    step='0.0001'
-                />
-                <input
-                    type='number'
-                    placeholder='Longitude'
-                    value={lng}
-                    onChange={(e) => setLng(e.target.value)}
-                    step='0.0001'
-                />
+                <div className='lat-lng-container'>
+                    <input
+                        type='number'
+                        placeholder='Latitude'
+                        value={lat}
+                        onChange={(e) => setLat(e.target.value)}
+                        step='0.0001'
+                    />
+                    <span>, </span>
+                    <input
+                        type='number'
+                        placeholder='Longitude'
+                        value={lng}
+                        onChange={(e) => setLng(e.target.value)}
+                        step='0.0001'
+                    />
+                </div>
                 <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}

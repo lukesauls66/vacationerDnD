@@ -5,13 +5,14 @@ body {
 
 .create-spot-form {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: none;
+    box-shadow: none;
 }
 
 .create-spot-form input,
@@ -19,12 +20,18 @@ body {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 2px solid black;
     border-radius: 3px;
     font-size: 16px;;
 }
 
 .city-state-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lat-lng-container {
     display: flex;
     align-items: center;
     gap: 10px;
