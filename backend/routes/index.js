@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "production") {
   const path = require("path");
   router.get("/", (req, res) => {
     res.cookie("XSRF-TOKEN", req.csrfToken());
-    return res.sendFile(
+    res.sendFile(
       path.resolve(__dirname, "../../frontend", "dist", "index.html")
     );
   });
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === "production") {
 
   router.get(/^(?!\/?api).*/, (req, res) => {
     res.cookie("XSRF-TOKEN", req.csrfToken());
-    return res.sendFile(
+    res.sendFile(
       path.resolve(__dirname, "../../frontend", "dist", "index.html")
     );
   });
@@ -25,8 +25,11 @@ if (process.env.NODE_ENV === "production") {
 
 if (process.env.NODE_ENV !== "production") {
   router.get("/api/csrf/restore", (req, res) => {
-    res.cookie("XSRF-TOKEN", req.csrfToken());
-    return res.json({});
+    const csrfToken = req.csrfToken();
+    res.cookie("XSRF-TOKEN", csrfToken);
+    res.status(200).json({
+      "XSRF-Token": csrfToken,
+    });
   });
 }
 
