@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/slices/sessionSlice";
 import "./SignupForm.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
-  const backendErrors = useSelector((state) => state.session.errors);
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
