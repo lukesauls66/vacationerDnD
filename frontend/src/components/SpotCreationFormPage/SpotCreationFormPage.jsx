@@ -16,7 +16,7 @@ function SpotCreationFormPage() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [images, setImages] = useState([]);
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState({});
 
   const spotCreationValidationErrors = ({
     country,
@@ -104,7 +104,7 @@ function SpotCreationFormPage() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setErrors("");
+    setErrors({});
 
     const spotCreationClientSideErrors = spotCreationValidationErrors({
       country,
@@ -245,10 +245,8 @@ function SpotCreationFormPage() {
               required
             />
           </label>
-          {errors.spotCreationClientSideErrors?.description && (
-            <p className="new-spot-credential-error">
-              {errors.spotCreationClientSideErrors.description}
-            </p>
+          {errors?.description && (
+            <p className="new-spot-credential-error">{errors.description}</p>
           )}
         </div>
         <div className="spot-creation-form-section-3">
@@ -272,10 +270,8 @@ function SpotCreationFormPage() {
               onChange={(e) => setName(e.target.value)}
             />
           </label>
-          {errors.spotCreationClientSideErrors?.name && (
-            <p className="new-spot-credential-error">
-              {errors.spotCreationClientSideErrors.name}
-            </p>
+          {errors?.name && (
+            <p className="new-spot-credential-error">{errors.name}</p>
           )}
         </div>
         <div className="spot-creation-form-section-4">
@@ -300,10 +296,8 @@ function SpotCreationFormPage() {
               />
             </label>
           </div>
-          {errors.spotCreationClientSideErrors?.price && (
-            <p className="new-spot-credential-error">
-              {errors.spotCreationClientSideErrors.price}
-            </p>
+          {errors?.price && (
+            <p className="new-spot-credential-error">{errors.price}</p>
           )}
         </div>
         <div className="spot-creation-form-section-5">
