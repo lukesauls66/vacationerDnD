@@ -28,8 +28,6 @@ function ReviewSubpage() {
     }
   }, [spotId]);
 
-  console.log("reviews", reviews);
-
   return (
     <div className="reviews-subpage">
       {reviews.length ? (

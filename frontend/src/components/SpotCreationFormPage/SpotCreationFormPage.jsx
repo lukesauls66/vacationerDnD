@@ -17,7 +17,6 @@ function SpotCreationFormPage() {
   const [price, setPrice] = useState("");
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState("");
-  console.log("errors state: ", errors);
 
   const spotCreationValidationErrors = ({
     country,
@@ -124,8 +123,6 @@ function SpotCreationFormPage() {
 
     MakeNewSpot();
   };
-
-  console.log(images);
 
   const handleImagesUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -322,6 +319,7 @@ function SpotCreationFormPage() {
                 type="file"
                 multiple
                 onChange={handleImagesUpload}
+                required
               />
             </label>
           </div>
