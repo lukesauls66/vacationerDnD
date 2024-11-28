@@ -100,6 +100,7 @@ router.get("/bookings", requireAuth, async (req, res) => {
 
 router.post("/login", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
+  console.log("JWT Secret: ", process.env.JWT_SECRET);
 
   const user = await User.unscoped().findOne({
     where: {

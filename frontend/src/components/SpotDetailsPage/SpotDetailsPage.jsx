@@ -11,6 +11,7 @@ function SpotDetailsPage() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const { currSpots, loading, errors } = useSelector((state) => state.spots);
+  console.log("CurrSpots:", currSpots);
   const { user } = useSelector((state) => state.session);
 
   useEffect(() => {
@@ -43,24 +44,40 @@ function SpotDetailsPage() {
             <div className="spot-images-container">
               <img
                 className="preview-spot-image"
-                src={currSpots?.SpotImages[0]?.url}
+                src={currSpots?.previewImage}
               />
               <div className="inner-spot-images-container">
                 <img
                   className="spot-image"
-                  src={currSpots?.SpotImages[1]?.url}
+                  src={
+                    currSpots?.additionImageUrls
+                      ? currSpots?.additionImageUrls[1]
+                      : currSpots?.SpotImages[1].url
+                  }
                 />
                 <img
                   className="spot-image"
-                  src={currSpots?.SpotImages[2]?.url}
+                  src={
+                    currSpots?.additionImageUrls
+                      ? currSpots?.additionImageUrls[2]
+                      : currSpots?.SpotImages[2].url
+                  }
                 />
                 <img
                   className="spot-image"
-                  src={currSpots?.SpotImages[3]?.url}
+                  src={
+                    currSpots?.additionImageUrls
+                      ? currSpots?.additionImageUrls[3]
+                      : currSpots?.SpotImages[3].url
+                  }
                 />
                 <img
                   className="spot-image"
-                  src={currSpots?.SpotImages[4]?.url}
+                  src={
+                    currSpots?.additionImageUrls
+                      ? currSpots?.additionImageUrls[4]
+                      : currSpots?.SpotImages[4].url
+                  }
                 />
               </div>
             </div>

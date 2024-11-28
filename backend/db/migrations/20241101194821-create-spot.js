@@ -71,6 +71,10 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: true,
         },
+        additionImageUrls: {
+          type: Sequelize.JSON,
+          allowNull: true,
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,

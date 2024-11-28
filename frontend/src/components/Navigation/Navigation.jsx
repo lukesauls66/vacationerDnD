@@ -11,7 +11,7 @@ function Navigation({ isUserLoaded }) {
   const sessionLinks = sessionUser ? (
     <div className="new-spot-and-user-button-container">
       <div className="new-spot-link-container">
-        <a className="new-spot-link" href="/spots/new">
+        <a className="new-spot-link" href="/spots/upload">
           Create a New Spot
         </a>
       </div>

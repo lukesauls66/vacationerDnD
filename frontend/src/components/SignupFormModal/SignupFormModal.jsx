@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { csrfFetch } from "../../store/csrf";
 import * as sessionActions from "../../store/slices/sessionSlice";
 import "./SignupForm.css";
 
@@ -16,8 +15,6 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
-
-  console.log("Backend:", backendErrors);
 
   const validationErrors = ({ firstName, lastName }) => {
     const newValidationErrors = {};
@@ -42,27 +39,6 @@ function SignupFormModal() {
 
     return newErrors;
   };
-
-  // const checkUsername = async (username) => {
-  //   try {
-  //     const res = await csrfFetch(`/api/users/check-username`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ username: username }),
-  //     });
-  //     console.log("testing fetch");
-
-  //     if (res.status === 400) {
-  //       return setErrors((prevErrors) => ({
-  //         ...prevErrors,
-  //         username: "Username must be unique",
-  //       }));
-  //       // return "Username must be unique";
-  //     }
-  //   } catch (err) {
-  //     console.error("Error checking username", err);
-  //   }
-  // };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -101,7 +77,6 @@ function SignupFormModal() {
           ...prevErrors,
           backendErrors: res.payload,
         }));
-        // checkUsername(username);
         return;
       }
 
@@ -114,8 +89,6 @@ function SignupFormModal() {
       }));
     }
   };
-
-  console.log("frontside:", errors);
 
   return (
     <div className="signup-form-container">
@@ -220,7 +193,6 @@ function SignupFormModal() {
               {errors.passwordConfirmation.confirmPassword}
             </p>
           )}
-          {/* {errors.backendErrors && <p>{errors.backendErrors}</p>} */}
           <button className="signup-button" type="submit">
             Sign Up
           </button>
