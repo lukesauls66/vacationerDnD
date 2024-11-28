@@ -1,3 +1,5 @@
+import './SpotCreatePage.css';
+
 import * as sessionActions from '../../store/session';
 
 import { useState } from 'react';
@@ -9,25 +11,33 @@ function SpotCreatePage() {
 
 
     const [country, setCountry] = useState('');
-    const [street, setStreet] = useState('');
+    const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
+    const [state, setState] = useState('');
     const [lat, setLat] = useState('');
     const [lng, setLng] = useState('');
     const [description, setDescription] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
-    const [images, setImages] = useState(['', '', '', '', '']);
+    const [previewImage, setPreviewImage] = useState('');
+    const [images, setImages] = useState(['', '', '', '']);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const spotData = {
-            name,
-            description,
-            city,
             country,
-            price
+            address,
+            city,
+            state,
+            lat,
+            lng,
+            description,
+            name,
+            price,
+            previewImage,
+            images
         };
 
         await dispatch(sessionActions.createUserSpot(spotData));
@@ -36,7 +46,7 @@ function SpotCreatePage() {
     return (
         <div>
             <h1>Create a New Spot</h1>
-            <form onSubmit={handleSubmit}>
+            <form className='create-spot-form' onSubmit={handleSubmit}>
                 <input
                     type='text'
                     placeholder='Country'
@@ -46,15 +56,24 @@ function SpotCreatePage() {
                 <input
                     type='text'
                     placeholder='Street Address'
-                    value={street}
-                    onChange={(e) => setStreet(e.target.value)}
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                 />
-                <input
-                    type='text'
-                    placeholder='City'
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                />
+                <div className='city-state-container'>
+                    <input
+                        type='text'
+                        placeholder='City'
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                    />
+                    
+                    <input
+                        type='text'
+                        placeholder='State'
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                    />
+                </div>
                 <input
                     type='number'
                     placeholder='Latitude'
@@ -82,9 +101,15 @@ function SpotCreatePage() {
                 />
                 <input
                     type='number'
-                    placeholder='price'
+                    placeholder='Price'
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
+                />
+                <input
+                    type='url'
+                    placeholder='Preview Image'
+                    value={previewImage}
+                    onChange={(e) => setPreviewImage(e.target.value)}
                 />
                 {images.map((image, index) => (
                     <input
