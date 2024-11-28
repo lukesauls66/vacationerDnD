@@ -15,14 +15,8 @@ function SpotCreationFormPage() {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [previewImage, setPreviewImage] = useState(null);
-  const [previewImageUrl, setPreviewImageUrl] = useState(null);
-  const [imageUrl1, setImageUrl1] = useState(null);
-  const [imageUrl2, setImageUrl2] = useState(null);
-  const [imageUrl3, setImageUrl3] = useState(null);
-  const [imageUrl4, setImageUrl4] = useState(null);
+  const [images, setImages] = useState([]);
   const [errors, setErrors] = useState("");
-  const [previewImgErrors, setPreviewImgErrors] = useState("");
   console.log("errors state: ", errors);
 
   const spotCreationValidationErrors = ({
@@ -55,7 +49,8 @@ function SpotCreationFormPage() {
     if (!name) {
       newValidationErrors.name = "Name is required";
     }
-    if (price !== Number(price) || price < 1) {
+    const parsedPrice = Number(price);
+    if (isNaN(parsedPrice) || parsedPrice < 1) {
       newValidationErrors.price = "Price per night must be a positive number";
     }
 
@@ -64,37 +59,53 @@ function SpotCreationFormPage() {
 
   const MakeNewSpot = async () => {
     try {
-      const res = await csrfFetch("/api/spots", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          country,
-          address,
-          city,
-          state,
-          description,
-          name,
-          price,
-        }),
+      const formData = new FormData();
+
+      formData.append("country", country);
+      formData.append("address", address);
+      formData.append("city", city);
+      formData.append("state", state);
+      formData.append("description", description);
+      formData.append("name", name);
+      formData.append("price", Number(price));
+
+      images.forEach((image) => {
+        formData.append("images", image);
       });
 
-      console.log("res from creation: ", res);
+      const res = await csrfFetch("/api/spots/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("Server error:", errorData);
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
 
       const data = await res.json();
-      console.log("data from creation: ", data);
-
       if (data.id) {
         navigate(`/spots/${data.id}`);
       } else {
         console.error("Unable to create spot");
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          serverError: "Unable to create spot",
+        }));
       }
     } catch (err) {
       console.error("Error: ", err);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        serverError: err.message || "An unexpected error occurred",
+      }));
     }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setErrors("");
 
     const spotCreationClientSideErrors = spotCreationValidationErrors({
       country,
@@ -107,40 +118,22 @@ function SpotCreationFormPage() {
     });
 
     if (Object.keys(spotCreationClientSideErrors).length > 0) {
-      setErrors({ spotCreationClientSideErrors });
+      setErrors(spotCreationClientSideErrors);
+      return;
     }
 
     MakeNewSpot();
   };
 
-  //   const validFileTypes = ["image/png", "image/jpg", "image/jpeg"];
+  console.log(images);
 
-  const handlePreviewImageUpload = (e) => {
-    // const file = e.target.files[0];
-    // console.log("File type: ", file.type);
-    // if (file) {
-    //   //   if (!validFileTypes.find((type) => type === file.type)) {
-    //   //     setPreviewImgErrors("File must be jpg, jpeg, png format");
-    //   //     return;
-    //   //   }
-    //   //   if (!validFileTypes.includes(file.type)) {
-    //   //     setPreviewImgErrors("File must be jpg, jpeg, png format");
-    //   //     console.log("preview img errors: ", previewImgErrors);
-    //   //     return;
-    //   //   }
-    //   const filetype = file.type.toLowerCase();
-    //   const isValidType = validFileTypes.some((validType) =>
-    //     filetype.startsWith(validType)
-    //   );
-    //   if (!isValidType) {
-    //     setPreviewImgErrors("File must be jpg, jpeg, png format");
-    //     console.log("preview img errors: ", previewImgErrors);
-    //     return;
-    //   }
-    //   setPreviewImage(file);
-    //   const imgUrl = URL.createObjectURL(file);
-    //   setPreviewImageUrl(imgUrl);
-    // }
+  const handleImagesUpload = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length + images.length <= 5) {
+      setImages((prevImages) => [...prevImages, ...files]);
+    } else {
+      alert("You can only upload up to 5 images");
+    }
   };
 
   return (
@@ -322,57 +315,13 @@ function SpotCreationFormPage() {
             <p>Submit a link to at least one photo to publish your spot.</p>
           </div>
           <div className="spot-creation-form-image-url-input-container">
-            <label htmlFor="previewUrl">
+            <label htmlFor="Images">
               <input
-                id="previewUrl"
+                id="Images"
                 className="spot-creation-form-image-url-input"
                 type="file"
-                // placeholder="Preview Image URL"
-                // value={previewImage}
-                onChange={handlePreviewImageUpload}
-              />
-            </label>
-            {previewImgErrors && (
-              <p className="new-spot-credential-error">{previewImgErrors}</p>
-            )}
-            <label htmlFor="imageUrl1">
-              <input
-                id="imageUrl1"
-                className="spot-creation-form-image-url-input"
-                type="file"
-                placeholder="Image URL"
-                value={imageUrl1}
-                onChange={(e) => setImageUrl1(e.target.value)}
-              />
-            </label>
-            <label htmlFor="imageUrl2">
-              <input
-                id="imageUrl2"
-                className="spot-creation-form-image-url-input"
-                type="file"
-                placeholder="Image URL"
-                value={imageUrl2}
-                onChange={(e) => setImageUrl2(e.target.value)}
-              />
-            </label>
-            <label htmlFor="imageUrl3">
-              <input
-                id="imageUrl3"
-                className="spot-creation-form-image-url-input"
-                type="file"
-                placeholder="Image URL"
-                value={imageUrl3}
-                onChange={(e) => setImageUrl3(e.target.value)}
-              />
-            </label>
-            <label htmlFor="imageUrl4">
-              <input
-                id="imageUrl4"
-                className="spot-creation-form-image-url-input"
-                type="file"
-                placeholder="Image URL"
-                value={imageUrl4}
-                onChange={(e) => setImageUrl4(e.target.value)}
+                multiple
+                onChange={handleImagesUpload}
               />
             </label>
           </div>
@@ -382,6 +331,9 @@ function SpotCreationFormPage() {
             Create Spot
           </button>
         </div>
+        {errors.serverError && (
+          <p className="server-error">{errors.serverError}</p>
+        )}
       </form>
     </div>
   );

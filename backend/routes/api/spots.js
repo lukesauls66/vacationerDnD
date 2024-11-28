@@ -2,6 +2,24 @@ const router = require("express").Router();
 const { handleValidationErrors } = require("../../utils/validation");
 const { requireAuth } = require("../../utils/auth");
 const { check, query } = require("express-validator");
+const multer = require("multer");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccessKey,
+  },
+  region: bucketRegion,
+});
 
 const {
   Spot,
@@ -363,9 +381,16 @@ router.get(
   }
 );
 
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024, files: 5 },
+}).array("images", 5);
+
 router.post(
-  "/",
+  "/upload",
   requireAuth,
+  upload,
   [
     check("address")
       .exists({ checkFalsey: true })
@@ -407,18 +432,46 @@ router.post(
   ],
   async (req, res) => {
     try {
-      const {
-        address,
-        city,
-        state,
-        country,
-        // lat,
-        // lng,
-        name,
-        description,
-        price,
-        // previewImage,
-      } = req.body;
+      const { address, city, state, country, name, description, price } =
+        req.body;
+      const files = req.files;
+
+      if (!files || files.length === 0) {
+        return res.status(400).json({ message: "No files uploaded" });
+      }
+
+      const imageUrls = [];
+
+      for (const file of files) {
+        if (!file || !file.buffer) {
+          console.warn("Skipping file with no buffer");
+          continue;
+        }
+
+        const params = {
+          Bucket: bucketName,
+          Key: `/images/${Date.now()}_${file.originalname}`,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+        };
+
+        const command = new PutObjectCommand(params);
+        try {
+          await s3.send(command);
+          const imageUrl = `https://${bucketName}.s3.us-east-2.amazonaws.com/${params.Key}`;
+          imageUrls.push(imageUrl);
+        } catch (error) {
+          throw new Error(`Error uploading image: ${error.message}`);
+        }
+      }
+      if (imageUrls.length === 0) {
+        return res
+          .status(400)
+          .json({ message: "No images uploaded successfully" });
+      }
+
+      const previewImage = imageUrls[0];
+      const additionImageUrls = imageUrls;
 
       const userId = req.user.id;
 
@@ -428,14 +481,12 @@ router.post(
         city,
         state,
         country,
-        // lat,
-        // lng,
         name,
         description,
         price,
-        // previewImage,
+        previewImage,
+        additionImageUrls: additionImageUrls,
       });
-      console.log("new spot: ", newSpot);
 
       res.status(201).json(newSpot);
     } catch (err) {

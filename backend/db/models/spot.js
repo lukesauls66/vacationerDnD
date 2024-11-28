@@ -118,7 +118,10 @@ module.exports = (sequelize, DataTypes) => {
       previewImage: {
         type: DataTypes.STRING,
         allowNull: true,
-        // validate: { isUrl: true },
+      },
+      additionImageUrls: {
+        type: DataTypes.JSON,
+        allowNull: true,
       },
     },
     {

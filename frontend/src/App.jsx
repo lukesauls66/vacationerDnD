@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <SpotDetailsPage />,
       },
       {
-        path: "/spots/new",
+        path: "/spots/upload",
         element: <SpotCreationFormPage />,
       },
       {
