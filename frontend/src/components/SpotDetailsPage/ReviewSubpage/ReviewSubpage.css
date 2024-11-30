@@ -274,6 +274,15 @@
 }
 
 .open-modal-button {
-  width: 8rem;
+  width: 7rem;
   height: 2rem;
+}
+
+.delete-review-button {
+  width: 7rem;
+  height: 1.8rem;
+  border: 0.3mm solid red;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: yellow;
 }

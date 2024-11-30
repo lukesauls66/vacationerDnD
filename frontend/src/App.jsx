@@ -6,6 +6,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import SpotDetailsPage from "./components/SpotDetailsPage/SpotDetailsPage";
 import SpotCreationFormPage from "./components/SpotCreationFormPage/SpotCreationFormPage";
 import GetUsersSpots from "./components/ManageSpotsPage/ManageSpotsPage";
+import EditSpotPage from "./components/EditSpotPage/EditSpotPage";
 import * as sessionActions from "./store/slices/sessionSlice";
 
 const Layout = () => {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <LandingPage />,
+      },
+      {
+        path: "/edit/spots/:spotId",
+        element: <EditSpotPage />,
       },
       {
         path: "/spots/:spotId",

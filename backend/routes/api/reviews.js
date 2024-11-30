@@ -132,7 +132,7 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
     avgRating = sumOfRatings / numReviews;
   }
 
-  await Spot.update({ numReviews, avgRating }, { where: { is: spotId } });
+  await Spot.update({ numReviews, avgRating }, { where: { id: spotId } });
 
   return res.status(200).json({ message: "Successfully deleted" });
 });

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { csrfFetch } from "../../store/csrf";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import DeleteSpotModal from "../EditSpotPage/DeleteSpotModal/DeleteSpotModal";
 import { IoStarSharp } from "react-icons/io5";
 import "./ManageSpotsPage.css";
 
@@ -9,6 +11,7 @@ function GetUsersSpots() {
   const [usersSpots, setUsersSpots] = useState([]);
   const [tooltip, setTooltip] = useState("");
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const [isDeleteSpotModal, setIsDeleteSpotModal] = useState(false);
 
   const GetUsersSpotsDetails = useCallback(async () => {
     const res = await csrfFetch("/api/session/spots");
@@ -43,6 +46,17 @@ function GetUsersSpots() {
   const onCreateSpotClick = (e) => {
     e.preventDefault();
     navigate("/spots/upload");
+  };
+
+  const onEditSpotClick = (e, spotId) => {
+    e.preventDefault();
+    navigate(`/edit/spots/${spotId}`);
+  };
+
+  const openAndCloseDeleteSpotModal = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsDeleteSpotModal(!isDeleteSpotModal);
   };
 
   return (
@@ -97,8 +111,27 @@ function GetUsersSpots() {
                 </div>
                 <p>${spot.price}/night</p>
                 <div className="update-delete-buttons-container">
-                  <button className="update-delete-spot-button">Update</button>
-                  <button className="update-delete-spot-button">Delete</button>
+                  <button
+                    type="button"
+                    className="open-modal-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEditSpotClick(e, spot.id);
+                    }}
+                  >
+                    Update
+                  </button>
+                  <div onClick={openAndCloseDeleteSpotModal}>
+                    <OpenModalButton
+                      buttonText="Delete"
+                      modalComponent={
+                        <DeleteSpotModal
+                          spotId={spot.id}
+                          refreshSpots={GetUsersSpotsDetails}
+                        />
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             );

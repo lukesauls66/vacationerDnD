@@ -187,14 +187,14 @@ router.put(
       .exists({ checkFalsey: true })
       .isLength({ min: 1 })
       .withMessage("Country is required"),
-    check("lat")
-      .exists({ checkFalsey: true })
-      .isFloat({ min: -90, max: 90 })
-      .withMessage("Latitude must be within -90 and 90"),
-    check("lng")
-      .exists({ checkFalsey: true })
-      .isFloat({ min: -180, max: 180 })
-      .withMessage("Longitude must be within -180 and 180"),
+    // check("lat")
+    //   .exists({ checkFalsey: true })
+    //   .isFloat({ min: -90, max: 90 })
+    //   .withMessage("Latitude must be within -90 and 90"),
+    // check("lng")
+    //   .exists({ checkFalsey: true })
+    //   .isFloat({ min: -180, max: 180 })
+    //   .withMessage("Longitude must be within -180 and 180"),
     check("name")
       .exists({ checkFalsey: true })
       .isLength({ max: 50 })
@@ -217,8 +217,8 @@ router.put(
       city,
       state,
       country,
-      lat,
-      lng,
+      // lat,
+      // lng,
       name,
       description,
       price,
@@ -246,12 +246,16 @@ router.put(
     spotToUpdate.city = city;
     spotToUpdate.state = state;
     spotToUpdate.country = country;
-    spotToUpdate.lat = lat;
-    spotToUpdate.lng = lng;
+    // spotToUpdate.lat = lat;
+    // spotToUpdate.lng = lng;
     spotToUpdate.name = name;
     spotToUpdate.description = description;
     spotToUpdate.price = price;
 
+    await spotToUpdate.save();
+
+    res.set("Cache-Control", "no-store");
+    res.set("Pragma", "no-cache");
     res.status(200).json(spotToUpdate);
   }
 );
