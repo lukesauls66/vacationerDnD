@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { csrfFetch } from "../../../store/csrf";
@@ -11,7 +11,7 @@ function ReviewSubpage({ getSpotDetails }) {
   const { currSpots } = useSelector((state) => state.spots);
   const [reviews, setReviews] = useState([]);
 
-  const getReviews = async () => {
+  const getReviews = useCallback(async () => {
     try {
       const res = await csrfFetch(`/api/spots/${spotId}/reviews`);
       const data = await res.json();
@@ -25,11 +25,11 @@ function ReviewSubpage({ getSpotDetails }) {
       console.error(err.message || "This spot couldn't be found");
       setReviews([]);
     }
-  };
+  }, [spotId]);
 
   useEffect(() => {
     getReviews();
-  }, [spotId]);
+  }, [spotId, getReviews]);
 
   const reloadReviews = () => {
     getReviews();
