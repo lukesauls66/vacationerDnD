@@ -432,8 +432,16 @@ router.post(
   ],
   async (req, res) => {
     try {
-      const { address, city, state, country, name, description, price } =
-        req.body;
+      const {
+        address,
+        city,
+        state,
+        country,
+        name,
+        description,
+        price,
+        numReviews = 0,
+      } = req.body;
       const files = req.files;
 
       if (!files || files.length === 0) {
@@ -484,6 +492,7 @@ router.post(
         name,
         description,
         price,
+        numReviews,
         previewImage,
         additionImageUrls: additionImageUrls,
       });
