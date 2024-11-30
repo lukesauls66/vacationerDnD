@@ -67,6 +67,7 @@ function SpotCreationFormPage() {
       formData.append("description", description);
       formData.append("name", name);
       formData.append("price", Number(price));
+      formData.append("numReviews", 0);
 
       images.forEach((image) => {
         formData.append("images", image);

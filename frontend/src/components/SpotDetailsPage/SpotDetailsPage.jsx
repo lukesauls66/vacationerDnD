@@ -13,12 +13,16 @@ function SpotDetailsPage() {
   const { currSpots, loading, errors } = useSelector((state) => state.spots);
   const { user } = useSelector((state) => state.session);
 
-  useEffect(() => {
+  const getSpotDetails = async () => {
     try {
       dispatch(spotsActions.getSpotById(spotId));
     } catch (err) {
       console.error("Error:", err);
     }
+  };
+
+  useEffect(() => {
+    getSpotDetails();
   }, [dispatch, spotId]);
 
   if (loading) return <div>Loading...</div>;
@@ -139,9 +143,12 @@ function SpotDetailsPage() {
                 )}
               </div>
               {noReviewsAndNotTheOwner ? (
-                <p>Be the first to post a review!</p>
+                <>
+                  <p>Be the first to post a review!</p>
+                  <ReviewSubpage getSpotDetails={getSpotDetails} />
+                </>
               ) : (
-                <ReviewSubpage />
+                <ReviewSubpage getSpotDetails={getSpotDetails} />
               )}
             </div>
           </div>

@@ -41,9 +41,7 @@ li {
     padding-top: 1.5rem;
     padding-bottom: 2rem;
     background-color: rgba(163, 220, 247);
-    /* max-width: 50rem; */
     width: 125%;
-    /* min-width: 20rem; */
   }
 }
 
@@ -215,8 +213,8 @@ li {
   right: 4rem;
   z-index: 9999;
   background-color: rgb(245, 225, 228);
-  width: 8rem;
-  height: 9rem;
+  width: 10rem;
+  height: 10rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   border-radius: 0.5rem;
 }
@@ -252,7 +250,6 @@ li {
 .login-form {
   display: flex;
   flex-direction: column;
-  /* gap: 2rem; */
   padding: 0;
 }
 
@@ -263,7 +260,6 @@ li {
 .signup-form {
   display: flex;
   flex-direction: column;
-  /* gap: 2rem; */
   padding: 0;
 }
 
