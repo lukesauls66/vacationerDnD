@@ -23,8 +23,8 @@ module.exports = {
           description:
             "A stunning hotel and restaurant by the serene waters of East Blue. Offering picturesque views, luxurious accommodations, and a peaceful escape for travelers seeking both relaxation and adventure.",
           price: 360.0,
-          numReviews: 25,
-          avgRating: 4.8,
+          numReviews: 0,
+          avgRating: 0,
           previewImage: "https://i.ibb.co/T06ssMn/zeff-house-1.jpg",
         },
         {
@@ -39,8 +39,8 @@ module.exports = {
           description:
             "An opulent mansion nestled by the tranquil Richmond Falls, featuring grand décor and world-class amenities. Ideal for those seeking luxury and elegance, with easy access to scenic views and rich history.",
           price: 370.0,
-          numReviews: 30,
-          avgRating: 4.9,
+          numReviews: 0,
+          avgRating: 0,
           previewImage: "https://i.ibb.co/NNfPMJQ/arlong-house-1.jpg",
         },
         {
@@ -71,8 +71,8 @@ module.exports = {
           description:
             "A modern yet peaceful hotel in the heart of Traverse Town, blending industrial design with comfort. Enjoy tranquil rooms and a quiet atmosphere, just a short walk from town's vibrant culture and landmarks.",
           price: 180.0,
-          numReviews: 20,
-          avgRating: 4.7,
+          numReviews: 0,
+          avgRating: 0,
           previewImage: "https://i.ibb.co/xf44LVk/franky-house-1.jpg",
         },
         {
@@ -87,8 +87,8 @@ module.exports = {
           description:
             "A gothic-style castle perched on a cliff overlooking a dramatic sea. A perfect blend of history and mystery, offering breathtaking views, secluded serenity, and a chance to step into another world.",
           price: 220.0,
-          numReviews: 10,
-          avgRating: 4.6,
+          numReviews: 0,
+          avgRating: 0,
           previewImage: "https://i.ibb.co/bKbjY9W/mihawk-house-1.jpg",
         },
       ],

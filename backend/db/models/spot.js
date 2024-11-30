@@ -1,5 +1,5 @@
 "use strict";
-const { Model, DATE } = require("sequelize");
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     static associate(models) {
@@ -111,9 +111,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       numReviews: {
         type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
       avgRating: {
         type: DataTypes.FLOAT,
+        defaultValue: 0,
       },
       previewImage: {
         type: DataTypes.STRING,
