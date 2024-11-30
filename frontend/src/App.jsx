@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation/Navigation";
 import LandingPage from "./components/LandingPage/LandingPage";
 import SpotDetailsPage from "./components/SpotDetailsPage/SpotDetailsPage";
 import SpotCreationFormPage from "./components/SpotCreationFormPage/SpotCreationFormPage";
+import GetUsersSpots from "./components/ManageSpotsPage/ManageSpotsPage";
 import * as sessionActions from "./store/slices/sessionSlice";
 
 const Layout = () => {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/spots/upload",
         element: <SpotCreationFormPage />,
+      },
+      {
+        path: "/spots/current",
+        element: <GetUsersSpots />,
       },
       {
         path: "*",

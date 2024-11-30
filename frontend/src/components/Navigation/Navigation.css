@@ -183,7 +183,7 @@ li {
   z-index: 9999;
   background-color: rgb(245, 225, 228);
   width: 14rem;
-  height: 18rem;
+  height: 22rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   border-radius: 0.5rem;
 }
@@ -193,7 +193,7 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
   padding-top: 0.6rem;
   color: navy;
 }
@@ -301,4 +301,15 @@ li {
   left: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.manage-spots-link-container {
+  padding: 1.5rem 0;
+  font-size: 1.2rem;
+  border-top: 0.5mm solid black;
+  border-bottom: 0.5mm solid black;
+}
+
+.manage-spots-link {
+  text-decoration: none;
 }

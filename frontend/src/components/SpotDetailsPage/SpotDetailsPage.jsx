@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { IoStarSharp } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
@@ -13,17 +13,17 @@ function SpotDetailsPage() {
   const { currSpots, loading, errors } = useSelector((state) => state.spots);
   const { user } = useSelector((state) => state.session);
 
-  const getSpotDetails = async () => {
+  const getSpotDetails = useCallback(async () => {
     try {
       dispatch(spotsActions.getSpotById(spotId));
     } catch (err) {
       console.error("Error:", err);
     }
-  };
+  }, [dispatch, spotId]);
 
   useEffect(() => {
     getSpotDetails();
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, getSpotDetails]);
 
   if (loading) return <div>Loading...</div>;
   if (errors) return <div>Error: {errors}</div>;
