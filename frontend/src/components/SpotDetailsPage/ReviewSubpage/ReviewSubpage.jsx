@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { csrfFetch } from "../../../store/csrf";
 import PostReviewButton from "./PostReviewButton";
+import OpenModalButton from "../../OpenModalButton/OpenModalButton";
+import DeleteReviewModal from "./DeleteReviewModal/DeleteReviewModal";
 import "./ReviewSubpage.css";
 
 function ReviewSubpage({ getSpotDetails }) {
@@ -10,6 +12,7 @@ function ReviewSubpage({ getSpotDetails }) {
   const { user } = useSelector((state) => state.session);
   const { currSpots } = useSelector((state) => state.spots);
   const [reviews, setReviews] = useState([]);
+  const [isDeleteReviewModal, setIsDeleteReviewModal] = useState(false);
 
   const getReviews = useCallback(async () => {
     try {
@@ -35,6 +38,11 @@ function ReviewSubpage({ getSpotDetails }) {
     getReviews();
   };
 
+  const openAndCloseDeleteReviewModal = (e) => {
+    e.preventDefault();
+    setIsDeleteReviewModal(!isDeleteReviewModal);
+  };
+
   const userIsOwner = user && user.id === currSpots?.Owner.id;
   const userHasReviews = reviews.some((review) => review.User.id === user?.id);
 
@@ -50,6 +58,8 @@ function ReviewSubpage({ getSpotDetails }) {
       {reviews.length ? (
         <>
           {reviews.map((review) => {
+            const reviewBelongsToUser = review.User.id === user?.id;
+
             return (
               <div key={review.id} className="review-container">
                 <h1 className="review-user-name">{review.User.firstName}</h1>
@@ -57,6 +67,20 @@ function ReviewSubpage({ getSpotDetails }) {
                   {new Date(review.createdAt).toLocaleDateString()}
                 </p>
                 <p className="review-text">{`"${review.review}"`}</p>
+                {reviewBelongsToUser && (
+                  <div onClick={openAndCloseDeleteReviewModal}>
+                    <OpenModalButton
+                      buttonText={"Delete"}
+                      modalComponent={
+                        <DeleteReviewModal
+                          reviewId={review.id}
+                          refreshMainPage={getSpotDetails}
+                          refreshSubpage={getReviews}
+                        />
+                      }
+                    />
+                  </div>
+                )}
               </div>
             );
           })}

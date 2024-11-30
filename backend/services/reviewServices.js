@@ -20,8 +20,9 @@ async function addReview(userId, spotId, review, stars) {
 
   const reviews = await Review.findAll({ where: { spotId } });
   const numReviews = reviews.length;
-  const avgRating =
-    reviews.reduce((sum, review) => sum + review.stars, 0) / numReviews;
+  const sumOfRatings = reviews.reduce((sum, review) => sum + review.stars, 0);
+  let avgRating = sumOfRatings / numReviews;
+  avgRating = Math.round(avgRating * 100) / 100;
 
   await Spot.update({ numReviews, avgRating }, { where: { id: spotId } });
 
