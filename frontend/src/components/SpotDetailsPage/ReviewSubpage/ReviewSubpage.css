@@ -22,7 +22,7 @@
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .reviews-header {
@@ -34,6 +34,12 @@
 
   .inner-reviews-header {
     display: flex;
+  }
+
+  .reviews-subpage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }
 
@@ -61,7 +67,7 @@
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .reviews-header {
@@ -74,6 +80,12 @@
   .inner-reviews-header {
     display: flex;
   }
+
+  .reviews-subpage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1000px) {
@@ -82,7 +94,7 @@
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .reviews-header {
@@ -111,6 +123,12 @@
 
   .review-text {
     font-size: 1.2rem;
+  }
+
+  .reviews-subpage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }
 
@@ -138,7 +156,7 @@
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .reviews-header {
@@ -150,6 +168,12 @@
 
   .inner-reviews-header {
     display: flex;
+  }
+
+  .reviews-subpage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }
 
@@ -177,7 +201,7 @@
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .reviews-header {
@@ -189,6 +213,12 @@
 
   .inner-reviews-header {
     display: flex;
+  }
+
+  .reviews-subpage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }
 
@@ -216,7 +246,7 @@
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .reviews-header {
@@ -229,4 +259,21 @@
   .inner-reviews-header {
     display: flex;
   }
+
+  .reviews-subpage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.post-review-button-container {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+}
+
+.open-modal-button {
+  width: 8rem;
+  height: 2rem;
 }

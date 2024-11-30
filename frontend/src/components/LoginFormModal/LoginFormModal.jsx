@@ -34,7 +34,7 @@ function LoginFormModal() {
 
       closeModal();
     } catch (err) {
-      console.log("Error:", err);
+      console.error("Error:", err);
     }
   };
 
