@@ -23,6 +23,7 @@
   height: 3rem;
   background-color: red;
   font-size: 1.1rem;
+  cursor: pointer;
 }
 
 .no-delete-review-button {
@@ -30,4 +31,5 @@
   height: 3rem;
   font-size: 1.1rem;
   background-color: grey;
+  cursor: pointer;
 }
