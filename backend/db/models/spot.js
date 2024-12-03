@@ -40,11 +40,11 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Address must start with a number");
             }
 
-            array.slice(1).forEach((val) => {
-              if (val[0] !== val[0].toUpperCase()) {
-                throw new Error("Address must be capitalized.");
-              }
-            });
+            // array.slice(1).forEach((val) => {
+            //   if (val[0] !== val[0].toUpperCase()) {
+            //     throw new Error("Address must be capitalized.");
+            //   }
+            // });
           },
         },
       },
@@ -53,14 +53,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           len: [1, 150],
-          firstLetterCap(value) {
-            const array = value.split(" ");
-            array.forEach((val) => {
-              if (val[0] !== val[0].toUpperCase()) {
-                throw new Error("City must be capitalized.");
-              }
-            });
-          },
+          // firstLetterCap(value) {
+          //   const array = value.split(" ");
+          //   array.forEach((val) => {
+          //     if (val[0] !== val[0].toUpperCase()) {
+          //       throw new Error("City must be capitalized.");
+          //     }
+          //   });
+          // },
         },
       },
       state: {
@@ -68,14 +68,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           len: [1, 150],
-          firstLetterCap(value) {
-            const array = value.split(" ");
-            array.forEach((val) => {
-              if (val[0] !== val[0].toUpperCase()) {
-                throw new Error("State must be capitalized.");
-              }
-            });
-          },
+          // firstLetterCap(value) {
+          //   const array = value.split(" ");
+          //   array.forEach((val) => {
+          //     if (val[0] !== val[0].toUpperCase()) {
+          //       throw new Error("State must be capitalized.");
+          //     }
+          //   });
+          // },
         },
       },
       country: {
