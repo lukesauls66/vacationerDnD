@@ -500,12 +500,13 @@ router.post(
         previewImage,
         additionImageUrls: additionImageUrls,
       });
-
+      console.log(newSpot);
       res.status(201).json(newSpot);
     } catch (err) {
       console.error("Error creating spot:", err);
       res.status(500).json({
         message: "Error creating spot",
+        newSpot: newSpot,
       });
     }
   }
