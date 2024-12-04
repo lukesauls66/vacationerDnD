@@ -1,0 +1,38 @@
+.footer-main-container {
+  background-color: rgba(163, 220, 247);
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 4rem;
+  border-top: 0.2mm solid rgba(128, 128, 128, 0.5);
+}
+
+.footer-link-button-container:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.footer-link-button-linkedin {
+  border: none;
+}
+
+.footer-link-button-linkedin:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.footer-link-button-github {
+  border: none;
+}
+
+.footer-link-button-github:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.footer-link-button-linkedin svg {
+  color: #0077b5;
+}
+
+.footer-link-button-github svg {
+  color: #333;
+}

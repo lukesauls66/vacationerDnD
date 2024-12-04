@@ -7,6 +7,7 @@ import SpotDetailsPage from "./components/SpotDetailsPage/SpotDetailsPage";
 import SpotCreationFormPage from "./components/SpotCreationFormPage/SpotCreationFormPage";
 import GetUsersSpots from "./components/ManageSpotsPage/ManageSpotsPage";
 import EditSpotPage from "./components/EditSpotPage/EditSpotPage";
+import Footer from "./components/Footer/Footer";
 import * as sessionActions from "./store/slices/sessionSlice";
 
 const Layout = () => {
@@ -27,6 +28,7 @@ const Layout = () => {
     <>
       <Navigation isUserLoaded={isUserLoaded} />
       {isUserLoaded && <Outlet />}
+      <Footer />
     </>
   );
 };
