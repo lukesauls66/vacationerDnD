@@ -112,7 +112,7 @@ Navigate to http://localhost:5137 once both servers are runnings to access the a
 
 ## Database Schema Design
 
-[db-schema]
+![db-schema](./images/backend-schema.png)
 
 ## API Documentation
 
@@ -1635,5 +1635,3 @@ Return spots filtered by query parameters.
           }
         }
         ```
-
-    [db-schema]: ./images/backend-schema.png
