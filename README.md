@@ -1636,4 +1636,4 @@ Return spots filtered by query parameters.
         }
         ```
 
-    [db-schema]: ./images/backend-schema.PNG
+    [db-schema]: ./images/backend-schema.png
